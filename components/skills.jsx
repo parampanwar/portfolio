@@ -2,11 +2,10 @@ import ReusableButtons from './ReusableButtons';
 import { FaGithub } from 'react-icons/fa';
 const SkillsSection = () =>
     {
-        return (
-            
-        <section id="skills" className="min-h-screen flex items-center justify-center snap-start bg-gradient-to-r from-gray-800 to-gray-900 rounded-3xl">
+        return (            
+        <section id="skills" className="min-h-screen flex items-center justify-center  bg-gradient-to-r from-gray-800 to-gray-900 rounded-3xl self-center">
         <div className="flex flex-col items-center w-full max-w-5xl p-6 gap-8">
-          <h2 className="text-5xl font-bold text-gray-800 mb-2 border-3 border-gray-700 rounded-3xl px-5 py-5 self-start">
+          <h2 className="text-5xl font-bold text-gray-800 mb-2 border-3 border-gray-700 rounded-3xl px-5 py-5 self-center">
             Skills
           </h2>
           <div className="flex flex-col sm:flex-row gap-6 w-full">

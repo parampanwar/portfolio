@@ -15,7 +15,7 @@ const AboutSection = () => {
               viewport={{ once: true }}
             >
               
-              <h2 className="text-5xl font-bold text-gray-800 mb-2 border-3 border-gray-700 rounded-3xl px-5 py-5 w-fit">
+              <h2 className="text-5xl font-bold text-gray-800 mb-2 border-3 border-gray-700 rounded-3xl px-5 py-5 w-fit self-center">
                 About Me</h2>
                 <motion.div
               className="w-full tabletM:w-1/2 flex justify-center"

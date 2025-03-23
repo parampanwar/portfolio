@@ -2,72 +2,77 @@ import ReusableButtons from './ReusableButtons';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useState } from "react";
-import { FaInstagram } from "react-icons/fa";
-import { FaLinkedinIn } from "react-icons/fa";
-import { FaGithub, FaBars, FaTimes } from "react-icons/fa";
+import { FaInstagram, FaLinkedinIn, FaGithub, FaBars, FaTimes } from "react-icons/fa";
 import { BiLogoGmail } from "react-icons/bi";
 import WelcomeText from '/components/WelcomeText';
+
 const MyDashboard = () => {
     const [isOpen, setIsOpen] = useState(false);
-    return (
-
-
-        <div className="flex flex-col justify-between w-full gap-6 p-6 rounded-standard tabletM:p-7 ">
-            <section id="home" className="min-h-screen flex items-center justify-center ">
-                <div className='absolute top-7 right-7 flex gap-6'>
-                    <a href="https://www.instagram.com/parampanwar36" target='blank'>
-                        <FaInstagram className="text-2xl cursor-pointer transition-transform duration-300 hover:scale-110" /></a>
-                    <a href="https://www.linkedin.com/in/parampanwar" target='blank'>
-                        <FaLinkedinIn className="text-2xl cursor-pointer transition-colors duration-300  hover:scale-110" /></a>
-                    <a href="https://www.github.com/parampanwar" target='blank'>
-                        <FaGithub className="text-2xl cursor-pointer  transition-colors duration-300  hover:scale-110" /></a>
-                    <a href="mailto:parampanwar36@gmail.com">
-                        <BiLogoGmail className="text-2xl cursor-pointer transition-transform duration-300 hover:scale-110" /></a>
-
-                </div>
-                <div className="flex flex-col justify-between w-full gap-2 tabletM:flex-row ">
-                    <div className="flex gap-3 items-center">
-                        {/* Hamburger Menu (Visible on Small Screens) */}
-                        <div className="absolute top-7 left-7 md:hidden">
-                            <button onClick={() => setIsOpen(!isOpen)} className="text-3xl focus:outline-none">
-                                {isOpen ? <FaTimes /> : <FaBars />}
-                            </button>
-                        </div>
-
-                        {/* Navigation Menu */}
-                        <div className={`absolute left-0 top-16 w-full bg-gray-900 text-white shadow-md 
-    flex flex-col items-center gap-6 py-6 transition-all duration-300 
-    md:relative md:w-auto md:bg-transparent md:shadow-none 
-    ${isOpen ? "flex" : "hidden md:flex flex-col"}`} >
     
-    <a href="#about" className="cursor-pointer transition-transform duration-300 hover:scale-110">About</a>
-    <a href="#skills" className="cursor-pointer transition-transform duration-300 hover:scale-110">Skills</a>
-    <a href="#projects" className="cursor-pointer transition-transform duration-300 hover:scale-110">Projects</a>
-</div>
-                        <div className='flex items-center justify-start h-screen p-10  tabletM:-ml-16 '>
-                            <div className="flex flex-col">
+    return (
+        <section id="home" className="min-h-screen flex relative">
+            {/* Social Links */}
+            <div className='absolute top-7 right-7 flex gap-6'>
+                <a href="https://www.instagram.com/parampanwar36" target='blank'>
+                    <FaInstagram className="text-2xl cursor-pointer transition-transform duration-300 hover:scale-110" />
+                </a>
+                <a href="https://www.linkedin.com/in/parampanwar" target='blank'>
+                    <FaLinkedinIn className="text-2xl cursor-pointer transition-transform duration-300 hover:scale-110" />
+                </a>
+                <a href="https://www.github.com/parampanwar" target='blank'>
+                    <FaGithub className="text-2xl cursor-pointer transition-transform duration-300 hover:scale-110" />
+                </a>
+                <a href="mailto:parampanwar36@gmail.com">
+                    <BiLogoGmail className="text-2xl cursor-pointer transition-transform duration-300 hover:scale-110" />
+                </a>
+            </div>
 
-                                <WelcomeText />
+            {/* Hamburger Menu Button (Visible on Small Screens) */}
+            <div className="absolute top-7 left-7 md:hidden z-50">
+                <button onClick={() => setIsOpen(!isOpen)} className="text-3xl focus:outline-none">
+                    {isOpen ? <FaTimes className='text-white'/> : <FaBars className='text-white'/>}
+                </button>
+            </div>
 
-                                <p className="text-2xl font-light ">
-                                    I'm Param Panwar
-                                </p>
-                            </div>
-                        </div>
-                        <div className="w-full flex justify-center">
-                            <Image
-                                src="/param.jpg"
-                                alt="Param Panwar"
-                                width={300}
-                                height={50}
-                                className="rounded-full shadow-lg"
-                            />
-                        </div>
-                    </div>
-                    <div className="flex gap-3 items-center "></div>
+            {/* Mobile Menu with Transition */}
+            <motion.div 
+                initial={{ x: '-100%' }} 
+                animate={{ x: isOpen ? 0 : '-100%' }} 
+                transition={{ type: 'tween', duration: 0.3 }}
+                className={`fixed inset-0 bg-black bg-opacity-90 flex flex-col items-center justify-center gap-6 text-white text-2xl z-40 ${isOpen ? 'block' : 'hidden'}`}
+            >
+                <a href="#about" className="cursor-pointer hover:scale-110" onClick={() => setIsOpen(false)}>About</a>
+                <a href="#skills" className="cursor-pointer hover:scale-110" onClick={() => setIsOpen(false)}>Skills</a>
+                <a href="#projects" className="cursor-pointer hover:scale-110" onClick={() => setIsOpen(false)}>Projects</a>
+            </motion.div>
+
+            {/* Left Navigation (Desktop) */}
+            <div className="hidden md:flex flex-col gap-6 p-10 fixed left-0 top-1/2 transform -translate-y-1/2">
+                <a href="#about" className="cursor-pointer transition-transform duration-300 hover:scale-110">About</a>
+                <a href="#skills" className="cursor-pointer transition-transform duration-300 hover:scale-110">Skills</a>
+                <a href="#projects" className="cursor-pointer transition-transform duration-300 hover:scale-110">Projects</a>
+            </div>
+
+            {/* Main Content */}
+            <div className="flex flex-row tabletM:flex-row items-center justify-center w-full ml-20">
+                {/* Text Section */}
+                <div className="flex flex-col text-center tabletM:text-left">
+                    <WelcomeText />
+                    <p className="text-2xl font-light">I'm Param Panwar</p>
                 </div>
-            </section>
-        </div>
+                {/* Image Section */}
+                <div className="flex justify-center mt-6 ml-20 tabletM:mt-0 tabletM:ml-10">
+                    <Image
+                        src="/param.jpg"
+                        alt="Param Panwar"
+                        width={300}
+                        height={50}
+                        className="rounded-full shadow-lg"
+                    />
+                </div>
+            </div>
+        </section>
     );
 };
+
 export default MyDashboard;
