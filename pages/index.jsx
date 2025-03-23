@@ -31,24 +31,26 @@ export default function Dashboard() {
 
 
   //JS for welcome text
-  
+
   return (
     <MainScreenWrapper>
-        <MyDashboard />
-        < br />< br />< br />< br />
-        {/* *******************About Section************************ */}
-        <AboutSection />
-        < br />< br />< br />< br />
-        {/* *******************-----------------Skills Section-------------------************************ */}
-          <SkillsSection />          
-        <br /><br /><br /><br />
-        {/* Projects Section */}
-        <ProjectSection />
-        <br /><br />
-        <footer className='flex flex-col items-center text-white font-light'>
-          Copyright © 2025 Param Panwar. All Rights Reserved
-        </footer>
-        <br /><br />
+      <MyDashboard />
+      < br />< br />< br />< br />
+      {/* *******************About Section************************ */}
+      <AboutSection />
+      < br />< br />< br />< br />
+      {/* *******************-----------------Skills Section-------------------************************ */}
+      <SkillsSection />
+      <br /><br /><br /><br />
+      {/* Projects Section */}
+      <ProjectSection />
+      <br /><br />
+      <footer className="flex flex-col items-center text-white font-light text-center sm:flex-row sm:justify-center">
+        <span>Copyright © 2025 Param Panwar.</span>
+        <span className="sm:ml-2 sm:whitespace-nowrap">All Rights Reserved</span>
+      </footer>
+
+      <br /><br />
     </MainScreenWrapper >
   )
 }
