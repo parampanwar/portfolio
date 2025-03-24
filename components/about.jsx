@@ -5,7 +5,7 @@ import Image from 'next/image';
 const AboutSection = () => {
     return (
         <section id="about" className="min-h-screen flex items-center justify-center snap-start ">
-          <div className="flex flex-col items-center w-full max-w-5xl p-6 gap-8">3
+          <div className="flex flex-col items-center w-full max-w-5xl p-6 gap-8">
 
             <motion.div
               className="flex flex-col w-full tabletM:w-1/2 gap-6"
