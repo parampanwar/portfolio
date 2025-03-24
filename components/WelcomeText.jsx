@@ -9,10 +9,10 @@ const WelcomeText = ({ text = 'Hello' }) => {
       scale: 1,
       opacity: 1,
       transition: {
-        delay: i * 0.1,
-        duration: 1,
+        delay: i * 0.15,
+        duration: 10,
         type: 'spring',
-        stiffness: 150,
+        stiffness: 200,
         damping: 10,
         mass: 0.8,
       },

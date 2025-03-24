@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import MainScreenWrapper from '../components/MainScreenWrapper';
 import { useGlobalDashboardContext } from '../contexts/DashboardContext'
-import CircuitAnimation from '../components/CircuitAnimation';
+import CircuitAnimation from '../components/MousePointer';
 import styles from '../styles/Home.module.css';
 
 import ReusableButtons from '../components/ReusableButtons';

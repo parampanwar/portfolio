@@ -16,6 +16,7 @@ body {
   background-size: cover;
   background: #121b2c;
   min-height: 100vh;
+  cursor: none !important;
   scroll-behavior: smooth;
 }
 h1,h2,h3, p,a {
@@ -26,3 +27,4 @@ h1,h2,h3, p,a {
 #appId {
   min-height: 100vh;
 }
+
