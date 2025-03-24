@@ -19,6 +19,7 @@ function MyApp({ Component, pageProps }) {
         <div id="appId">
             <Head>
                 <title>Param Panwar</title>
+                <meta name="description" content="Portfolio of Param Panwar, a web developer." />
                 <link rel="icon" href="/favicon.ico" type="image/x-icon" />            
                 </Head>
             <AuthProvider>
