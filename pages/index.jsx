@@ -48,6 +48,8 @@ export default function Dashboard() {
       <footer className="flex flex-col items-center text-white font-light text-center sm:flex-row sm:justify-center">
         <span>Copyright © 2025 Param Panwar.</span>
         <span className="sm:ml-2 sm:whitespace-nowrap">All Rights Reserved</span>
+        <br />
+        
       </footer>
 
       <br /><br />

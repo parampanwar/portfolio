@@ -81,7 +81,7 @@ const MyDashboard = () => {
                 </a>
             </div>
 
-            {/* Hamburger Menu Button with Animated Icon */}
+            {/* Hamburger Menu Button */}
             <div className="absolute top-7 left-7 md:hidden z-50">
                 <button 
                     onClick={() => setIsOpen(!isOpen)} 
@@ -90,7 +90,7 @@ const MyDashboard = () => {
                     onMouseLeave={() => setIsHovering(false)}
                 >
                     <motion.div
-                        key={isOpen ? "times" : "bars"} // Key ensures re-render on icon change
+                        key={isOpen ? "times" : "bars"} 
                         initial="exit"
                         animate={isOpen ? "open" : "closed"}
                         exit="exit"

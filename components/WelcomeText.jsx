@@ -2,7 +2,7 @@
 import { motion } from 'framer-motion';
 
 const WelcomeText = ({ text = 'Hello' }) => {
-  // Animation variants for each letter
+
   const letterVariants = {
     initial: { scale: 0, opacity: 0 },
     animate: (i) => ({
