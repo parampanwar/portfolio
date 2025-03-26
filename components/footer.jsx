@@ -6,8 +6,8 @@ const Footer = () => {
                 <a href="#skills">SKILLS</a>
                 <a href="#project">PROJECTS</a>
             </span>
-            <span>Copyright © 2025 Param Panwar.</span>
-            <span className="sm:ml-2 sm:whitespace-nowrap">All Rights Reserved</span>
+            <span>© 2025 Param Panwar | Powered by coffee & code.</span>
+  
         </footer>
     );
 };
