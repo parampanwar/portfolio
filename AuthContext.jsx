@@ -15,10 +15,10 @@ const AuthProvider = ({children}) => {
     }
     return (
         <AuthContext.Provider 
-        value={{
-             
-            isPublic,
-                  }}
+        value=
+            {{
+                isPublic,
+            }}
         >
             {children}
         </AuthContext.Provider>

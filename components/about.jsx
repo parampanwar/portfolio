@@ -33,7 +33,7 @@ const AboutSection = () => {
               />
             </motion.div>
               <p className="text-lg text-gray-600 leading-relaxed">
-                Hi, I’m Param Panwar—a passionate web and app developer with a knack for crafting innovative and user-friendly digital experiences. I am pursuing B.Tech from JECRC Jaipur, where I sharpened my technical skills and built a solid foundation in problem-solving and programming.
+                Hi, I’m Param Panwar—a passionate web and app developer with a knack for crafting innovative and user-friendly digital experiences.  I’m currently pursuing a B.Tech at JECRC Jaipur, graduating in 2026, where I’ve honed my technical skills and built a strong foundation in programming and problem-solving.
               </p>
               <p className="text-lg text-gray-600 leading-relaxed">
                 Fueled by curiosity and a love for technology, I thrive on transforming ideas into functional, beautiful applications. Whether it’s designing <span className="italic">responsive websites</span> or building <span className="italic">seamless mobile apps</span>, I’m committed to delivering solutions that leave a lasting impact.
