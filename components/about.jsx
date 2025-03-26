@@ -50,7 +50,7 @@ const AboutSection = () => {
                 target="_self"
                 download="param_cv.pdf"
               >
-                Download Resume
+                Download Résumé
               </ReusableButtons>
           </div>
         </section>
