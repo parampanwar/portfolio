@@ -4,42 +4,54 @@ import { motion } from 'framer-motion';
 export default function MousePointer() {
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const [isHovering, setIsHovering] = useState(false);
+    const [isTouchDevice, setIsTouchDevice] = useState(false);
 
     useEffect(() => {
-        const handleMouseMove = (e) => {
-            requestAnimationFrame(() => {
-                setMousePosition({ x: e.clientX, y: e.clientY });
-            });
-        };
-        window.addEventListener('mousemove', handleMouseMove);
-        return () => window.removeEventListener('mousemove', handleMouseMove);
+        const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        setIsTouchDevice(isTouch);
+
+        if (!isTouch) {
+            const handleMouseMove = (e) => {
+                requestAnimationFrame(() => {
+                    setMousePosition({ x: e.clientX, y: e.clientY });
+                });
+            };
+            window.addEventListener('mousemove', handleMouseMove);
+            return () => window.removeEventListener('mousemove', handleMouseMove);
+        }
     }, []);
 
     useEffect(() => {
-        const handleHover = (e) => {
-            if (e.target.closest('a, button')) setIsHovering(true);
-        };
-        const handleLeave = (e) => {
-            if (!e.target.closest('a, button')) setIsHovering(false);
-        };
-        document.addEventListener('mouseover', handleHover);
-        document.addEventListener('mouseout', handleLeave);
-        return () => {
-            document.removeEventListener('mouseover', handleHover);
-            document.removeEventListener('mouseout', handleLeave);
-        };
-    }, []);
+        if (!isTouchDevice) {
+            const handleHover = (e) => {
+                if (e.target.closest('a, button')) setIsHovering(true);
+            };
+            const handleLeave = (e) => {
+                if (!e.target.closest('a, button')) setIsHovering(false);
+            };
+            document.addEventListener('mouseover', handleHover);
+            document.addEventListener('mouseout', handleLeave);
+            return () => {
+                document.removeEventListener('mouseover', handleHover);
+                document.removeEventListener('mouseout', handleLeave);
+            };
+        }
+    }, [isTouchDevice]);
 
     useEffect(() => {
-        document.body.style.cursor = 'none';
-        return () => {
-            document.body.style.cursor = 'auto';
-        };
-    }, []);
+        if (!isTouchDevice) {
+            document.body.style.cursor = 'none';
+            return () => {
+                document.body.style.cursor = 'auto';
+            };
+        }
+    }, [isTouchDevice]);
+
+    if (isTouchDevice) return null;
 
     return (
         <motion.div
-            className="fixed pointer-events-none z-50"
+            className="fixed pointer-events-none z-50 hidden md:block" // Hide on small screens
             style={{
                 x: mousePosition.x,
                 y: mousePosition.y,
