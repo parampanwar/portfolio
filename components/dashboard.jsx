@@ -144,13 +144,14 @@ const MyDashboard = () => {
                     <WelcomeText />
                     <p className="text-2xl font-light">I'm Param Panwar</p>
                 </div>
-                <div className="flex justify-center mt-6 ml-20 tabletM:mt-0 tabletM:ml-10">
+                <div className="flex justify-center mt-6 ml-20 tabletM:mt-0 tabletM:ml-10 ">
+                    
                     <Image
-                        src="/param.jpg"
+                        src="/param.png"
                         alt="Param Panwar"
                         width={300}
                         height={50}
-                        className="rounded-full shadow-lg"
+                        className="shadow-lg "
                     />
                 </div>
             </div>
