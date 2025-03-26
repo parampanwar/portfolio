@@ -10,6 +10,8 @@ import ProjectSection from '../components/projects';
 import SkillsSection from '../components/skills';
 import AboutSection from '../components/about'
 import MyDashboard from '../components/dashboard'
+import Footer from '../components/footer';
+
 export default function Dashboard() {
   let bDetails = 1
   const router = useRouter()
@@ -45,12 +47,7 @@ export default function Dashboard() {
       {/* Projects Section */}
       <ProjectSection />
       <br /><br />
-      <footer className="flex flex-col items-center text-white font-light text-center sm:flex-row sm:justify-center">
-        <span>Copyright © 2025 Param Panwar.</span>
-        <span className="sm:ml-2 sm:whitespace-nowrap">All Rights Reserved</span>
-        <br />
-        
-      </footer>
+      <Footer />
 
       <br /><br />
     </MainScreenWrapper >
