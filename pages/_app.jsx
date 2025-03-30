@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router'
 import { DashboardProvider } from '../contexts/DashboardContext';
 import { AuthProvider } from '../AuthContext'
-
+import { Analytics } from "@vercel/analytics/react"
 function MyApp({ Component, pageProps }) {
     //states
     const [title, setTitle] = useState('Param Panwar')
@@ -24,6 +24,7 @@ function MyApp({ Component, pageProps }) {
                 </Head>
             <AuthProvider>
                 <DashboardProvider>
+                <Analytics />
                     <Component {...pageProps} />
                 </DashboardProvider>
             </AuthProvider>
