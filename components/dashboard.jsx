@@ -80,8 +80,6 @@ const MyDashboard = () => {
                     <BiLogoGmail className="text-2xl cursor-pointer transition-transform duration-300 hover:scale-110" />
                 </a>
             </div>
-
-            {/* Hamburger Menu Button */}
             <div className="absolute top-7 left-7 md:hidden z-50">
                 <button 
                     onClick={() => setIsOpen(!isOpen)} 

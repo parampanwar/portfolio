@@ -28,3 +28,18 @@ h1,h2,h3, p,a {
   min-height: 100vh;
 }
 
+::-webkit-scrollbar{
+  width:5px;
+  height:8px;
+}
+::-webkit-scrollbar-track{
+  background: transparent;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb{
+  background: #87CEEB;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-corner {
+  background: #1a1a1a;
+}
