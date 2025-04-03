@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { FaInstagram, FaLinkedinIn, FaGithub, FaBars, FaTimes } from "react-icons/fa";
 import { BiLogoGmail } from "react-icons/bi";
 import WelcomeText from '/components/WelcomeText';
-import MousePointer from './MousePointer';
+
 
 const MyDashboard = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -49,7 +49,7 @@ const MyDashboard = () => {
 
     return (
         <section id="home" className="min-h-screen flex relative">
-            <MousePointer />
+        
             {/* Social Links */}
             <div className='absolute top-7 right-7 flex gap-6'>
                 <a 
