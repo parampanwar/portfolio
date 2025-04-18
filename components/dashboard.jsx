@@ -74,7 +74,7 @@ const MyDashboard = () => {
                     <FaGithub className="text-2xl cursor-pointer transition-transform duration-300 hover:scale-110" />
                 </a>
                 <a 
-                    href="mailto:parampanwar36@gmail.com"
+                    href="mailto:parampanwar.work@outlook.com?subject=Contact from Portfolio Website&body=Hi Param,%0D%0AI'm reaching out via your portfolio website."
                     onMouseEnter={() => setIsHovering(true)}
                     onMouseLeave={() => setIsHovering(false)}>
                     <BiLogoGmail className="text-2xl cursor-pointer transition-transform duration-300 hover:scale-110" />
