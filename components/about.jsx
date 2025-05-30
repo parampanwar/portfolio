@@ -46,9 +46,9 @@ const AboutSection = () => {
      
             
             <ReusableButtons
-                href="/resume/param_cv.pdf"
+                href="/resume/param_panwar_resume.pdf"
                 target="_self"
-                download="param_cv.pdf"
+                download="param_panwar.pdf"
               >
                 Download Résumé
               </ReusableButtons>
