@@ -20,6 +20,15 @@ const ProjectSection = () =>
             <h3 className="text-2xl font-semibold text-purple-300 mb-4">Cashbook</h3>
             <ReusableButtons href="https://github.com/parampanwar/cashbookapp" icon={FaGithub}>GitHub</ReusableButtons>
           </div>
+          <div className="flex-1 border-2 border-purple-500/50 rounded-lg p-6 bg-gray-700/50">
+            <h3 className="text-2xl font-semibold text-purple-300 mb-4">Chatroom</h3>
+            <ReusableButtons href="https://github.com/parampanwar/python-project-upflairs" icon={FaGithub}>GitHub</ReusableButtons>
+          </div>
+          <div className="flex-1 border-2 border-purple-500/50 rounded-lg p-6 bg-gray-700/50">
+            <h3 className="text-2xl font-semibold text-purple-300 mb-4">To-Do List App</h3>
+            <ReusableButtons href="https://github.com/parampanwar/django-projects-to-do-list" icon={FaGithub}>GitHub</ReusableButtons>
+          </div>
+          
         </div>
       </div>
     </section>
