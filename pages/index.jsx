@@ -41,7 +41,7 @@ export default function Dashboard() {
       {/* *******************About Section************************ */}
       <AboutSection />
       < br />< br />< br />< br />
-      {/* *******************-----------------Skills Section-------------------************************ */}
+      {/* **********-----------------Skills Section----------*************** */}
       <SkillsSection />
       <br /><br /><br /><br />
       {/* Projects Section */}
