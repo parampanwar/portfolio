@@ -49,8 +49,8 @@ const MyDashboard = () => {
 
     return (
         <section id="home" className="min-h-screen flex relative">
-        <div class="circuit-container" id="circuitContainer"></div>
-    <div class="cursor" id="cursor"></div>
+        <div className="circuit-container" id="circuitContainer"></div>
+    <div className="cursor" id="cursor"></div>
             {/* Social Links */}
             <div className='absolute top-7 right-7 flex gap-6'>
                 <a 
