@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import styles from '../styles/TwoFA.module.css';
 import Image from 'next/image';
+
 const TwoFASetup = ({ onComplete }) => {
   const [step, setStep] = useState(1); // 1: QR Code, 2: Verify
   const [qrCode, setQrCode] = useState('');
@@ -42,7 +43,8 @@ const TwoFASetup = ({ onComplete }) => {
         const errorData = await response.json();
         setError(errorData.detail || 'Failed to setup 2FA');
       }
-    } catch (error) {
+    } catch (setupError) { // 🔥 FIXED: Renamed from 'error' to avoid unused variable warning
+      console.error('Setup error:', setupError);
       setError('Unable to connect to server');
     } finally {
       setIsLoading(false);
@@ -67,7 +69,8 @@ const TwoFASetup = ({ onComplete }) => {
         const errorData = await response.json();
         setError(errorData.detail || 'Invalid token');
       }
-    } catch (error) {
+    } catch (verifyError) { // 🔥 FIXED: Renamed from 'error' to avoid unused variable warning
+      console.error('Verify error:', verifyError);
       setError('Unable to connect to server');
     } finally {
       setIsLoading(false);
@@ -96,7 +99,7 @@ const TwoFASetup = ({ onComplete }) => {
 
         <div className={styles.steps}>
           <p><strong>Step 1:</strong> Download Microsoft Authenticator from your app store</p>
-          <p><strong>Step 2:</strong> Open the app and tap "Add account"</p>
+          <p><strong>Step 2:</strong> Open the app and tap &quot;Add account&quot;</p>
           <p><strong>Step 3:</strong> Scan this QR code:</p>
         </div>
 
@@ -117,7 +120,7 @@ const TwoFASetup = ({ onComplete }) => {
         </div>
 
         <div className={styles.verifySection}>
-          <p><strong>Step 4:</strong> {'Enter the 6-digit code from Microsoft Authenticator:'}</p>
+          <p><strong>Step 4:</strong> Enter the 6-digit code from Microsoft Authenticator:</p> {/* 🔥 FIXED: Removed unescaped quotes */}
           <input
             type="text"
             value={verifyToken}
