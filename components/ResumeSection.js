@@ -1,6 +1,6 @@
 // components/ResumeSection.js - Updated for MongoDB storage
 import { useState, useEffect } from 'react';
-import { FaDownload, FaEye, FaFilePdf, FaSync } from 'react-icons/fa';
+import { FaDownload, FaEye, FaFilePdf } from 'react-icons/fa';
 import styles from '../styles/Dashboard.module.css';
 
 const ResumeSection = () => {
@@ -11,28 +11,29 @@ const ResumeSection = () => {
   const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
   useEffect(() => {
-    fetchCurrentResume();
-  }, []);
-
-  const fetchCurrentResume = async () => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/resumes/current`);
-      
-      if (response.ok) {
-        const data = await response.json();
-        setCurrentResume(data);
-      } else if (response.status === 404) {
-        setCurrentResume(null); // No resume found
-      } else {
-        setError('Failed to load resume');
+    // 🔥 FIXED: Move fetchCurrentResume inside useEffect to resolve dependency warning
+    const fetchCurrentResume = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/resumes/current`);
+        
+        if (response.ok) {
+          const data = await response.json();
+          setCurrentResume(data);
+        } else if (response.status === 404) {
+          setCurrentResume(null); // No resume found
+        } else {
+          setError('Failed to load resume');
+        }
+      } catch (fetchError) { // 🔥 FIXED: Renamed to avoid unused variable warning
+        console.error('Error fetching resume:', fetchError);
+        setError('Unable to connect to server');
+      } finally {
+        setIsLoading(false);
       }
-    } catch (error) {
-      console.error('Error fetching resume:', error);
-      setError('Unable to connect to server');
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    };
+
+    fetchCurrentResume();
+  }, [API_BASE_URL]); // 🔥 FIXED: Added API_BASE_URL to dependency array
 
   const downloadResume = () => {
     if (currentResume) {
