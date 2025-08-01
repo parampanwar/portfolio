@@ -1,0 +1,96 @@
+/* styles/TwoFA.module.css */
+.container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.qrContainer {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.qrCode {
+  max-width: 200px;
+  height: auto;
+}
+
+.secret {
+  background: #f8f9fa;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  font-family: monospace;
+  font-size: 1.1rem;
+  display: block;
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.tokenInput {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.5rem;
+  text-align: center;
+  letter-spacing: 0.5rem;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  margin: 1rem 0;
+}
+
+.backupCodes {
+  background: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 5px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.codes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.backupCode {
+  background: #f8f9fa;
+  padding: 0.5rem;
+  text-align: center;
+  font-family: monospace;
+  border-radius: 3px;
+  border: 1px solid #ddd;
+}
+
+.button {
+  width: 100%;
+  padding: 1rem;
+  background: #0066cc;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.error {
+  background: #fee;
+  color: #c33;
+  padding: 1rem;
+  border-radius: 5px;
+  margin: 1rem 0;
+}
+
+.warning {
+  color: #856404;
+  font-weight: 500;
+  margin-top: 1rem;
+}
