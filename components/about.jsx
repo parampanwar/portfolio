@@ -1,50 +1,17 @@
 // components/AboutSection.js
-import { useState, useEffect } from 'react';
 import ReusableButtons from './ReusableButtons';
 import { FaGithub } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
 const AboutSection = () => {
-  const [currentResume, setCurrentResume] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  
-  const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-
-  useEffect(() => {
-    fetchCurrentResume();
-  }, []);
-
-  const fetchCurrentResume = async () => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/resumes/current`);
-      
-      if (response.ok) {
-        const data = await response.json();
-        setCurrentResume(data);
-      } else {
-        console.log('No resume found in database');
-      }
-    } catch (error) {
-      console.error('Error fetching resume:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   const handleDownloadResume = () => {
-    if (currentResume) {
-      // Use the database resume
-      window.open(`${API_BASE_URL}${currentResume.download_url}`, '_blank');
-    } else {
-      // Fallback to static file if no database resume
-      const link = document.createElement('a');
-      link.href = '/resume/param_panwar_resume.pdf';
-      link.download = 'param_panwar.pdf';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
+    const link = document.createElement('a');
+    link.href = '/resume/param_panwar.pdf';
+    link.download = 'param_panwar.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
@@ -90,22 +57,11 @@ const AboutSection = () => {
           </p>
         </motion.div>
 
-        {/* Updated Resume Button */}
+        {/* Resume Download Button */}
         <div className="flex flex-col items-center gap-2">
-          {isLoading ? (
-            <div className="text-gray-500">Loading resume...</div>
-          ) : (
-            <>
-              <ReusableButtons onClick={handleDownloadResume}>
-                Download Résumé
-              </ReusableButtons>
-              {currentResume && (
-                <p className="text-sm text-gray-500">
-                  
-                </p>
-              )}
-            </>
-          )}
+          <ReusableButtons onClick={handleDownloadResume}>
+            Download Résumé
+          </ReusableButtons>
         </div>
       </div>
     </section>
