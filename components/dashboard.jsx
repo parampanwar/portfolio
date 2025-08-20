@@ -14,82 +14,100 @@ const MyDashboard = () => {
 
     // Animation variants for the menu
     const menuVariants = {
-        open: { 
-            x: 0, 
-            opacity: 1, 
+        open: {
+            x: 0,
+            opacity: 1,
             transition: { type: 'tween', duration: 0.3 }
         },
-        closed: { 
-            x: '-100%', 
-            opacity: 0, 
+        closed: {
+            x: '-100%',
+            opacity: 0,
             transition: { type: 'tween', duration: 0.3 }
         },
     };
 
     // Animation variants for the icon
     const iconVariants = {
-        open: { 
-            rotate: 90, 
-            opacity: 1, 
-            scale: 1, 
+        open: {
+            rotate: 90,
+            opacity: 1,
+            scale: 1,
             transition: { duration: 0.2 }
         },
-        closed: { 
-            rotate: 0, 
-            opacity: 1, 
-            scale: 1, 
+        closed: {
+            rotate: 0,
+            opacity: 1,
+            scale: 1,
             transition: { duration: 0.2 }
         },
-        exit: { 
-            opacity: 0, 
-            scale: 0.8, 
+        exit: {
+            opacity: 0,
+            scale: 0.8,
             transition: { duration: 0.1 }
         }
     };
+    const [isCopied, setIsCopied] = useState(false);
+
+    const handleCopyEmail = () => {
+        navigator.clipboard.writeText('panwarparam.work@gmail.com');
+        setIsCopied(true);
+        setTimeout(() => setIsCopied(false), 4000);
+    };
+
 
     return (
         <section id="home" className="min-h-screen flex relative">
-        <div class="circuit-container" id="circuitContainer"></div>
-    <div class="cursor" id="cursor"></div>
+            <div class="circuit-container" id="circuitContainer"></div>
+            <div class="cursor" id="cursor"></div>
+
             {/* Social Links */}
             <div className='absolute top-7 right-7 flex gap-6'>
-                <a 
-                    href="https://www.instagram.com/parampanwar36" 
-                    target='_blank' 
+                <button
+                    onClick={handleCopyEmail}
+                    className="flex items-center gap-2 px-3 py-1 rounded-md bg-gray-800 text-white cursor-pointer transition-transform duration-300 hover:scale-105"
+                    onMouseEnter={() => setIsHovering(true)}
+                    onMouseLeave={() => setIsHovering(false)}
+                >
+                    <BiLogoGmail className="text-xl" />
+                    <span className="text-sm font-mono">{isCopied ? 'Copied!' : 'panwarparam.work@gmail.com'}</span>
+                </button>
+                <a
+                    href="https://www.instagram.com/parampanwar36"
+                    target='_blank'
                     onMouseEnter={() => setIsHovering(true)}
                     onMouseLeave={() => setIsHovering(false)}>
                     <FaInstagram className="text-2xl cursor-pointer transition-transform duration-300 hover:scale-110" />
                 </a>
-                <a 
-                    href="https://www.linkedin.com/in/parampanwar" 
+                <a
+                    href="https://www.linkedin.com/in/parampanwar"
                     target='_blank'
                     onMouseEnter={() => setIsHovering(true)}
                     onMouseLeave={() => setIsHovering(false)}>
                     <FaLinkedinIn className="text-2xl cursor-pointer transition-transform duration-300 hover:scale-110" />
                 </a>
-                <a 
-                    href="https://www.github.com/parampanwar" 
+                <a
+                    href="https://www.github.com/parampanwar"
                     target='_blank'
                     onMouseEnter={() => setIsHovering(true)}
                     onMouseLeave={() => setIsHovering(false)}>
                     <FaGithub className="text-2xl cursor-pointer transition-transform duration-300 hover:scale-110" />
                 </a>
-                <a 
+                {/* <a 
                     href="mailto:panwarparam.work@gmail.com?subject=Contact from Portfolio Website&body=Hi Param,%0D%0AI'm reaching out via your portfolio website."
                     onMouseEnter={() => setIsHovering(true)}
                     onMouseLeave={() => setIsHovering(false)}>
                     <BiLogoGmail className="text-2xl cursor-pointer transition-transform duration-300 hover:scale-110" />
-                </a>
+                </a> */}
             </div>
             <div className="absolute top-7 left-7 md:hidden z-50">
-                <button 
-                    onClick={() => setIsOpen(!isOpen)} 
+                <button
+                    onClick={() => setIsOpen(!isOpen)}
                     className="text-3xl focus:outline-none"
                     onMouseEnter={() => setIsHovering(true)}
                     onMouseLeave={() => setIsHovering(false)}
                 >
                     <motion.div
-                        key={isOpen ? "times" : "bars"}     
+                        key={isOpen ? "times" : "bars"}
                         initial="exit"
                         animate={isOpen ? "open" : "closed"}
                         exit="exit"
@@ -114,22 +132,22 @@ const MyDashboard = () => {
 
             {/* Sidebar for larger screens */}
             <div className="hidden md:flex flex-col gap-6 p-10 fixed left-0 top-1/2 transform -translate-y-1/2">
-                <a 
-                    href="#about" 
+                <a
+                    href="#about"
                     className="cursor-pointer transition-transform duration-300 hover:scale-110"
                     onMouseEnter={() => setIsHovering(true)}
                     onMouseLeave={() => setIsHovering(false)}>
                     About
                 </a>
-                <a 
-                    href="#skills" 
+                <a
+                    href="#skills"
                     className="cursor-pointer transition-transform duration-300 hover:scale-110"
                     onMouseEnter={() => setIsHovering(true)}
                     onMouseLeave={() => setIsHovering(false)}>
                     Skills
                 </a>
-                <a 
-                    href="#projects" 
+                <a
+                    href="#projects"
                     className="cursor-pointer transition-transform duration-300 hover:scale-110"
                     onMouseEnter={() => setIsHovering(true)}
                     onMouseLeave={() => setIsHovering(false)}>
@@ -144,7 +162,7 @@ const MyDashboard = () => {
                     <p className="text-2xl font-light">I'm Param Panwar</p>
                 </div>
                 <div className="flex justify-center mt-6 ml-20 tabletM:mt-0 tabletM:ml-10 ">
-                    
+
                     <Image
                         src="/param.png"
                         alt="Param Panwar"
