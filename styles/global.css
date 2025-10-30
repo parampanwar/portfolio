@@ -1,48 +1,159 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=M+PLUS+1:wght@300;500;600;700&display=swap');
-@import "tailwindcss";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: 'Josefin Sans', sans-serif;
-  /* background: #5060ee; */
-  background-repeat: repeat;
-  background-size: cover;
-  background: #121b2c;
-  min-height: 100vh;
-  cursor: none !important;
-  scroll-behavior: smooth;
-}
-h1,h2,h3, p,a {
 
-  color: skyblue;
-}
-  
-#appId {
-  min-height: 100vh;
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 5%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 5%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 5%;
+
+    --primary: 211 100% 50%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 195 92% 60%;
+
+    --secondary: 240 5% 96%;
+    --secondary-foreground: 0 0% 10%;
+
+    --muted: 240 5% 96%;
+    --muted-foreground: 240 4% 46%;
+
+    --accent: 280 100% 70%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 6% 90%;
+    --input: 240 6% 90%;
+    --ring: 211 100% 50%;
+
+    --radius: 1.5rem;
+
+    /* Apple Liquid Glass tokens */
+    --glass-white: 0 0% 100%;
+    --glass-blur: 20px;
+    --gradient-mesh-1: 211 100% 50%;
+    --gradient-mesh-2: 280 100% 70%;
+    --gradient-mesh-3: 195 92% 60%;
+    --gradient-mesh-4: 340 82% 67%;
+    
+    /* Shadows */
+    --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+    --shadow-glass-lg: 0 20px 60px 0 rgba(0, 0, 0, 0.15);
+    
+    /* Animations */
+    --transition-fluid: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    --transition-bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  .dark {
+    --background: 0 0% 7%;
+    --foreground: 0 0% 98%;
+
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 211 100% 55%;
+    --primary-foreground: 0 0% 7%;
+    --primary-glow: 195 92% 65%;
+
+    --secondary: 240 5% 15%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 240 4% 16%;
+    --muted-foreground: 240 5% 65%;
+
+    --accent: 280 100% 75%;
+    --accent-foreground: 0 0% 7%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 4% 16%;
+    --input: 240 4% 16%;
+    --ring: 211 100% 55%;
+
+    /* Apple Liquid Glass tokens - dark */
+    --glass-white: 0 0% 10%;
+    --glass-blur: 24px;
+    --gradient-mesh-1: 211 100% 55%;
+    --gradient-mesh-2: 280 100% 75%;
+    --gradient-mesh-3: 195 92% 65%;
+    --gradient-mesh-4: 340 82% 72%;
+    
+    --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+    --shadow-glass-lg: 0 20px 60px 0 rgba(0, 0, 0, 0.6);
+  }
 }
 
-::-webkit-scrollbar{
-  width:5px;
-  height:5px;
-}
-::-webkit-scrollbar-track{
-  background: transparent;
-  border-radius: 10px;
-}
-::-webkit-scrollbar-thumb{
-  background: #87CEEB;
-  border-radius: 10px;
-}
-::-webkit-scrollbar-corner {
-  background: #1a1a1a;
-}
+@layer base {
+  html.lenis {
+    /* This allows lenis to anidmate the scroll */
+    scroll-behavior: auto !important;
+  }
+  * {
+    @apply border-border;
+  }
 
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
 
+  html {
+    scroll-behavior: smooth;
+  }
 
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-background;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-primary/30 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary/50;
+  }
+
+  /* Liquid Glass utilities */
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .dark .glass-panel {
+    background: rgba(20, 20, 25, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+  }
+
+  .gradient-mesh {
+    background: 
+      radial-gradient(at 0% 0%, hsl(var(--gradient-mesh-1)) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, hsl(var(--gradient-mesh-2)) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, hsl(var(--gradient-mesh-3)) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, hsl(var(--gradient-mesh-4)) 0px, transparent 50%);
+  }
+}
