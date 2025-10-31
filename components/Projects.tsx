@@ -5,7 +5,7 @@ import Image from 'next/image';
 const projectsData = [
     {
         title: "Shoponcell",
-        description: "A SaaS Product Whatsapp and RCS Marketing",
+        description: "A SaaS Product for Whatsapp and RCS Marketing",
         liveUrl: "https://shoponcell.com",
         tags: ["NextJS", "Full-Stack"],
         gradient: "from-blue-500 to-cyan-500",
