@@ -8,7 +8,7 @@ const Hero = () => {
   const [isCopied, setIsCopied] = useState(false);
 
   const handleCopyEmail = () => {
-    navigator.clipboard.writeText('panwarparam.work@gmail.com');
+    navigator.clipboard.writeText('contact@parampanwar.com');
     setIsCopied(true);
     setTimeout(() => setIsCopied(false), 3000);
   };
