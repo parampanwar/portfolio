@@ -156,4 +156,17 @@ All colors MUST be HSL.
       radial-gradient(at 100% 100%, hsl(var(--gradient-mesh-3)) 0px, transparent 50%),
       radial-gradient(at 0% 100%, hsl(var(--gradient-mesh-4)) 0px, transparent 50%);
   }
+
+  .gradient-text {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+.bg-clip-text {
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
+  padding-bottom: 0.15em; /* gives a bit more descender space */
+}
 }

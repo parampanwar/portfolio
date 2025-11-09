@@ -3,18 +3,9 @@ import { FaGithub, FaLinkedinIn } from 'react-icons/fa';
 import { BiLogoGmail } from 'react-icons/bi';
 import { useState } from 'react';
 import { Button } from './ui/button';
-
+import { scrollToSection } from "../utils/scrollToSection";
 const Hero = () => {
-  const [isCopied, setIsCopied] = useState(false);
-
-  const handleCopyEmail = () => {
-    navigator.clipboard.writeText('contact@parampanwar.com');
-    setIsCopied(true);
-    setTimeout(() => setIsCopied(false), 3000);
-  };
-
   const text = "Hello!";
-
   return (
     <section id="home" className="min-h-screen flex flex-col relative overflow-hidden bg-background">
       {/* Liquid gradient mesh background */}
@@ -54,27 +45,39 @@ const Hero = () => {
         <div className="flex items-center gap-6">
           <Button
             variant="ghost"
-            size="sm"
-            onClick={handleCopyEmail}
-            className=" gap-2 relative overflow-hidden bg-[linear-gradient(110deg,transparent_40%,rgba(255,255,255,0.3)_50%,transparent_60%),hsl(var(--primary))] bg-[length:200%_100%,100%_100%] bg-[-200%_0,0_0] bg-no-repeat animate-shine transition-colors 
+            onClick={() => scrollToSection("#home")}
+            className="gap-2 relative overflow-hidden bg-[linear-gradient(110deg,transparent_40%,rgba(255,255,255,0.3)_50%,transparent_60%),hsl(var(--primary))] bg-[length:200%_100%,100%_100%] bg-[-200%_0,0_0] bg-no-repeat animate-shine transition-colors 
     duration-300 ease-in-out"
           >
-            <BiLogoGmail className="text-lg" />
-            <span className="hidden sm:inline text-sm">
-              {isCopied ? 'Copied!' : 'Email'}
-            </span>
+            Home
           </Button>
-          <Button variant="ghost" size="icon" className="rounded-full hover:bg-black transition-colors 
-    duration-300 ease-in-out" asChild>
-            <a href="https://github.com/parampanwar" target="_blank" rel="noopener noreferrer">
-              <FaGithub className="text-lg" />
-            </a>
+
+          <Button
+            variant="ghost"
+            onClick={() => scrollToSection("#skills")}
+            className="gap-2 relative overflow-hidden bg-[linear-gradient(110deg,transparent_40%,rgba(255,255,255,0.3)_50%,transparent_60%),hsl(var(--primary))] bg-[length:200%_100%,100%_100%] bg-[-200%_0,0_0] bg-no-repeat animate-shine transition-colors 
+    duration-300 ease-in-out"
+          >
+            Skills
           </Button>
-          <Button variant="ghost" size="icon" className="rounded-full hover:bg-[#0077b5] transition-colors duration-300 ease-in-out" asChild>
-            <a href="https://linkedin.com/in/parampanwar" target="_blank" rel="noopener noreferrer">
-              <FaLinkedinIn className="text-lg" />
-            </a>
+          <Button
+            variant="ghost"
+            onClick={() => scrollToSection("#about")}
+            className="gap-2 relative overflow-hidden bg-[linear-gradient(110deg,transparent_40%,rgba(255,255,255,0.3)_50%,transparent_60%),hsl(var(--primary))] bg-[length:200%_100%,100%_100%] bg-[-200%_0,0_0] bg-no-repeat animate-shine transition-colors 
+    duration-300 ease-in-out"
+          >
+            About
           </Button>
+          <Button
+            variant="ghost"
+            onClick={() => scrollToSection("#projects")}
+            className="gap-2 relative overflow-hidden bg-[linear-gradient(110deg,transparent_40%,rgba(255,255,255,0.3)_50%,transparent_60%),hsl(var(--primary))] bg-[length:200%_100%,100%_100%] bg-[-200%_0,0_0] bg-no-repeat animate-shine transition-colors 
+    duration-300 ease-in-out"
+          >
+            Projects
+          </Button>
+
+
         </div>
       </motion.div>
 

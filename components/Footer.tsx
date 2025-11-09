@@ -1,5 +1,59 @@
-import { FaGithub, FaLinkedinIn, FaHeart } from 'react-icons/fa';
+import { FaGithub, FaLinkedinIn, FaHeart, FaCheck } from 'react-icons/fa';
 import { BiLogoGmail } from 'react-icons/bi';
+import { useState } from 'react';
+import { scrollToSection } from "../utils/scrollToSection";
+import type { FC, MouseEvent } from 'react'; // Import types for function component and mouse event
+
+// 1. Define the props interface for EmailLink
+interface EmailLinkProps {
+  email: string; // The email prop must be a string
+}
+
+// 2. Apply the interface to the component
+const EmailLink: FC<EmailLinkProps> = ({ email }) => {
+  const [isCopied, setIsCopied] = useState(false);
+
+  // 3. Define the type for the event object
+  const handleCopy = async (e: MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    try {
+      // document.execCommand('copy') is sometimes preferred in iframe environments, 
+      // but navigator.clipboard is the modern standard and should work in Next.js.
+      await navigator.clipboard.writeText(email);
+      setIsCopied(true);
+      setTimeout(() => {
+        setIsCopied(false);
+      }, 2000);
+
+    } catch (err) {
+      console.error('Failed to copy text: ', err);
+      window.location.href = `mailto:${email}`;
+    }
+  };
+
+  return (
+    <div className="flex items-center leading-relaxed hover:cursor-pointer">
+      <a
+        // Removed href={`mailto:${email}`} to prevent accidental right-click mailto: prompt. 
+        // We only use the mailto: in the fallback now.
+        onClick={handleCopy}
+        className="text-foreground transition-colors duration-300 font-medium relative group"
+      >
+        {email}
+
+        {/* Visual feedback for copying */}
+        {isCopied && (
+          <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold text-white bg-green-500 px-2 py-0.5 rounded shadow-lg flex items-center gap-1 transition-opacity duration-300 whitespace-nowrap">
+            <FaCheck className="w-3 h-3" /> Copied!
+          </span>
+        )}
+
+        {/* Optional underline on hover */}
+        <span className="absolute bottom-0 left-0 w-full h-px bg-current opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+      </a>
+    </div>
+  );
+};
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -8,7 +62,7 @@ const Footer = () => {
     <footer className="relative overflow-hidden">
       {/* Liquid background */}
       <div className="absolute inset-0 bg-gradient-to-t from-primary/5 to-transparent" />
-      
+
       <div className="glass-panel relative mx-6 mb-6 rounded-3xl border-2">
         <div className="max-w-6xl mx-auto px-8 py-12">
           <div className="grid md:grid-cols-3 gap-12 mb-12">
@@ -20,6 +74,9 @@ const Footer = () => {
               <p className="text-muted-foreground leading-relaxed">
                 Full-Stack Developer passionate about creating beautiful web experiences with modern technologies
               </p>
+
+              <EmailLink email="contact@parampanwar.com" />
+
             </div>
 
             {/* Quick Links */}
@@ -27,9 +84,13 @@ const Footer = () => {
               <h4 className="text-lg font-semibold text-foreground mb-6">Quick Links</h4>
               <nav className="flex flex-col space-y-3">
                 {['Home', 'About', 'Skills', 'Projects'].map((item) => (
-                  <a 
+                  <a
                     key={item}
-                    href={`#${item.toLowerCase()}`} 
+                    href={`#${item.toLowerCase()}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      scrollToSection(`#${item.toLowerCase()}`);
+                    }}
                     className="text-muted-foreground hover:text-primary transition-colors duration-300 w-fit relative group"
                   >
                     {item}
@@ -43,8 +104,9 @@ const Footer = () => {
             <div className="space-y-4">
               <h4 className="text-lg font-semibold text-foreground mb-6">Connect</h4>
               <div className="flex gap-3">
+
                 {[
-                  { href: "mailto:panwarparam.work@gmail.com", icon: BiLogoGmail, label: "Email" },
+                  { href: "mailto:contact@parampanwar.com", icon: BiLogoGmail, label: "Email" },
                   { href: "https://github.com/parampanwar", icon: FaGithub, label: "GitHub" },
                   { href: "https://linkedin.com/in/parampanwar", icon: FaLinkedinIn, label: "LinkedIn" }
                 ].map((social) => (
@@ -56,6 +118,7 @@ const Footer = () => {
                     className="w-12 h-12 rounded-2xl glass-panel flex items-center justify-center hover:scale-110 hover:bg-primary/10 transition-all duration-300 group"
                     aria-label={social.label}
                   >
+
                     <social.icon className="text-xl group-hover:text-primary transition-colors duration-300" />
                   </a>
                 ))}

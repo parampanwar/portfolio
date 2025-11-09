@@ -6,12 +6,11 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useEffect } from 'react'
 import type { AppProps } from 'next/app';
 import '../styles/global.css';
-// Create the client
+
 const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
-    // We only want to run this code on the client
     if (typeof window !== 'undefined') {
       const Lenis = require('@studio-freight/lenis')
 
@@ -39,7 +38,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        {/* This <Component /> is the page being rendered (e.g., index.tsx) */}
         <Component {...pageProps} />
       </TooltipProvider>
     </QueryClientProvider>
