@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import Image from 'next/image'
 import { Button } from './ui/button';
 import { FaGithub, FaDownload } from 'react-icons/fa';
 const About = () => {
@@ -45,8 +46,10 @@ const About = () => {
               
               {/* Glass frame */}
               <div className="relative glass-panel p-3 rounded-[3rem]">
-                <img
+                <Image
                   src="/param2.webp"
+                  width={288}
+                  height={288}
                   alt="Param Panwar"
                   className="relative w-72 h-72 sm:w-80 sm:h-80 rounded-[2.5rem] object-cover"
                 />
