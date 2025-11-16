@@ -46,7 +46,7 @@ const About = () => {
               {/* Glass frame */}
               <div className="relative glass-panel p-3 rounded-[3rem]">
                 <img
-                  src="/param2.jpg"
+                  src="/param2.webp"
                   alt="Param Panwar"
                   className="relative w-72 h-72 sm:w-80 sm:h-80 rounded-[2.5rem] object-cover"
                 />
