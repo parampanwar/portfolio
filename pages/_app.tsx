@@ -5,6 +5,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useEffect } from 'react'
 import type { AppProps } from 'next/app';
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import '../styles/global.css';
 
 const queryClient = new QueryClient();
@@ -38,7 +40,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       <TooltipProvider>
         <Toaster />
         <Sonner />
+         <Navbar />
         <Component {...pageProps} />
+         <Footer />
       </TooltipProvider>
     </QueryClientProvider>
   );
