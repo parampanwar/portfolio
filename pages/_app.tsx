@@ -40,7 +40,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <Chatbot />
+        {/* <Chatbot /> */}
         <Toaster />
         <Sonner />
         <Navbar />
