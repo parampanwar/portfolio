@@ -7,6 +7,7 @@ import { useEffect } from 'react'
 import type { AppProps } from 'next/app';
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import Chatbot from "@/components/Chatbot"
 import '../styles/global.css';
 
 const queryClient = new QueryClient();
@@ -28,7 +29,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       }
 
       requestAnimationFrame(raf)
-      
+
       // Clean up on unmount
       return () => {
         lenis.destroy()
@@ -36,13 +37,15 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
   }, [])
   return (
+
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
+        <Chatbot />
         <Toaster />
         <Sonner />
-         <Navbar />
+        <Navbar />
         <Component {...pageProps} />
-         <Footer />
+
       </TooltipProvider>
     </QueryClientProvider>
   );
