@@ -7,7 +7,7 @@ import { useEffect } from 'react'
 import type { AppProps } from 'next/app';
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import Chatbot from "@/components/Chatbot"
+// import Chatbot from "@/components/Chatbot"
 import '../styles/global.css';
 
 const queryClient = new QueryClient();
