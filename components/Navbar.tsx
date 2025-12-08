@@ -10,27 +10,18 @@ import { useRouter, usePathname } from "next/navigation";
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
-  const pathname = usePathname(); // Get current URL path
-
-  // NEW: Smart Navigation Handler
-  const handleNav = (target) => {
-    setIsMenuOpen(false); // Close mobile menu if open
-
-    // Case 1: Simple page navigation (e.g., "/contact")
+  const pathname = usePathname(); 
+  const handleNav = (target: string) => {
+    setIsMenuOpen(false); 
     if (!target.includes("#")) {
       router.push(target);
       return;
     }
-
-    // Case 2: Section navigation (e.g., "/#home" or "#home")
-    // Clean the ID to ensure it format is "#section"
     const sectionId = target.replace("/", "");
 
     if (pathname === "/") {
-      // If we are already on Home, just scroll
       scrollToSection(sectionId);
     } else {
-      // If we are on Contact/Other pages, go to Home with the hash
       router.push("/" + sectionId);
     }
   };
