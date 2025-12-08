@@ -1,5 +1,6 @@
 export const scrollToSection = (id) => {
-  const section = document.querySelector(id);
+  const targetId = id.startsWith('/') ? id.replace('/', '') : id;
+  const section = document.querySelector(targetId);
   if (section) {
     section.scrollIntoView({
       behavior: "smooth",

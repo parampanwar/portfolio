@@ -1,24 +1,22 @@
-import { FaGithub, FaLinkedinIn, FaHeart, FaCheck } from 'react-icons/fa';
+"use client";
+
+import { FaGithub, FaLinkedinIn, FaCheck } from 'react-icons/fa';
 import { BiLogoGmail } from 'react-icons/bi';
 import { useState } from 'react';
 import { scrollToSection } from "../utils/scrollToSection";
-import type { FC, MouseEvent } from 'react'; // Import types for function component and mouse event
+import type { FC, MouseEvent } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
 
-// 1. Define the props interface for EmailLink
 interface EmailLinkProps {
-  email: string; // The email prop must be a string
+  email: string;
 }
 
-// 2. Apply the interface to the component
 const EmailLink: FC<EmailLinkProps> = ({ email }) => {
   const [isCopied, setIsCopied] = useState(false);
 
-  // 3. Define the type for the event object
   const handleCopy = async (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     try {
-      // document.execCommand('copy') is sometimes preferred in iframe environments, 
-      // but navigator.clipboard is the modern standard and should work in Next.js.
       await navigator.clipboard.writeText(email);
       setIsCopied(true);
       setTimeout(() => {
@@ -34,8 +32,6 @@ const EmailLink: FC<EmailLinkProps> = ({ email }) => {
   return (
     <div className="flex items-center leading-relaxed hover:cursor-pointer">
       <a
-        // Removed href={`mailto:${email}`} to prevent accidental right-click mailto: prompt. 
-        // We only use the mailto: in the fallback now.
         onClick={handleCopy}
         className="text-foreground transition-colors duration-300 font-medium relative group"
       >
@@ -57,6 +53,16 @@ const EmailLink: FC<EmailLinkProps> = ({ email }) => {
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const handleNav = (sectionId: string) => {
+    if (pathname === '/') {
+      scrollToSection(`#${sectionId}`);
+    } else {
+      router.push(`/#${sectionId}`);
+    }
+  };
 
   return (
     <footer className="relative overflow-hidden">
@@ -86,12 +92,12 @@ const Footer = () => {
                 {['Home', 'About', 'Skills', 'Projects'].map((item) => (
                   <a
                     key={item}
-                    href={`#${item.toLowerCase()}`}
+                    href={`/#${item.toLowerCase()}`}
                     onClick={(e) => {
                       e.preventDefault();
-                      scrollToSection(`#${item.toLowerCase()}`);
+                      handleNav(item.toLowerCase());
                     }}
-                    className="text-muted-foreground hover:text-primary transition-colors duration-300 w-fit relative group"
+                    className="text-muted-foreground hover:text-primary transition-colors duration-300 w-fit relative group cursor-pointer"
                   >
                     {item}
                     <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-accent group-hover:w-full transition-all duration-300" />
@@ -131,9 +137,6 @@ const Footer = () => {
             <p className="text-sm text-muted-foreground text-center sm:text-left">
               © {currentYear} Param Panwar. All rights reserved.
             </p>
-            {/* <p className="text-sm text-muted-foreground flex items-center gap-2">
-              Made with <FaHeart className="text-red-500 animate-pulse" /> and ☕
-            </p> */}
           </div>
         </div>
       </div>

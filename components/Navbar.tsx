@@ -1,11 +1,40 @@
+"use client";
+
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { scrollToSection } from "../utils/scrollToSection";
-import { useRouter } from "next/router";
+// UPDATED: Use next/navigation for App Router
+import { useRouter, usePathname } from "next/navigation";
+
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
+  const pathname = usePathname(); // Get current URL path
+
+  // NEW: Smart Navigation Handler
+  const handleNav = (target) => {
+    setIsMenuOpen(false); // Close mobile menu if open
+
+    // Case 1: Simple page navigation (e.g., "/contact")
+    if (!target.includes("#")) {
+      router.push(target);
+      return;
+    }
+
+    // Case 2: Section navigation (e.g., "/#home" or "#home")
+    // Clean the ID to ensure it format is "#section"
+    const sectionId = target.replace("/", "");
+
+    if (pathname === "/") {
+      // If we are already on Home, just scroll
+      scrollToSection(sectionId);
+    } else {
+      // If we are on Contact/Other pages, go to Home with the hash
+      router.push("/" + sectionId);
+    }
+  };
+
   return (
     <>
       {/* Desktop Navbar */}
@@ -16,19 +45,19 @@ const Navbar = () => {
         transition={{ delay: 0.5, duration: 0.6 }}
       >
         <div className="flex items-center gap-6">
-          <Button variant="ghost" onClick={() => scrollToSection("#home")}>
+          <Button variant="ghost" onClick={() => handleNav("/#home")}>
             Home
           </Button>
-          <Button variant="ghost" onClick={() => scrollToSection("#skills")}>
+          <Button variant="ghost" onClick={() => handleNav("/#skills")}>
             Skills
           </Button>
-          <Button variant="ghost" onClick={() => scrollToSection("#about")}>
+          <Button variant="ghost" onClick={() => handleNav("/#about")}>
             About
           </Button>
-          <Button variant="ghost" onClick={() => router.push("/contact")}>
+          <Button variant="ghost" onClick={() => handleNav("/contact")}>
             Contact
           </Button>
-          <Button variant="ghost" onClick={() => scrollToSection("#projects")}>
+          <Button variant="ghost" onClick={() => handleNav("/#projects")}>
             Projects
           </Button>
         </div>
@@ -85,10 +114,7 @@ const Navbar = () => {
               className="absolute bottom-8 left-8"
             >
               <Button
-                onClick={() => {
-                  scrollToSection(item.section);
-                  setIsMenuOpen(false);
-                }}
+                onClick={() => handleNav(item.section)}
                 className="w-14 h-14 rounded-full text-xs"
               >
                 {item.label}
