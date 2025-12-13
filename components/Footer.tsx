@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { scrollToSection } from "../utils/scrollToSection";
 import type { FC, MouseEvent } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-
+import Image from 'next/image';
 interface EmailLinkProps {
   email: string;
 }
@@ -37,14 +37,12 @@ const EmailLink: FC<EmailLinkProps> = ({ email }) => {
       >
         {email}
 
-        {/* Visual feedback for copying */}
         {isCopied && (
           <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold text-white bg-green-500 px-2 py-0.5 rounded shadow-lg flex items-center gap-1 transition-opacity duration-300 whitespace-nowrap">
             <FaCheck className="w-3 h-3" /> Copied!
           </span>
         )}
 
-        {/* Optional underline on hover */}
         <span className="absolute bottom-0 left-0 w-full h-px bg-current opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
       </a>
     </div>
@@ -66,17 +64,25 @@ const Footer = () => {
 
   return (
     <footer className="relative overflow-hidden">
-      {/* Liquid background */}
+
       <div className="absolute inset-0 bg-gradient-to-t from-primary/5 to-transparent" />
 
       <div className="glass-panel relative mx-6 mb-6 rounded-3xl border-2">
         <div className="max-w-6xl mx-auto px-8 py-12">
           <div className="grid md:grid-cols-3 gap-12 mb-12">
-            {/* Brand */}
+
             <div className="space-y-4">
-              <h3 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary via-accent to-[hsl(var(--gradient-mesh-2))]">
+              <Image
+                src="/param.svg"
+                alt="Param"
+                width={80}
+                height={80}
+                priority
+                className='ml-5'
+              />
+              {/* <h3 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary via-accent to-[hsl(var(--gradient-mesh-2))]">
                 Param Panwar
-              </h3>
+              </h3> */}
               <p className="text-muted-foreground leading-relaxed">
                 Full-Stack Developer passionate about creating beautiful web experiences with modern technologies
               </p>

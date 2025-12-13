@@ -17,7 +17,7 @@ const projectsData = [
         githubUrl: "https://github.com/parampanwar/portfolio",
         tags: ["React", "Tailwind", "Framer Motion"],
         gradient: "from-purple-500 to-pink-500",
-        logo:"/Portfolio.svg"
+        logo: "/param.svg"
     },
     {
         title: "Cashbook",
@@ -73,12 +73,10 @@ const Projects = () => {
                             className="group"
                         >
                             <div className="glass-panel h-full p-8 rounded-3xl hover:scale-[1.02] transition-all duration-500 relative overflow-hidden">
-                                {/* Gradient overlay */}
                                 <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
 
                                 <div className="relative space-y-6">
-                                    {/* Project icon */}
-                                    {/* Project icon */}
+
                                     <div className="flex items-start justify-between">
                                         <div
                                             className={`
