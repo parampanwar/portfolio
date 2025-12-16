@@ -77,8 +77,7 @@ const Footer = () => {
                 alt="Param"
                 width={80}
                 height={80}
-                priority
-                className='ml-5'
+                className='ml-20'
               />
               {/* <h3 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary via-accent to-[hsl(var(--gradient-mesh-2))]">
                 Param Panwar
