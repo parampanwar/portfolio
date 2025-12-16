@@ -9,7 +9,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 // import Chatbot from "@/components/Chatbot"
 import '../styles/global.css';
-
+import Head from "next/head";
 const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -37,18 +37,34 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
   }, [])
   return (
+    <>
+      <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              "name": "Param Panwar",
+              "url": "https://www.parampanwar.com",
+              "image": "https://www.parampanwar.com/logo.png"
+            })
+          }}
+        />
+      </Head>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          {/* <Chatbot /> */}
+          <Toaster />
+          <Sonner />
+          <Navbar />
+          <Component {...pageProps} />
 
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        {/* <Chatbot /> */}
-        <Toaster />
-        <Sonner />
-        <Navbar />
-        <Component {...pageProps} />
-
-      </TooltipProvider>
-    </QueryClientProvider>
-  );
+        </TooltipProvider>
+      </QueryClientProvider>
+         </>
+      );
+ 
 }
 
 export default MyApp;
