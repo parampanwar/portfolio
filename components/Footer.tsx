@@ -7,6 +7,10 @@ import { scrollToSection } from "../utils/scrollToSection";
 import type { FC, MouseEvent } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Image from 'next/image';
+import { FaXTwitter } from "react-icons/fa6";
+import { FaBrain } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
+
 interface EmailLinkProps {
   email: string;
 }
@@ -83,10 +87,10 @@ const Footer = () => {
                 Param Panwar
               </h3> */}
               <p className="text-muted-foreground leading-relaxed">
-                Full-Stack Developer passionate about creating beautiful web experiences with modern technologies
+                Building the future with code and AI. Let's create something intelligent together.
               </p>
 
-              <EmailLink email="contact@parampanwar.com" />
+              {/* <EmailLink email="contact@parampanwar.com" /> */}
 
             </div>
 
@@ -117,7 +121,7 @@ const Footer = () => {
               <div className="flex gap-3">
 
                 {[
-                  { href: "mailto:contact@parampanwar.com", icon: BiLogoGmail, label: "Email" },
+                  { href: "https://x.com/parampanwar36", icon: FaXTwitter, label: "X" },
                   { href: "https://github.com/parampanwar", icon: FaGithub, label: "GitHub" },
                   { href: "https://linkedin.com/in/parampanwar", icon: FaLinkedinIn, label: "LinkedIn" }
                 ].map((social) => (
@@ -130,10 +134,14 @@ const Footer = () => {
                     aria-label={social.label}
                   >
 
-                    <social.icon className="text-xl group-hover:text-primary transition-colors duration-300" />
+                    <social.icon className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
                   </a>
                 ))}
+                
               </div>
+              <p className='text-sm text-muted-foreground'>
+              <EmailLink  email="contact@parampanwar.com"  />
+            </p>
             </div>
           </div>
 
@@ -141,6 +149,9 @@ const Footer = () => {
           <div className="pt-8 border-t border-border/50 flex flex-col sm:flex-row justify-between items-center gap-4">
             <p className="text-sm text-muted-foreground text-center sm:text-left">
               © {currentYear} Param Panwar. All rights reserved.
+            </p>
+            <p className='text-sm text-muted-foreground flex items-center gap-2'>
+              Crafted with <FaHeart  className="w-4 h-4 text-destructive"/> and <FaBrain className="w-4 h-4 text-primary" />
             </p>
           </div>
         </div>
