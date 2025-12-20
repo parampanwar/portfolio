@@ -7,7 +7,7 @@ const projectsData = [
         title: "Shoponcell",
         description: "A SaaS Product for Whatsapp and RCS Marketing",
         liveUrl: "https://shoponcell.com",
-        tags: ["NextJS", "Full-Stack"],
+        tags: ["NextJS", "FastAPI", "Python", "Tailwind"],
         gradient: "from-blue-500 to-cyan-500",
         logo: "/shoponcell_light_logo.4f3e0d21.svg"
     },
@@ -15,7 +15,7 @@ const projectsData = [
         title: "Portfolio",
         description: "Personal portfolio website showcasing projects, skills, and professional journey",
         githubUrl: "https://github.com/parampanwar/portfolio",
-        tags: ["React", "Tailwind", "Framer Motion"],
+        tags: ["NextJS", "Tailwind", "Framer Motion"],
         gradient: "from-purple-500 to-pink-500",
         logo: "/param.svg"
     },
@@ -23,14 +23,14 @@ const projectsData = [
         title: "Cashbook",
         description: "Financial tracking application for managing personal expenses and budgets efficiently",
         githubUrl: "https://github.com/parampanwar/cashbookapp",
-        tags: ["React Native", "Mobile", "Finance"],
+        tags: ["Django", "Bootstrap", "Python", "Finance"],
         gradient: "from-green-500 to-emerald-500"
     },
     {
         title: "To-Do List",
         description: "Task management system with Django backend for organizing daily activities",
         githubUrl: "https://github.com/parampanwar/django-projects-to-do-list",
-        tags: ["Django", "Python", "Web App"],
+        tags: ["Django", "Bootstrap", "Python", "Web App"],
         gradient: "from-orange-500 to-red-500"
     }
 ];

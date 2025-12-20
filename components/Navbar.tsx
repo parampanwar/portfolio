@@ -4,15 +4,14 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { scrollToSection } from "../utils/scrollToSection";
-// UPDATED: Use next/navigation for App Router
 import { useRouter, usePathname } from "next/navigation";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
-  const pathname = usePathname(); 
+  const pathname = usePathname();
   const handleNav = (target: string) => {
-    setIsMenuOpen(false); 
+    setIsMenuOpen(false);
     if (!target.includes("#")) {
       router.push(target);
       return;
@@ -77,13 +76,14 @@ const Navbar = () => {
         <motion.div
           initial={false}
           animate={isMenuOpen ? "open" : "closed"}
-          className="absolute bottom-0 left-0"
+          className="absolute bottom-0 left-0 "
         >
           {[
-            { label: "Home", section: "#home", angle: -90 },
+            { label: "Projects", section: "#projects", angle: 180 },
             { label: "Skills", section: "#skills", angle: -135 },
+            { label: "Home", section: "#home", angle: -90 },
             { label: "About", section: "#about", angle: -45 },
-            { label: "Projects", section: "#projects", angle: 180 }
+            { label: "Contact", section: "/contact", angle: 0 }
           ].map((item, i) => (
             <motion.div
               key={item.label}
@@ -102,9 +102,9 @@ const Navbar = () => {
                 }
               }}
               transition={{ duration: 0.4, delay: i * 0.05 }}
-              className="absolute bottom-8 left-8"
+              className="absolute bottom-8 left-0"
             >
-              <Button
+              <Button variant="hero" size="lg"
                 onClick={() => handleNav(item.section)}
                 className="w-14 h-14 rounded-full text-xs"
               >

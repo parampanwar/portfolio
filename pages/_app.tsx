@@ -7,6 +7,7 @@ import { useEffect } from 'react'
 import type { AppProps } from 'next/app';
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import NeuralBackground from '@/components/NeuralBackground';
 // import Chatbot from "@/components/Chatbot"
 import '../styles/global.css';
 import Head from "next/head";
@@ -58,6 +59,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <Toaster />
           <Sonner />
           <Navbar />
+           <NeuralBackground />
           <Component {...pageProps} />
 
         </TooltipProvider>

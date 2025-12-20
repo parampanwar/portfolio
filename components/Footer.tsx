@@ -98,7 +98,7 @@ const Footer = () => {
             <div className="space-y-4">
               <h4 className="text-lg font-semibold text-foreground mb-6">Quick Links</h4>
               <nav className="flex flex-col space-y-3">
-                {['Home', 'About', 'Skills', 'Projects'].map((item) => (
+                {['Home', 'Skills', 'Projects', 'About'].map((item) => (
                   <a
                     key={item}
                     href={`/#${item.toLowerCase()}`}
@@ -137,11 +137,11 @@ const Footer = () => {
                     <social.icon className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
                   </a>
                 ))}
-                
+
               </div>
-              <p className='text-sm text-muted-foreground'>
-              <EmailLink  email="contact@parampanwar.com"  />
-            </p>
+              <div className='text-sm text-muted-foreground'>
+                <EmailLink email="contact@parampanwar.com" />
+              </div>
             </div>
           </div>
 
@@ -151,7 +151,7 @@ const Footer = () => {
               © {currentYear} Param Panwar. All rights reserved.
             </p>
             <p className='text-sm text-muted-foreground flex items-center gap-2'>
-              Crafted with <FaHeart  className="w-4 h-4 text-destructive"/> and <FaBrain className="w-4 h-4 text-primary" />
+              Crafted with <FaHeart className="w-4 h-4 text-destructive" /> and <FaBrain className="w-4 h-4 text-primary" />
             </p>
           </div>
         </div>

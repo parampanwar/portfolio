@@ -5,6 +5,7 @@ export default {
   content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
   prefix: "",
   theme: {
+
     container: {
       center: true,
       padding: "2rem",
@@ -12,6 +13,7 @@ export default {
         "2xl": "1400px",
       },
     },
+
     extend: {
       colors: {
         border: "hsl(var(--border))",
@@ -57,6 +59,9 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        "dark-surface": "hsl(var(--dark-surface))",
+        "dark-base": "hsl(var(--dark-base))",
+        "dark-elevated": "hsl(var(--dark-elevated))",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -73,21 +78,21 @@ export default {
           to: { height: "0" },
         },
         "liquid-float": {
-          "0%, 100%": { 
+          "0%, 100%": {
             transform: "translate(0, 0) scale(1)",
             borderRadius: "60% 40% 30% 70% / 60% 30% 70% 40%"
           },
-          "50%": { 
+          "50%": {
             transform: "translate(30px, -30px) scale(1.1)",
             borderRadius: "30% 60% 70% 40% / 50% 60% 30% 60%"
           }
         },
         "liquid-float-2": {
-          "0%, 100%": { 
+          "0%, 100%": {
             transform: "translate(0, 0) scale(1)",
             borderRadius: "40% 60% 60% 40% / 60% 40% 60% 40%"
           },
-          "50%": { 
+          "50%": {
             transform: "translate(-40px, 40px) scale(1.15)",
             borderRadius: "60% 40% 30% 70% / 40% 60% 50% 60%"
           }
@@ -127,6 +132,7 @@ export default {
       backgroundSize: {
         "300%": "300%",
       },
+
     },
   },
   plugins: [require("tailwindcss-animate")],
