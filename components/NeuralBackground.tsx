@@ -12,7 +12,7 @@ interface Node {
 const NeuralBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const nodesRef = useRef<Node[]>([]);
-  const animationRef = useRef<number>();
+  const animationRef = useRef<number>(0);
   const mouseRef = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
@@ -107,7 +107,7 @@ const NeuralBackground = () => {
         // Draw node with pulse effect
         const pulse = Math.sin(node.pulsePhase) * 0.5 + 0.5;
         const glowRadius = node.radius + pulse * 3;
-        
+
         // Glow
         const gradient = ctx.createRadialGradient(
           node.x, node.y, 0,
@@ -115,7 +115,7 @@ const NeuralBackground = () => {
         );
         gradient.addColorStop(0, `hsla(190, 100%, 50%, ${0.3 + pulse * 0.2})`);
         gradient.addColorStop(1, 'hsla(190, 100%, 50%, 0)');
-        
+
         ctx.beginPath();
         ctx.arc(node.x, node.y, glowRadius * 3, 0, Math.PI * 2);
         ctx.fillStyle = gradient;
