@@ -1,6 +1,6 @@
 "use client";
 
-import { FaGithub, FaLinkedinIn, FaCheck } from 'react-icons/fa';
+import { FaGithub, FaLinkedinIn, FaCheck, FaInstagram } from 'react-icons/fa';
 import { BiLogoGmail } from 'react-icons/bi';
 import { useState } from 'react';
 import { scrollToSection } from "../utils/scrollToSection";
@@ -123,7 +123,8 @@ const Footer = () => {
                 {[
                   { href: "https://x.com/parampanwar36", icon: FaXTwitter, label: "X" },
                   { href: "https://github.com/parampanwar", icon: FaGithub, label: "GitHub" },
-                  { href: "https://linkedin.com/in/parampanwar", icon: FaLinkedinIn, label: "LinkedIn" }
+                  { href: "https://linkedin.com/in/parampanwar", icon: FaLinkedinIn, label: "LinkedIn" },
+                  { href: "https://instagram.com/theparampanwar", icon: FaInstagram, label: "Instagram" }
                 ].map((social) => (
                   <a
                     key={social.label}
