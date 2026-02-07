@@ -9,6 +9,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Analytics } from '@vercel/analytics/react';
 import NeuralBackground from '@/components/NeuralBackground';
+import Whatsappbutton from '@/components/Whatsappbutton'
 // import Chatbot from "@/components/Chatbot"
 import '../styles/global.css';
 import Head from "next/head";
@@ -53,6 +54,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             })
           }}
         />
+        	
       </Head>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
@@ -61,7 +63,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           <Sonner />
           <Navbar />
           <NeuralBackground />
+          
           <Component {...pageProps} />
+          <Whatsappbutton />
         </TooltipProvider>
       </QueryClientProvider>
       <Analytics />
