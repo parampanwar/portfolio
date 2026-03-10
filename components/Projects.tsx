@@ -2,14 +2,15 @@ import { motion } from 'framer-motion';
 import { Button } from './ui/button';
 import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
 import Image from 'next/image';
+import BotinxLogo from '../botinx'
 const projectsData = [
     {
-        title: "Shoponcell",
-        description: "A SaaS Product for Whatsapp and RCS Marketing",
-        liveUrl: "https://shoponcell.com",
+        title: "Botinx",
+        description: "Intelligent Whatsapp & RCS Marketing Platform",
+        liveUrl: "https://botinx.com",
         tags: ["NextJS", "FastAPI", "Python", "Tailwind"],
         gradient: "from-blue-500 to-cyan-500",
-        logo: "/shoponcell_light_logo.4f3e0d21.svg"
+        logo: <BotinxLogo size={60} />
     },
     {
         title: "Portfolio",
@@ -88,14 +89,15 @@ const Projects = () => {
                                                 }
     `}
                                         >
-                                            {project.logo ? (
+                                            {typeof project.logo === "string" ? (
                                                 <Image
                                                     src={project.logo}
                                                     alt={`${project.title} logo`}
                                                     width={48}
                                                     height={48}
-                                                // Removed the unnecessary `className="bg-white"` here
                                                 />
+                                            ) : project.logo ? (
+                                                project.logo
                                             ) : (
                                                 <span className="text-2xl font-bold text-white drop-shadow">
                                                     {project.title.charAt(0)}
