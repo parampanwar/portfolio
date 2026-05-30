@@ -141,7 +141,7 @@ const Footer = () => {
 
               </div>
               <div className='text-sm text-muted-foreground'>
-                <EmailLink email="contact@parampanwar.com" />
+                <EmailLink email="contact@parampanwar.xyz" />
               </div>
             </div>
           </div>
