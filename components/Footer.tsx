@@ -90,7 +90,6 @@ const Footer = () => {
                 Building the future with code and AI. Let's create something intelligent together.
               </p>
 
-              {/* <EmailLink email="contact@parampanwar.com" /> */}
 
             </div>
 

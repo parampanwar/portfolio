@@ -126,7 +126,7 @@ const Contact = () => {
                                     <div>
                                         <p className="text-sm text-muted-foreground">Email</p>
                                         <a href="mailto:param@example.com" className="text-foreground hover:text-primary transition-colors">
-                                            contact@parampanwar.com
+                                            contact@parampanwar.xyz
                                         </a>
                                     </div>
                                 </div>
