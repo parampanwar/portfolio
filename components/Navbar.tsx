@@ -44,9 +44,9 @@ const Navbar = () => {
           <Button variant="ghost" onClick={() => handleNav("/#about")}>
             About
           </Button>
-          <Button variant="ghost" onClick={() => handleNav("/contact")}>
+          {/* <Button variant="ghost" onClick={() => handleNav("/contact")}>
             Contact
-          </Button>
+          </Button> */}
           <Button variant="ghost" onClick={() => handleNav("/#projects")}>
             Projects
           </Button>
