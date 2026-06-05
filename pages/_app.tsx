@@ -1,77 +1,41 @@
-'use client'
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useEffect } from 'react'
-import type { AppProps } from 'next/app';
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import { Analytics } from '@vercel/analytics/react';
-import NeuralBackground from '@/components/NeuralBackground';
-import Whatsappbutton from '@/components/Whatsappbutton'
-// import Chatbot from "@/components/Chatbot"
-import '../styles/global.css';
+import type { AppProps } from "next/app";
 import Head from "next/head";
-const queryClient = new QueryClient();
+import { useEffect } from "react";
+import "@/styles/globals.css";
+import { siteConfig } from "@/data/portfolio";
 
-function MyApp({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps }: AppProps) {
+  // Prevent FOUC on initial load
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const Lenis = require('@studio-freight/lenis')
+    document.documentElement.classList.add("loaded");
+  }, []);
 
-      const lenis = new Lenis({
-        duration: 1.2, // speed
-        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // ease-out function
-        smoothTouch: true,
-      })
-
-      function raf(time: number) {
-        lenis.raf(time)
-        requestAnimationFrame(raf)
-      }
-
-      requestAnimationFrame(raf)
-
-      // Clean up on unmount
-      return () => {
-        lenis.destroy()
-      }
-    }
-  }, [])
   return (
     <>
       <Head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Person",
-              "name": "Param Panwar",
-              "url": "https://www.parampanwar.com",
-              "image": "https://www.parampanwar.com/logo.png"
-            })
-          }}
-        />
-        	
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#0a0a0f" />
+        
+        {/* Resource Hints for Core Web Vitals */}
+        <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://res.cloudinary.com" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://www.google.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://www.google.com" />
+        
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+        <link rel="apple-touch-icon" href="/logo.png" />
+        
+        {/* Fallback Social Metadata */}
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content={siteConfig.name} />
+        <meta property="og:image" content={siteConfig.ogImage} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:creator" content="@parampanwar" />
       </Head>
-      <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-          {/* <Chatbot /> */}
-          <Toaster />
-          <Sonner />
-          <Navbar />
-          <NeuralBackground />
-          
-          <Component {...pageProps} />
-          <Whatsappbutton />
-        </TooltipProvider>
-      </QueryClientProvider>
-      <Analytics />
+      <Component {...pageProps} />
     </>
   );
-
 }
-
-export default MyApp;

@@ -1,163 +1,209 @@
+"use client";
+
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { toast } from "@/hooks/use-toast";
-import { Send, Loader2 } from "lucide-react";
+import { z } from "zod";
+import { Loader2, Send, CheckCircle, AlertCircle } from "lucide-react";
+import Script from "next/script";
 
-const contactSchema = z.object({
-  name: z.string().trim().min(1, { message: "Name is required" }).max(100, { message: "Name must be less than 100 characters" }),
-  email: z.string().trim().email({ message: "Invalid email address" }).max(255, { message: "Email must be less than 255 characters" }),
-  subject: z.string().trim().min(1, { message: "Subject is required" }).max(200, { message: "Subject must be less than 200 characters" }),
-  message: z.string().trim().min(10, { message: "Message must be at least 10 characters" }).max(1000, { message: "Message must be less than 1000 characters" }),
+declare global {
+  interface Window {
+    grecaptcha: any;
+  }
+}
+
+const schema = z.object({
+  name: z.string().trim().min(1, "Name is required").max(100),
+  email: z.string().trim().email("Invalid email address").max(255),
+  subject: z.string().trim().min(1, "Subject is required").max(200),
+  message: z.string().trim().min(10, "Message must be at least 10 characters").max(1000),
 });
 
-type ContactFormData = z.infer<typeof contactSchema>;
+type FormData = z.infer<typeof schema>;
 
-export const ContactForm = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  
+type Status = "idle" | "loading" | "success" | "error";
+
+export default function ContactForm() {
+  const [status, setStatus] = useState<Status>("idle");
+  const [errorMsg, setErrorMsg] = useState("");
+  const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<ContactFormData>({
-    resolver: zodResolver(contactSchema),
-  });
+  } = useForm<FormData>({ resolver: zodResolver(schema) });
 
-  const onSubmit = async (data: ContactFormData) => {
-  setIsSubmitting(true);
+  const onSubmit = async (data: FormData) => {
+    setStatus("loading");
+    setErrorMsg("");
 
-  try {
-    const res = await fetch("/api/contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
+    try {
+      let token = "";
+      if (siteKey && window.grecaptcha) {
+        token = await new Promise<string>((resolve, reject) => {
+          window.grecaptcha.ready(() => {
+            window.grecaptcha
+              .execute(siteKey, { action: "submit_contact" })
+              .then((t: string) => resolve(t))
+              .catch((err: any) => reject(err));
+          });
+        });
+      }
 
-    const result = await res.json();
-
-    if (!res.ok) {
-      toast({
-        title: "Error",
-        description: result.message || "Something went wrong.",
-        variant: "destructive",
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...data, recaptchaToken: token }),
       });
-      setIsSubmitting(false);
-      return;
+
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body.message || "Failed to send message");
+      }
+
+      setStatus("success");
+      reset();
+
+      // Reset back to idle after 5s
+      setTimeout(() => setStatus("idle"), 5000);
+    } catch (err) {
+      setStatus("error");
+      setErrorMsg(err instanceof Error ? err.message : "Something went wrong");
+      setTimeout(() => setStatus("idle"), 4000);
     }
+  };
 
-    toast({
-      title: "Message sent!",
-      description: "Thank you for reaching out. I will reply soon.",
-    });
-
-    reset();
-  } catch (error) {
-    console.error(error);
-    toast({
-      title: "Network Error",
-      description: "Unable to send message. Try again later.",
-      variant: "destructive",
-    });
+  if (status === "success") {
+    return (
+      <div className="flex flex-col items-center justify-center py-16 gap-4">
+        <CheckCircle className="w-12 h-12 text-signal" />
+        <h3 className="font-display font-bold text-xl text-text-primary">Message sent!</h3>
+        <p className="text-text-secondary text-sm text-center max-w-sm">
+          Thanks for reaching out. I'll get back to you within 24 hours.
+        </p>
+      </div>
+    );
   }
 
-  setIsSubmitting(false);
-};
-
-
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      <div className="space-y-2">
-        <Label htmlFor="name" className="text-foreground/90">
-          Name
-        </Label>
-        <Input
-          id="name"
-          placeholder="Your name"
-          className="glass-input"
-          {...register("name")}
-          aria-invalid={errors.name ? "true" : "false"}
+    <>
+      {siteKey && (
+        <Script
+          src={`https://www.google.com/recaptcha/api.js?render=${siteKey}`}
+          strategy="lazyOnload"
         />
-        {errors.name && (
-          <p className="text-sm text-destructive animate-fade-in">{errors.name.message}</p>
-        )}
+      )}
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
+      <div className="grid sm:grid-cols-2 gap-5">
+        {/* Name */}
+        <div>
+          <label htmlFor="name" className="field-label">
+            Name
+          </label>
+          <input
+            id="name"
+            type="text"
+            placeholder="Your name"
+            autoComplete="name"
+            className="input-field"
+            {...register("name")}
+          />
+          {errors.name && (
+            <p className="text-red-400 text-xs mt-1.5 flex items-center gap-1">
+              <AlertCircle size={11} /> {errors.name.message}
+            </p>
+          )}
+        </div>
+
+        {/* Email */}
+        <div>
+          <label htmlFor="email" className="field-label">
+            Email
+          </label>
+          <input
+            id="email"
+            type="email"
+            placeholder="you@example.com"
+            autoComplete="email"
+            className="input-field"
+            {...register("email")}
+          />
+          {errors.email && (
+            <p className="text-red-400 text-xs mt-1.5 flex items-center gap-1">
+              <AlertCircle size={11} /> {errors.email.message}
+            </p>
+          )}
+        </div>
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="email" className="text-foreground/90">
-          Email
-        </Label>
-        <Input
-          id="email"
-          type="email"
-          placeholder="mail@example.com"
-          className="glass-input"
-          {...register("email")}
-          aria-invalid={errors.email ? "true" : "false"}
-        />
-        {errors.email && (
-          <p className="text-sm text-destructive animate-fade-in">{errors.email.message}</p>
-        )}
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="subject" className="text-foreground/90">
+      {/* Subject */}
+      <div>
+        <label htmlFor="subject" className="field-label">
           Subject
-        </Label>
-        <Input
+        </label>
+        <input
           id="subject"
-          placeholder="What's this about?"
-          className="glass-input"
+          type="text"
+          placeholder="Project inquiry, collaboration, etc."
+          className="input-field"
           {...register("subject")}
-          aria-invalid={errors.subject ? "true" : "false"}
         />
         {errors.subject && (
-          <p className="text-sm text-destructive animate-fade-in">{errors.subject.message}</p>
+          <p className="text-red-400 text-xs mt-1.5 flex items-center gap-1">
+            <AlertCircle size={11} /> {errors.subject.message}
+          </p>
         )}
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="message" className="text-foreground/90">
+      {/* Message */}
+      <div>
+        <label htmlFor="message" className="field-label">
           Message
-        </Label>
-        <Textarea
+        </label>
+        <textarea
           id="message"
-          placeholder="Tell us what's on your mind..."
-          className="glass-input min-h-[150px] resize-none"
+          placeholder="Tell me about your project..."
+          rows={5}
+          className="textarea-field"
           {...register("message")}
-          aria-invalid={errors.message ? "true" : "false"}
         />
         {errors.message && (
-          <p className="text-sm text-destructive animate-fade-in">{errors.message.message}</p>
+          <p className="text-red-400 text-xs mt-1.5 flex items-center gap-1">
+            <AlertCircle size={11} /> {errors.message.message}
+          </p>
         )}
       </div>
 
-      <Button
+      {/* Error alert */}
+      {status === "error" && (
+        <div className="rounded-xl px-4 py-3 text-sm text-red-400 flex items-center gap-2"
+          style={{ background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.2)" }}>
+          <AlertCircle size={14} />
+          {errorMsg || "Failed to send message. Please try again."}
+        </div>
+      )}
+
+      <button
         type="submit"
-        disabled={isSubmitting}
-        className="w-full glass-button group relative overflow-hidden"
+        disabled={status === "loading"}
+        className="btn-primary w-full justify-center disabled:opacity-60 disabled:cursor-not-allowed"
       >
-        <span className="relative z-10 flex items-center justify-center gap-2">
-          {isSubmitting ? (
-            <>
-              <Loader2 className="h-4 w-4 animate-spin" />
-              Sending...
-            </>
-          ) : (
-            <>
-              Send Message
-              <Send className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </>
-          )}
-        </span>
-        <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary opacity-0 transition-opacity group-hover:opacity-100" />
-      </Button>
+        {status === "loading" ? (
+          <>
+            <Loader2 size={16} className="animate-spin" />
+            Sending…
+          </>
+        ) : (
+          <>
+            <Send size={16} />
+            Send message
+          </>
+        )}
+      </button>
     </form>
+    </>
   );
-};
+}

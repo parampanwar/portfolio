@@ -1,139 +1,97 @@
-import type { Config } from "tailwindcss";
-
-export default {
+/** @type {import('tailwindcss').Config} */
+module.exports = {
   darkMode: ["class"],
-  content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
-  prefix: "",
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
   theme: {
-
-    container: {
-      center: true,
-      padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
-    },
-
     extend: {
+      fontFamily: {
+        display: ["'Syne'", "sans-serif"],
+        body: ["'DM Sans'", "sans-serif"],
+        mono: ["'JetBrains Mono'", "monospace"],
+      },
       colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+        ink: {
+          DEFAULT: "#0a0a0f",
+          50: "#f5f5ff",
+          100: "#ebebfe",
+          200: "#d1d0fd",
+          900: "#0a0a0f",
+          950: "#050508",
         },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
+        signal: {
+          DEFAULT: "#e8ff47",
+          dark: "#c5d900",
         },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
-        sidebar: {
-          DEFAULT: "hsl(var(--sidebar-background))",
-          foreground: "hsl(var(--sidebar-foreground))",
-          primary: "hsl(var(--sidebar-primary))",
-          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
-          accent: "hsl(var(--sidebar-accent))",
-          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
-          border: "hsl(var(--sidebar-border))",
-          ring: "hsl(var(--sidebar-ring))",
-        },
-        "dark-surface": "hsl(var(--dark-surface))",
-        "dark-base": "hsl(var(--dark-base))",
-        "dark-elevated": "hsl(var(--dark-elevated))",
+        void: "#0d0d14",
+        surface: "#111118",
+        "surface-2": "#18181f",
+        "surface-3": "#1f1f28",
+        rim: "#2a2a38",
+        "rim-2": "#3a3a4a",
+        "text-primary": "#f0f0fc",
+        "text-secondary": "#9090b0",
+        "text-muted": "#5a5a7a",
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
-      keyframes: {
-        "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
-        },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
-        },
-        "liquid-float": {
-          "0%, 100%": {
-            transform: "translate(0, 0) scale(1)",
-            borderRadius: "60% 40% 30% 70% / 60% 30% 70% 40%"
-          },
-          "50%": {
-            transform: "translate(30px, -30px) scale(1.1)",
-            borderRadius: "30% 60% 70% 40% / 50% 60% 30% 60%"
-          }
-        },
-        "liquid-float-2": {
-          "0%, 100%": {
-            transform: "translate(0, 0) scale(1)",
-            borderRadius: "40% 60% 60% 40% / 60% 40% 60% 40%"
-          },
-          "50%": {
-            transform: "translate(-40px, 40px) scale(1.15)",
-            borderRadius: "60% 40% 30% 70% / 40% 60% 50% 60%"
-          }
-        },
-        "gradient-shift": {
-          "0%, 100%": { backgroundPosition: "0% 50%" },
-          "50%": { backgroundPosition: "100% 50%" }
-        },
-        "fade-in": {
-          "0%": { opacity: "0", transform: "translateY(20px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" }
-        },
-        "scale-in": {
-          "0%": { opacity: "0", transform: "scale(0.9)" },
-          "100%": { opacity: "1", transform: "scale(1)" }
-        },
-        "blur-in": {
-          "0%": { opacity: "0", filter: "blur(10px)" },
-          "100%": { opacity: "1", filter: "blur(0)" }
-        },
-        'shine': {
-          '0%': { 'background-position': '-200% 0' },
-          '100%': { 'background-position': '200% 0' },
-        }
-      },
       animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
-        "liquid-float": "liquid-float 20s ease-in-out infinite",
-        "liquid-float-2": "liquid-float-2 25s ease-in-out infinite",
-        "gradient-shift": "gradient-shift 8s ease infinite",
-        "fade-in": "fade-in 0.8s cubic-bezier(0.22, 1, 0.36, 1)",
-        "scale-in": "scale-in 0.8s cubic-bezier(0.22, 1, 0.36, 1)",
-        "blur-in": "blur-in 1s cubic-bezier(0.22, 1, 0.36, 1)",
-        'shine': 'shine 4s ease-in-out infinite 3s',
+        "fade-up": "fadeUp 0.6s ease forwards",
+        "fade-in": "fadeIn 0.4s ease forwards",
+        flicker: "flicker 3s infinite",
+        "spin-slow": "spin 8s linear infinite",
+        "bounce-slow": "bounce 3s infinite",
+        "scan-line": "scanLine 4s linear infinite",
+        marquee: "marquee 30s linear infinite",
+        "marquee-reverse": "marqueeReverse 30s linear infinite",
+        float: "float 6s ease-in-out infinite",
+      },
+      keyframes: {
+        fadeUp: {
+          from: { opacity: 0, transform: "translateY(24px)" },
+          to: { opacity: 1, transform: "translateY(0)" },
+        },
+        fadeIn: {
+          from: { opacity: 0 },
+          to: { opacity: 1 },
+        },
+        flicker: {
+          "0%, 100%": { opacity: 1 },
+          "50%": { opacity: 0.8 },
+          "75%": { opacity: 0.95 },
+        },
+        scanLine: {
+          "0%": { transform: "translateY(-100%)" },
+          "100%": { transform: "translateY(100vh)" },
+        },
+        marquee: {
+          "0%": { transform: "translateX(0%)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
+        marqueeReverse: {
+          "0%": { transform: "translateX(-50%)" },
+          "100%": { transform: "translateX(0%)" },
+        },
+        float: {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-12px)" },
+        },
+      },
+      backgroundImage: {
+        "grid-pattern":
+          "linear-gradient(rgba(232,255,71,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(232,255,71,0.04) 1px, transparent 1px)",
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
       },
       backgroundSize: {
-        "300%": "300%",
+        grid: "40px 40px",
       },
-
     },
   },
-  plugins: [require("tailwindcss-animate")],
-} satisfies Config;
+  plugins: [],
+};
