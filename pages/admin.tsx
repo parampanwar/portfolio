@@ -17,6 +17,45 @@ import { siteConfig } from "@/data/portfolio";
 import { formatDate, slugify } from "@/lib/utils";
 import { connectToDatabase } from "@/lib/mongodb";
 
+// Helper to upload files directly to Cloudinary using signed uploads
+const uploadToCloudinaryDirect = async (file: File): Promise<string> => {
+  const token = localStorage.getItem("access_token");
+  const tokenType = localStorage.getItem("token_type") || "Bearer";
+
+  const sigRes = await fetch("/api/cloudinary-signature", {
+    headers: { Authorization: `${tokenType} ${token}` },
+  });
+  if (!sigRes.ok) {
+    const errorData = await sigRes.json();
+    throw new Error(errorData.message || "Failed to get upload signature");
+  }
+  const { signature, timestamp, folder, apiKey, cloudName } = await sigRes.json();
+
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("api_key", apiKey);
+  formData.append("timestamp", timestamp.toString());
+  formData.append("signature", signature);
+  formData.append("folder", folder);
+
+  const cloudRes = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`, {
+    method: "POST",
+    body: formData,
+  });
+
+  if (!cloudRes.ok) {
+    const errorData = await cloudRes.json().catch(() => ({}));
+    throw new Error(errorData.error?.message || "Upload to Cloudinary failed");
+  }
+
+  const cloudData = await cloudRes.json();
+  if (!cloudData.secure_url) {
+    throw new Error("Invalid response from Cloudinary");
+  }
+
+  return cloudData.secure_url;
+};
+
 interface Props {
   initialPosts: BlogMeta[];
   totalReads: number;
@@ -104,55 +143,30 @@ function ResumeManager() {
     setIsUploading(true);
 
     try {
-      // 1. Convert file to base64 Data URL
-      const reader = new FileReader();
-      reader.readAsDataURL(selectedFile);
-      reader.onloadend = async () => {
-        const base64Data = reader.result as string;
+      const uploadedUrl = await uploadToCloudinaryDirect(selectedFile);
 
-        // 2. Upload to Cloudinary via /api/upload
-        const token = localStorage.getItem("access_token");
-        const tokenType = localStorage.getItem("token_type") || "Bearer";
-        
-        const uploadRes = await fetch("/api/upload", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `${tokenType} ${token}`,
-          },
-          body: JSON.stringify({ file: base64Data }),
-        });
+      const token = localStorage.getItem("access_token");
+      const tokenType = localStorage.getItem("token_type") || "Bearer";
+      
+      const settingsRes = await fetch("/api/resume-settings", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `${tokenType} ${token}`,
+        },
+        body: JSON.stringify({ url: uploadedUrl }),
+      });
 
-        if (!uploadRes.ok) {
-          throw new Error("Failed to upload to Cloudinary");
-        }
-
-        const uploadData = await uploadRes.json();
-        if (!uploadData.success || !uploadData.url) {
-          throw new Error(uploadData.message || "Failed to upload to Cloudinary");
-        }
-
-        // 3. Save URL in MongoDB settings
-        const settingsRes = await fetch("/api/resume-settings", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `${tokenType} ${token}`,
-          },
-          body: JSON.stringify({ url: uploadData.url }),
-        });
-
-        if (settingsRes.ok) {
-          setResumeUrl(uploadData.url);
-          setSelectedFile(null);
-          alert("Resume updated successfully!");
-        } else {
-          alert("Failed to save resume settings in database.");
-        }
-        setIsUploading(false);
-      };
+      if (settingsRes.ok) {
+        setResumeUrl(uploadedUrl);
+        setSelectedFile(null);
+        alert("Resume updated successfully!");
+      } else {
+        alert("Failed to save resume settings in database.");
+      }
     } catch (e: any) {
       alert(e?.message || "Upload failed");
+    } finally {
       setIsUploading(false);
     }
   };
@@ -350,36 +364,15 @@ function BlogManager({ posts: initialPosts }: { posts: BlogMeta[] }) {
     setIsUploading(true);
     setError(null);
 
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = async () => {
-      const base64data = reader.result;
-      try {
-        const token = localStorage.getItem("access_token");
-        const tokenType = localStorage.getItem("token_type") || "Bearer";
-        
-        const res = await fetch("/api/upload", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `${tokenType} ${token}`,
-          },
-          body: JSON.stringify({ file: base64data }),
-        });
-
-        const data = await res.json();
-        if (res.ok && data.success) {
-          setCoverImage(data.url);
-          setUploadedImages((prev) => [data.url, ...prev]);
-        } else {
-          setError(data.message || "Upload failed");
-        }
-      } catch {
-        setError("Failed to upload image");
-      } finally {
-        setIsUploading(false);
-      }
-    };
+    try {
+      const uploadedUrl = await uploadToCloudinaryDirect(file);
+      setCoverImage(uploadedUrl);
+      setUploadedImages((prev) => [uploadedUrl, ...prev]);
+    } catch (err: any) {
+      setError(err?.message || "Failed to upload cover image");
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   // Inline upload helper (adds to history for copy-pasting Markdown)
@@ -390,35 +383,14 @@ function BlogManager({ posts: initialPosts }: { posts: BlogMeta[] }) {
     setIsUploading(true);
     setError(null);
 
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = async () => {
-      const base64data = reader.result;
-      try {
-        const token = localStorage.getItem("access_token");
-        const tokenType = localStorage.getItem("token_type") || "Bearer";
-        
-        const res = await fetch("/api/upload", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `${tokenType} ${token}`,
-          },
-          body: JSON.stringify({ file: base64data }),
-        });
-
-        const data = await res.json();
-        if (res.ok && data.success) {
-          setUploadedImages((prev) => [data.url, ...prev]);
-        } else {
-          setError(data.message || "Upload failed");
-        }
-      } catch {
-        setError("Failed to upload image");
-      } finally {
-        setIsUploading(false);
-      }
-    };
+    try {
+      const uploadedUrl = await uploadToCloudinaryDirect(file);
+      setUploadedImages((prev) => [uploadedUrl, ...prev]);
+    } catch (err: any) {
+      setError(err?.message || "Failed to upload inline image");
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   // Handle post save
