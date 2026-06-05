@@ -29,6 +29,7 @@ function ResumeManager() {
   const { user } = useAuth(true);
   const [resumeUrl, setResumeUrl] = useState<string>("/resume/param_panwar.pdf");
   const [isUploading, setIsUploading] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [dragActive, setDragActive] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
@@ -66,6 +67,36 @@ function ResumeManager() {
     e.stopPropagation();
     setDragActive(false);
     if (e.dataTransfer.files[0]) handleFileSelect(e.dataTransfer.files[0]);
+  };
+
+  const deleteResume = async () => {
+    if (!confirm("Are you sure you want to delete this custom resume? This will remove the file from Cloudinary and restore the default resume path.")) return;
+    setIsDeleting(true);
+
+    try {
+      const token = localStorage.getItem("access_token");
+      const tokenType = localStorage.getItem("token_type") || "Bearer";
+
+      const res = await fetch("/api/resume-settings", {
+        method: "DELETE",
+        headers: {
+          Authorization: `${tokenType} ${token}`,
+        },
+      });
+
+      if (res.ok) {
+        setResumeUrl("/resume/param_panwar.pdf");
+        setSelectedFile(null);
+        alert("Custom resume deleted successfully. Default resume restored.");
+      } else {
+        const data = await res.json();
+        throw new Error(data.error || "Failed to delete resume");
+      }
+    } catch (e: any) {
+      alert(e?.message || "Delete failed");
+    } finally {
+      setIsDeleting(false);
+    }
   };
 
   const uploadResume = async () => {
@@ -126,6 +157,8 @@ function ResumeManager() {
     }
   };
 
+  const hasCustomResume = resumeUrl !== "/resume/param_panwar.pdf";
+
   return (
     <div className="space-y-6">
       {/* Current resume info */}
@@ -133,63 +166,89 @@ function ResumeManager() {
         <h3 className="font-display font-semibold text-text-primary text-sm mb-2">
           Current Live Resume
         </h3>
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3 min-w-0">
             <FaFilePdf className="text-signal text-2xl shrink-0" />
             <div className="min-w-0">
               <p className="text-sm text-text-secondary truncate font-mono">
                 {resumeUrl}
               </p>
+              {hasCustomResume && (
+                <span className="inline-block mt-1 text-[10px] font-mono text-signal bg-signal/10 px-2 py-0.5 rounded-full border border-signal/25">
+                  Custom Upload Active
+                </span>
+              )}
             </div>
           </div>
-          <a
-            href={resumeUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-ghost text-xs py-2 px-4 shrink-0 flex items-center gap-2"
-          >
-            <FaEye size={12} /> View Live
-          </a>
+          <div className="flex items-center gap-2 shrink-0 self-end sm:self-auto">
+            <a
+              href={resumeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-ghost text-xs py-2 px-4 flex items-center gap-2"
+            >
+              <FaEye size={12} /> View Live
+            </a>
+            {hasCustomResume && (
+              <button
+                onClick={deleteResume}
+                disabled={isDeleting}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full font-display font-semibold text-xs border border-red-500/30 text-red-400 hover:text-red-300 hover:bg-red-500/10 hover:border-red-500/50 disabled:opacity-50 transition-all duration-300"
+              >
+                {isDeleting ? "Deleting…" : <><FaTrash size={11} /> Delete Custom Resume</>}
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
-      {/* Upload zone */}
-      <div
-        onDragEnter={handleDrag}
-        onDragLeave={handleDrag}
-        onDragOver={handleDrag}
-        onDrop={handleDrop}
-        className={`border-2 border-dashed rounded-2xl p-10 text-center transition-all cursor-pointer ${
-          dragActive ? "border-signal bg-signal/5" : "border-rim hover:border-rim-2"
-        }`}
-      >
-        <FaFilePdf className="text-3xl text-signal mx-auto mb-3" />
-        <p className="text-text-secondary text-sm mb-3">
-          {selectedFile ? selectedFile.name : "Drag & drop PDF here, or click to browse"}
-        </p>
-        <input
-          type="file"
-          accept=".pdf"
-          id="resume-upload"
-          className="hidden"
-          onChange={(e) => handleFileSelect(e.target.files?.[0] ?? null)}
-        />
-        <label
-          htmlFor="resume-upload"
-          className="btn-ghost text-xs py-2 px-4 cursor-pointer"
-        >
-          Browse
-        </label>
-      </div>
+      {/* Upload zone - only show if no custom resume exists */}
+      {!hasCustomResume ? (
+        <>
+          <div
+            onDragEnter={handleDrag}
+            onDragLeave={handleDrag}
+            onDragOver={handleDrag}
+            onDrop={handleDrop}
+            className={`border-2 border-dashed rounded-2xl p-10 text-center transition-all cursor-pointer ${
+              dragActive ? "border-signal bg-signal/5" : "border-rim hover:border-rim-2"
+            }`}
+          >
+            <FaFilePdf className="text-3xl text-signal mx-auto mb-3" />
+            <p className="text-text-secondary text-sm mb-3">
+              {selectedFile ? selectedFile.name : "Drag & drop PDF here, or click to browse"}
+            </p>
+            <input
+              type="file"
+              accept=".pdf"
+              id="resume-upload"
+              className="hidden"
+              onChange={(e) => handleFileSelect(e.target.files?.[0] ?? null)}
+            />
+            <label
+              htmlFor="resume-upload"
+              className="btn-ghost text-xs py-2 px-4 cursor-pointer"
+            >
+              Browse
+            </label>
+          </div>
 
-      {selectedFile && (
-        <button
-          onClick={uploadResume}
-          disabled={isUploading}
-          className="btn-primary w-full justify-center"
-        >
-          {isUploading ? "Uploading…" : <><FaUpload /> Upload & Set Live Resume</>}
-        </button>
+          {selectedFile && (
+            <button
+              onClick={uploadResume}
+              disabled={isUploading}
+              className="btn-primary w-full justify-center"
+            >
+              {isUploading ? "Uploading…" : <><FaUpload /> Upload & Set Live Resume</>}
+            </button>
+          )}
+        </>
+      ) : (
+        <div className="border border-rim bg-surface-2 p-6 rounded-2xl text-center">
+          <p className="text-sm text-text-secondary leading-relaxed">
+            Only one custom resume can be active. If you want to upload a new resume file, you must first click the <strong className="text-red-400">Delete Custom Resume</strong> button above to delete it from Cloudinary and reset your setting.
+          </p>
+        </div>
       )}
     </div>
   );
