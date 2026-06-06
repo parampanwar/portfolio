@@ -7,6 +7,7 @@ import { z } from "zod";
 import { Loader2, Send, CheckCircle, AlertCircle } from "lucide-react";
 import Script from "next/script";
 
+
 declare global {
   interface Window {
     grecaptcha: any;
