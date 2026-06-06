@@ -144,8 +144,8 @@ export const siteConfig = {
   title: "Param Panwar — Full-Stack Developer | Next.js & FastAPI Specialist",
   description:
     "Param Panwar is a Full-Stack Developer specializing in high-performance web systems, React, Next.js, and FastAPI. Discover scalable solutions, AI integrations, and developer insights.",
-  url: "https://parampanwar.xyz",
-  ogImage: "https://parampanwar.xyz/og.png",
+  url: "https://www.parampanwar.xyz",
+  ogImage: "https://www.parampanwar.xyz/og.png",
   keywords: "Param Panwar, Full-Stack Developer India, Next.js Developer India, FastAPI Developer, Python Developer, Freelance Software Engineer, Botinx WhatsApp, Skillix AI",
 };
 

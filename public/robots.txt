@@ -4,4 +4,4 @@ Disallow: /admin
 Disallow: /login
 Disallow: /api/
 
-Sitemap: https://parampanwar.xyz/sitemap.xml
+Sitemap: https://www.parampanwar.xyz/sitemap.xml
