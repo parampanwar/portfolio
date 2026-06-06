@@ -18,7 +18,7 @@ import { formatDate, slugify } from "@/lib/utils";
 import { connectToDatabase } from "@/lib/mongodb";
 
 // Helper to upload files directly to Cloudinary using signed uploads
-const uploadToCloudinaryDirect = async (file: File): Promise<string> => {
+const uploadToCloudinaryDirect = async (file: File, resourceType: string = "auto"): Promise<string> => {
   const token = localStorage.getItem("access_token");
   const tokenType = localStorage.getItem("token_type") || "Bearer";
 
@@ -38,7 +38,7 @@ const uploadToCloudinaryDirect = async (file: File): Promise<string> => {
   formData.append("signature", signature);
   formData.append("folder", folder);
 
-  const cloudRes = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`, {
+  const cloudRes = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/${resourceType}/upload`, {
     method: "POST",
     body: formData,
   });
@@ -143,7 +143,7 @@ function ResumeManager() {
     setIsUploading(true);
 
     try {
-      const uploadedUrl = await uploadToCloudinaryDirect(selectedFile);
+      const uploadedUrl = await uploadToCloudinaryDirect(selectedFile, "raw");
 
       const token = localStorage.getItem("access_token");
       const tokenType = localStorage.getItem("token_type") || "Bearer";
