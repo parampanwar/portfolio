@@ -58,9 +58,24 @@ export const projects: Project[] = [
     links: {
       live: "https://skillix.ezypayroll.in",
     },
-    featured: true,
+    featured: false,
     category: "fullstack",
-    year: 2024,
+    year: 2026,
+  },
+  {
+     id: "rferotary",
+    title: "RFE ROTARY",
+    description:
+      "Full stack App for Rotary Friendship Exchange",
+    longDescription:
+      "A comprehensive talent evaluation platform. Features automated coding challenges, AI-powered portfolio profiling, and match filters for recruiters. Built with Next.js, FastAPI, PostgreSQL, and OpenAI API.",
+    tech: ["MySQL", "Node.js", "Gemini"],
+    links: {
+      live: "https://rferotary.org",
+    },
+    featured: false,
+    category: "fullstack",
+    year: 2026,
   },
 ];
 
