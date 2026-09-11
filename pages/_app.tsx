@@ -1,5 +1,6 @@
 import type { AppProps } from "next/app";
 import Head from "next/head";
+import Script from "next/script";
 import { useEffect } from "react";
 import "@/styles/globals.css";
 import { siteConfig } from "@/data/portfolio";
@@ -12,6 +13,21 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <>
+      {/* Google tag (gtag.js) */}
+      <Script
+        strategy="afterInteractive"
+        src="https://www.googletagmanager.com/gtag/js?id=G-J04XCTL5P4"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-J04XCTL5P4');
+        `}
+      </Script>
+
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#0a0a0f" />
