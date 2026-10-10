@@ -77,101 +77,138 @@ export default async function handler(
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>New Message From Portfolio</title>
+  <title>New Message: ${safeSubject}</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Syne:wght@700;800&family=JetBrains+Mono:wght@500;600&display=swap');
-    
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #050508;
-      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      color: #f0f0fc;
-      -webkit-font-smoothing: antialiased;
+    @media (prefers-color-scheme: dark) {
+      .body-bg { background-color: #0E0E0C !important; }
+      .card-bg { background-color: #171714 !important; border-color: #2A2926 !important; }
+      .text-primary { color: #F2EFE8 !important; }
+      .text-muted { color: #8F8B82 !important; }
+      .text-subtle { color: #726E65 !important; }
+      .panel-bg { background-color: #1F1E1B !important; border-color: #2A2926 !important; }
+      .border-line { border-color: #2A2926 !important; }
+      .btn-primary { background-color: #F2EFE8 !important; color: #121212 !important; }
     }
-    
-    .btn-action:hover {
-      background-color: #f8ff9c !important;
-      box-shadow: 0 12px 40px rgba(232, 255, 71, 0.4) !important;
-      transform: translateY(-2px) !important;
-    }
-    
-    .social-link:hover {
-      background: rgba(232, 255, 71, 0.15) !important;
-      border-color: #e8ff47 !important;
-      color: #e8ff47 !important;
+    .btn-primary:hover {
+      background-color: #FF4D1F !important;
+      color: #FFFFFF !important;
     }
   </style>
 </head>
-<body style="margin: 0; padding: 0; background-color: #050508; font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; -webkit-font-smoothing: antialiased;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #050508; padding: 48px 16px;">
+<body class="body-bg" style="margin: 0; padding: 0; background-color: #F4F1EA; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; color: #121212;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="body-bg" style="background-color: #F4F1EA; padding: 48px 16px;">
     <tr>
       <td align="center">
-        <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 580px; background-color: #0c0c12; border: 1px solid #1f1f2e; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);">
-          <!-- Top Accent Bar -->
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="card-bg" style="max-width: 600px; background-color: #FFFFFF; border: 1px solid #D9D4C7; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);">
+          <!-- Top Accent Line -->
           <tr>
-            <td height="4" style="background: linear-gradient(90deg, #e8ff47 0%, #a3ff1a 100%); line-height: 4px; font-size: 4px;">&nbsp;</td>
+            <td height="4" style="background: #FF4D1F; line-height: 4px; font-size: 4px;">&nbsp;</td>
           </tr>
           
-          <!-- Header Logo -->
+          <!-- Header Bar -->
           <tr>
-            <td align="center" style="padding: 40px 40px 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.03);">
-              <a href="https://parampanwar.xyz" target="_blank" style="text-decoration: none;">
-                <img src="cid:logo" alt="Param Panwar Logo" height="38" style="height: 38px; width: auto; max-height: 38px; display: block; border: 0; outline: none; margin: 0 auto;" />
-              </a>
-            </td>
-          </tr>
-          
-          <!-- Message Body -->
-          <tr>
-            <td style="padding: 40px 40px 32px;">
-              <span style="display: inline-block; padding: 4px 12px; background: rgba(232, 255, 71, 0.08); border: 1px solid rgba(232, 255, 71, 0.25); border-radius: 100px; color: #e8ff47; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 24px;">New Inbound Transmission</span>
-              <h1 style="font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 800; line-height: 1.25; color: #f0f0fc; margin: 0 0 20px;">${safeSubject}</h1>
-              
-              <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #12121a; border: 1px solid #1f1f2e; border-radius: 12px; padding: 20px; margin-bottom: 32px;">
+            <td style="padding: 32px 36px 20px; border-bottom: 1px solid #EBE7DD;" class="border-line">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
-                  <td style="padding-bottom: 10px; font-size: 14px; color: #7e7e9a;">
-                    <span style="color: #e8ff47; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; text-transform: uppercase; display: inline-block; width: 90px;">From:</span>
-                    <strong style="color: #f0f0fc; font-weight: 600;">${safeName}</strong>
+                  <td valign="middle">
+                    <span style="font-family: Georgia, 'Times New Roman', serif; font-size: 20px; font-weight: normal; letter-spacing: -0.02em; color: #121212;" class="text-primary">
+                      Param Panwar
+                    </span>
                   </td>
-                </tr>
-                <tr>
-                  <td style="font-size: 14px; color: #7e7e9a;">
-                    <span style="color: #e8ff47; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; text-transform: uppercase; display: inline-block; width: 90px;">Email:</span>
-                    <a href="mailto:${safeEmail}" style="color: #f0f0fc; text-decoration: underline; font-weight: 500;">${safeEmail}</a>
+                  <td align="right" valign="middle">
+                    <span style="font-family: 'JetBrains Mono', Consolas, Monaco, monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #6B675F;" class="text-muted">
+                      Portfolio Inbox
+                    </span>
                   </td>
                 </tr>
               </table>
-              
-              <p style="margin: 0 0 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; color: #7e7e9a;">Message Content</p>
-              <div style="background-color: #12121a; border-left: 3px solid #e8ff47; border-radius: 0 12px 12px 0; padding: 24px; margin-bottom: 8px;">
-                <p style="color: #e2e2f0; font-size: 15px; line-height: 1.8; white-space: pre-wrap; margin: 0;">${safeMessageHtml}</p>
-              </div>
             </td>
           </tr>
-          
-          <!-- CTA Action -->
+
+          <!-- Main Content -->
           <tr>
-            <td align="center" style="padding: 8px 40px 48px;">
-              <a href="https://parampanwar.xyz/admin" class="btn-action" target="_blank" style="display: inline-block; padding: 14px 36px; background-color: #e8ff47; color: #050508; font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; text-decoration: none; border-radius: 100px; letter-spacing: 0.05em; box-shadow: 0 8px 30px rgba(232, 255, 71, 0.25); text-align: center; transition: all 0.2s ease;">Review Submission ↗</a>
+            <td style="padding: 36px 36px 28px;">
+              <!-- Status Pill -->
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 20px;">
+                <tr>
+                  <td style="padding: 4px 12px; background: rgba(255, 77, 31, 0.08); border: 1px solid rgba(255, 77, 31, 0.25); border-radius: 99px;">
+                    <span style="display: inline-block; width: 6px; height: 6px; background-color: #FF4D1F; border-radius: 50%; vertical-align: middle; margin-right: 6px;"></span>
+                    <span style="font-family: 'JetBrains Mono', Consolas, Monaco, monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #FF4D1F; font-weight: 600; vertical-align: middle;">New Inbound Message</span>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Subject Headline -->
+              <h1 style="margin: 0 0 24px; font-family: Georgia, 'Times New Roman', serif; font-size: 26px; font-weight: normal; line-height: 1.25; letter-spacing: -0.025em; color: #121212;" class="text-primary">
+                ${safeSubject}
+              </h1>
+
+              <!-- Sender Details Card -->
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="panel-bg border-line" style="background-color: #FAF8F5; border: 1px solid #EBE7DD; border-radius: 8px; margin-bottom: 28px;">
+                <tr>
+                  <td style="padding: 16px 20px;">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td width="70" valign="top" style="padding-bottom: 10px; font-family: 'JetBrains Mono', Consolas, Monaco, monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #6B675F;" class="text-muted">From:</td>
+                        <td valign="top" style="padding-bottom: 10px; font-size: 14px; font-weight: 600; color: #121212;" class="text-primary">${safeName}</td>
+                      </tr>
+                      <tr>
+                        <td width="70" valign="top" style="font-family: 'JetBrains Mono', Consolas, Monaco, monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #6B675F;" class="text-muted">Email:</td>
+                        <td valign="top" style="font-size: 14px; color: #121212;" class="text-primary">
+                          <a href="mailto:${safeEmail}" style="color: #FF4D1F; text-decoration: none; font-weight: 500;">${safeEmail}</a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Message Section -->
+              <p style="margin: 0 0 10px; font-family: 'JetBrains Mono', Consolas, Monaco, monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #6B675F;" class="text-muted">
+                Message Content
+              </p>
+              <div class="panel-bg" style="background-color: #FAF8F5; border-left: 3px solid #FF4D1F; border-top: 1px solid #EBE7DD; border-right: 1px solid #EBE7DD; border-bottom: 1px solid #EBE7DD; border-radius: 0 8px 8px 0; padding: 22px 24px; margin-bottom: 32px;">
+                <p style="margin: 0; font-size: 15px; line-height: 1.7; color: #121212; white-space: pre-wrap;" class="text-primary">${safeMessageHtml}</p>
+              </div>
+
+              <!-- Action Buttons -->
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 8px;">
+                <tr>
+                  <td align="left">
+                    <a href="mailto:${safeEmail}?subject=Re:%20${encodeURIComponent(safeSubject)}" class="btn-primary" target="_blank" style="display: inline-block; padding: 13px 28px; background-color: #121212; color: #FFFFFF; font-family: 'JetBrains Mono', Consolas, Monaco, monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; text-decoration: none; border-radius: 99px;">
+                      Direct Reply ↗
+                    </a>
+                  </td>
+                  <td style="padding-left: 16px;">
+                    <a href="https://parampanwar.xyz/admin" target="_blank" style="font-family: 'JetBrains Mono', Consolas, Monaco, monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: #6B675F; text-decoration: none;" class="text-muted">
+                      Admin Console ↗
+                    </a>
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
-          
+
           <!-- Footer Panel -->
           <tr>
-            <td style="background-color: #12121a; border-top: 1px solid #1f1f2e; padding: 32px 40px; text-align: center;">
-              <p style="font-size: 12px; color: #7e7e9a; line-height: 1.6; margin: 0 0 16px; font-family: 'DM Sans', sans-serif;">
-                © ${new Date().getFullYear()} <a href="https://parampanwar.xyz" target="_blank" style="color: #f0f0fc; text-decoration: none; font-weight: 600;">parampanwar.xyz</a>. All rights reserved.
-              </p>
-              <div style="margin-top: 16px;">
-                <a href="${social.github}" class="social-link" target="_blank" style="display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #e8ff47; text-decoration: none; margin: 0 8px; padding: 4px 12px; background: rgba(232, 255, 71, 0.05); border: 1px solid rgba(232, 255, 71, 0.15); border-radius: 6px; transition: all 0.2s ease;">GitHub</a>
-                <a href="${social.linkedin}" class="social-link" target="_blank" style="display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #e8ff47; text-decoration: none; margin: 0 8px; padding: 4px 12px; background: rgba(232, 255, 71, 0.05); border: 1px solid rgba(232, 255, 71, 0.15); border-radius: 6px; transition: all 0.2s ease;">LinkedIn</a>
-              </div>
+            <td style="background-color: #FAF8F5; border-top: 1px solid #EBE7DD; padding: 28px 36px;" class="panel-bg border-line">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="font-family: Georgia, 'Times New Roman', serif; font-size: 13px; color: #6B675F;" class="text-muted">
+                    Param Panwar — Full-stack engineer
+                  </td>
+                  <td align="right">
+                    <a href="${social.github}" target="_blank" style="font-family: 'JetBrains Mono', Consolas, Monaco, monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #121212; text-decoration: none; margin-left: 12px;" class="text-primary">GitHub ↗</a>
+                    <a href="${social.linkedin}" target="_blank" style="font-family: 'JetBrains Mono', Consolas, Monaco, monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #121212; text-decoration: none; margin-left: 12px;" class="text-primary">LinkedIn ↗</a>
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
         </table>
-        <p style="margin: 24px 0 0; font-size: 11px; color: #55556d; text-align: center; letter-spacing: 0.02em; font-family: 'JetBrains Mono', monospace;">
-          [ PORTFOLIO CONSOLE — AUTHENTICATED ACCESS ONLY ]
+        
+        <p style="margin: 20px 0 0; font-family: 'JetBrains Mono', Consolas, Monaco, monospace; font-size: 11px; color: #8F8B82; text-align: center; letter-spacing: 0.08em;" class="text-subtle">
+          PARAM PANWAR PORTFOLIO • JAIPUR, IN
         </p>
       </td>
     </tr>
@@ -186,103 +223,131 @@ export default async function handler(
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Thanks for reaching out!</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Syne:wght@700;800&family=JetBrains+Mono:wght@500;600&display=swap');
-    
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #050508;
-      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      color: #f0f0fc;
-      -webkit-font-smoothing: antialiased;
+    @media (prefers-color-scheme: dark) {
+      .body-bg { background-color: #0E0E0C !important; }
+      .card-bg { background-color: #171714 !important; border-color: #2A2926 !important; }
+      .text-primary { color: #F2EFE8 !important; }
+      .text-muted { color: #8F8B82 !important; }
+      .text-subtle { color: #726E65 !important; }
+      .panel-bg { background-color: #1F1E1B !important; border-color: #2A2926 !important; }
+      .border-line { border-color: #2A2926 !important; }
+      .btn-primary { background-color: #F2EFE8 !important; color: #121212 !important; }
     }
-    
-    .btn-action:hover {
-      background-color: #f8ff9c !important;
-      box-shadow: 0 12px 40px rgba(232, 255, 71, 0.4) !important;
-      transform: translateY(-2px) !important;
-    }
-    
-    .social-link:hover {
-      background: rgba(232, 255, 71, 0.15) !important;
-      border-color: #e8ff47 !important;
-      color: #e8ff47 !important;
+    .btn-primary:hover {
+      background-color: #FF4D1F !important;
+      color: #FFFFFF !important;
     }
   </style>
 </head>
-<body style="margin: 0; padding: 0; background-color: #050508; font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; -webkit-font-smoothing: antialiased;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #050508; padding: 48px 16px;">
+<body class="body-bg" style="margin: 0; padding: 0; background-color: #F4F1EA; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; color: #121212;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="body-bg" style="background-color: #F4F1EA; padding: 48px 16px;">
     <tr>
       <td align="center">
-        <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 580px; background-color: #0c0c12; border: 1px solid #1f1f2e; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);">
-          <!-- Top Accent Bar -->
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="card-bg" style="max-width: 600px; background-color: #FFFFFF; border: 1px solid #D9D4C7; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);">
+          <!-- Top Accent Line -->
           <tr>
-            <td height="4" style="background: linear-gradient(90deg, #e8ff47 0%, #a3ff1a 100%); line-height: 4px; font-size: 4px;">&nbsp;</td>
+            <td height="4" style="background: #FF4D1F; line-height: 4px; font-size: 4px;">&nbsp;</td>
           </tr>
           
-          <!-- Header Logo -->
+          <!-- Header Bar -->
           <tr>
-            <td align="center" style="padding: 40px 40px 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.03);">
-              <a href="https://parampanwar.xyz" target="_blank" style="text-decoration: none;">
-                <img src="cid:logo" alt="Param Panwar Logo" height="38" style="height: 38px; width: auto; max-height: 38px; display: block; border: 0; outline: none; margin: 0 auto;" />
-              </a>
-            </td>
-          </tr>
-          
-          <!-- Hero Section -->
-          <tr>
-            <td style="padding: 40px 40px 20px;">
-              <span style="display: inline-block; padding: 4px 12px; background: rgba(232, 255, 71, 0.08); border: 1px solid rgba(232, 255, 71, 0.25); border-radius: 100px; color: #e8ff47; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 24px;">Transmission Successful</span>
-              <h1 style="font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 800; line-height: 1.25; color: #f0f0fc; margin: 0 0 16px;">Thanks for reaching out!</h1>
-              <p style="font-size: 15px; line-height: 1.75; color: #a8a8c8; margin: 0 0 24px; font-family: 'DM Sans', sans-serif;">
-                Hi <strong style="color: #f0f0fc;">${safeName}</strong>, thank you for contacting me. I've received your submission regarding <strong style="color: #e8ff47;">"${safeSubject}"</strong> and will personally review your message and reply within 24 hours.
-              </p>
-            </td>
-          </tr>
-          
-          <!-- Message Body Summary -->
-          <tr>
-            <td style="padding: 0 40px 32px;">
-              <p style="margin: 0 0 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; color: #7e7e9a;">Summary of your message</p>
-              <div style="background-color: #12121a; border-left: 3px solid #e8ff47; border-radius: 0 12px 12px 0; padding: 24px; margin-bottom: 8px;">
-                <p style="color: #e2e2f0; font-size: 15px; line-height: 1.8; white-space: pre-wrap; margin: 0;">${safeMessageHtml}</p>
-              </div>
-            </td>
-          </tr>
-          
-          <!-- Call To Action Button -->
-          <tr>
-            <td align="center" style="padding: 8px 40px 48px;">
-              <a href="https://parampanwar.xyz" class="btn-action" target="_blank" style="display: inline-block; padding: 14px 36px; background-color: #e8ff47; color: #050508; font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; text-decoration: none; border-radius: 100px; letter-spacing: 0.05em; box-shadow: 0 8px 30px rgba(232, 255, 71, 0.25); text-align: center; transition: all 0.2s ease;">Visit Website ↗</a>
-            </td>
-          </tr>
-          
-          <!-- Footer Signature -->
-          <tr>
-            <td style="background-color: #12121a; border-top: 1px solid #1f1f2e; padding: 32px 40px; text-align: left;">
-              <table width="100%" cellpadding="0" cellspacing="0">
+            <td style="padding: 32px 36px 20px; border-bottom: 1px solid #EBE7DD;" class="border-line">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
-                  <td style="font-family: 'DM Sans', sans-serif; font-size: 14px; color: #a8a8c8; line-height: 1.6;">
-                    Warm regards,<br>
-                    <strong style="color: #f0f0fc; font-weight: 600;">Param Panwar</strong><br>
-                    <span style="font-size: 12px; color: #7e7e9a;">Full-Stack Developer</span>
+                  <td valign="middle">
+                    <span style="font-family: Georgia, 'Times New Roman', serif; font-size: 20px; font-weight: normal; letter-spacing: -0.02em; color: #121212;" class="text-primary">
+                      Param Panwar
+                    </span>
                   </td>
-                  <td align="right" valign="bottom" style="white-space: nowrap;">
-                    <a href="${social.github}" class="social-link" target="_blank" style="display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #e8ff47; text-decoration: none; margin-left: 8px; padding: 4px 12px; background: rgba(232, 255, 71, 0.05); border: 1px solid rgba(232, 255, 71, 0.15); border-radius: 6px; transition: all 0.2s ease;">GitHub</a>
-                    <a href="${social.linkedin}" class="social-link" target="_blank" style="display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #e8ff47; text-decoration: none; margin-left: 8px; padding: 4px 12px; background: rgba(232, 255, 71, 0.05); border: 1px solid rgba(232, 255, 71, 0.15); border-radius: 6px; transition: all 0.2s ease;">LinkedIn</a>
+                  <td align="right" valign="middle">
+                    <span style="font-family: 'JetBrains Mono', Consolas, Monaco, monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #6B675F;" class="text-muted">
+                      Jaipur, IN
+                    </span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Main Content -->
+          <tr>
+            <td style="padding: 36px 36px 28px;">
+              <!-- Status Pill -->
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 20px;">
+                <tr>
+                  <td style="padding: 4px 12px; background: rgba(255, 77, 31, 0.08); border: 1px solid rgba(255, 77, 31, 0.25); border-radius: 99px;">
+                    <span style="display: inline-block; width: 6px; height: 6px; background-color: #FF4D1F; border-radius: 50%; vertical-align: middle; margin-right: 6px;"></span>
+                    <span style="font-family: 'JetBrains Mono', Consolas, Monaco, monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #FF4D1F; font-weight: 600; vertical-align: middle;">Message Received</span>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Headline -->
+              <h1 style="margin: 0 0 18px; font-family: Georgia, 'Times New Roman', serif; font-size: 28px; font-weight: normal; line-height: 1.25; letter-spacing: -0.03em; color: #121212;" class="text-primary">
+                Thanks for reaching out.
+              </h1>
+
+              <!-- Greeting & Note -->
+              <p style="margin: 0 0 16px; font-size: 15px; line-height: 1.7; color: #3A3834;" class="text-primary">
+                Hi <strong>${safeName}</strong>,
+              </p>
+              <p style="margin: 0 0 28px; font-size: 15px; line-height: 1.7; color: #3A3834;" class="text-primary">
+                Thank you for your note regarding <strong style="color: #FF4D1F;">&ldquo;${safeSubject}&rdquo;</strong>. I've received your inquiry and will personally review it and get back to you within 24 hours.
+              </p>
+
+              <!-- Copy of their message -->
+              <p style="margin: 0 0 10px; font-family: 'JetBrains Mono', Consolas, Monaco, monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #6B675F;" class="text-muted">
+                Summary of your message
+              </p>
+              <div class="panel-bg" style="background-color: #FAF8F5; border-left: 3px solid #FF4D1F; border-top: 1px solid #EBE7DD; border-right: 1px solid #EBE7DD; border-bottom: 1px solid #EBE7DD; border-radius: 0 8px 8px 0; padding: 22px 24px; margin-bottom: 32px;">
+                <p style="margin: 0; font-size: 15px; line-height: 1.7; color: #121212; white-space: pre-wrap;" class="text-primary">${safeMessageHtml}</p>
+              </div>
+
+              <!-- Action Buttons -->
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 8px;">
+                <tr>
+                  <td>
+                    <a href="https://parampanwar.xyz" class="btn-primary" target="_blank" style="display: inline-block; padding: 13px 28px; background-color: #121212; color: #FFFFFF; font-family: 'JetBrains Mono', Consolas, Monaco, monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; text-decoration: none; border-radius: 99px;">
+                      Visit Portfolio ↗
+                    </a>
+                  </td>
+                  <td style="padding-left: 16px;">
+                    <a href="https://parampanwar.xyz/resume" target="_blank" style="font-family: 'JetBrains Mono', Consolas, Monaco, monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: #6B675F; text-decoration: none;" class="text-muted">
+                      View Résumé ↗
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Signature & Footer -->
+          <tr>
+            <td style="background-color: #FAF8F5; border-top: 1px solid #EBE7DD; padding: 28px 36px;" class="panel-bg border-line">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td valign="top" style="font-family: Georgia, 'Times New Roman', serif; font-size: 14px; line-height: 1.6; color: #121212;" class="text-primary">
+                    Warm regards,<br>
+                    <strong style="font-size: 16px;">Param Panwar</strong><br>
+                    <span style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; color: #6B675F;" class="text-muted">Full-stack engineer building AI products that ship</span>
+                  </td>
+                  <td align="right" valign="bottom">
+                    <a href="${social.github}" target="_blank" style="font-family: 'JetBrains Mono', Consolas, Monaco, monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #121212; text-decoration: none; margin-left: 12px;" class="text-primary">GitHub ↗</a>
+                    <a href="${social.linkedin}" target="_blank" style="font-family: 'JetBrains Mono', Consolas, Monaco, monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #121212; text-decoration: none; margin-left: 12px;" class="text-primary">LinkedIn ↗</a>
                   </td>
                 </tr>
                 <tr>
-                  <td colspan="2" style="padding-top: 24px; font-family: 'DM Sans', sans-serif; font-size: 11px; color: #55556d; text-align: center; border-top: 1px solid #1f1f2e;">
-                    This is an automated transmission summary. Please do not reply directly to this email.
+                  <td colspan="2" style="padding-top: 20px; border-top: 1px solid #EBE7DD; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 11px; color: #8F8B82; text-align: center;" class="text-subtle border-line">
+                    This is an automated confirmation sent from parampanwar.xyz.
                   </td>
                 </tr>
               </table>
             </td>
           </tr>
         </table>
-        <p style="margin: 24px 0 0; font-size: 11px; color: #7e7e9a; text-align: center; letter-spacing: 0.02em; font-family: 'DM Sans', sans-serif;">
-          © ${new Date().getFullYear()} parampanwar.xyz. All rights reserved.
+        
+        <p style="margin: 20px 0 0; font-family: 'JetBrains Mono', Consolas, Monaco, monospace; font-size: 11px; color: #8F8B82; text-align: center; letter-spacing: 0.08em;" class="text-subtle">
+          © ${new Date().getFullYear()} PARAM PANWAR • JAIPUR, IN
         </p>
       </td>
     </tr>
