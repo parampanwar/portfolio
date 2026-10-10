@@ -3,6 +3,10 @@ import Head from "next/head";
 import Script from "next/script";
 import { useEffect } from "react";
 import "@/styles/globals.css";
+import "lenis/dist/lenis.css";
+import "@/styles/admin.css";
+import { display, body, mono } from "@/lib/fonts";
+import MotionSystem from "@/components/motion/MotionSystem";
 import { siteConfig } from "@/data/portfolio";
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -30,20 +34,26 @@ export default function App({ Component, pageProps }: AppProps) {
 
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#0a0a0f" />
-        
+        <meta name="theme-color" content="#F4F1EA" />
+
         {/* Resource Hints for Core Web Vitals */}
-        <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="anonymous" />
+        <link
+          rel="preconnect"
+          href="https://res.cloudinary.com"
+          crossOrigin="anonymous"
+        />
         <link rel="dns-prefetch" href="https://res.cloudinary.com" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://www.google.com" crossOrigin="anonymous" />
+        <link
+          rel="preconnect"
+          href="https://www.google.com"
+          crossOrigin="anonymous"
+        />
         <link rel="dns-prefetch" href="https://www.google.com" />
-        
+
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
         <link rel="apple-touch-icon" href="/logo.png" />
-        
+
         {/* Fallback Social Metadata */}
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content={siteConfig.name} />
@@ -51,7 +61,16 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:creator" content="@parampanwar" />
       </Head>
-      <Component {...pageProps} />
+      <style jsx global>{`
+        html {
+          --font-display: ${display.style.fontFamily};
+          --font-body: ${body.style.fontFamily};
+          --font-mono: ${mono.style.fontFamily};
+        }
+      `}</style>
+      <MotionSystem>
+        <Component {...pageProps} />
+      </MotionSystem>
     </>
   );
 }

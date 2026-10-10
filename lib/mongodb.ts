@@ -1,4 +1,12 @@
 import { MongoClient } from "mongodb";
+import dns from "dns";
+
+// Fix for Node.js on Windows/local networks failing to resolve MongoDB SRV records (querySrv ECONNREFUSED)
+try {
+  dns.setServers(["8.8.8.8", "1.1.1.1"]);
+} catch (e) {
+  console.warn("Could not set custom DNS servers:", e);
+}
 
 const uri = process.env.MONGODB_URI;
 const options = {};

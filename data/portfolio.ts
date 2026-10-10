@@ -58,7 +58,7 @@ export const projects: Project[] = [
     links: {
       live: "https://skillix.ezypayroll.in",
     },
-    featured: false,
+    featured: true,
     category: "fullstack",
     year: 2026,
   },
@@ -67,13 +67,12 @@ export const projects: Project[] = [
     title: "RFE ROTARY",
     description:
       "Full stack App for Rotary Friendship Exchange",
-    longDescription:
-      "A comprehensive talent evaluation platform. Features automated coding challenges, AI-powered portfolio profiling, and match filters for recruiters. Built with Next.js, FastAPI, PostgreSQL, and OpenAI API.",
+    longDescription: "A full-stack application for Rotary Friendship Exchange.",
     tech: ["MySQL", "Node.js", "Gemini"],
     links: {
       live: "https://rferotary.org",
     },
-    featured: false,
+    featured: true,
     category: "fullstack",
     year: 2026,
   },
@@ -133,7 +132,7 @@ export const techMarquee: string[] = [
 
 export const experience: Experience[] = [
   {
-    company: "Dooomshell Softwares Pvt. Ltd.",
+    company: "Doomshell Softwares Pvt. Ltd.",
     role: "Full-Stack Developer",
     duration: "2025 – Present",
     description:
@@ -217,7 +216,7 @@ export const aiTools: AiTool[] = [
     icon: "⊕",
   },
   {
-    name: "Midjourney / DALL·E",
+    name: "Midjourney / DALLÂ·E",
     category: "Design & Assets",
     usage: "Weekly",
     description: "UI mockup inspiration, blog cover images, placeholder visuals for rapid prototyping.",
@@ -239,12 +238,7 @@ export const aiTools: AiTool[] = [
   },
 ];
 
-export const aiStats: AiStat[] = [
-  { value: "4h+",  label: "AI-assisted daily",  sublabel: "coding + writing" },
-  { value: "8+",   label: "AI tools in stack",   sublabel: "actively used"    },
-  { value: "60%",  label: "Faster shipping",     sublabel: "vs pre-AI workflow"},
-  { value: "3",    label: "AI SaaS shipped",     sublabel: "in production"    },
-];
+export const aiStats: AiStat[] = [];
 
 export const aiWorkflows = [
   {

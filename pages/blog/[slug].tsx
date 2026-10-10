@@ -1,5 +1,6 @@
 import type { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect } from "react";
 import { MDXRemote, type MDXRemoteSerializeResult } from "next-mdx-remote";
@@ -11,7 +12,13 @@ import { motion } from "framer-motion";
 import { ArrowLeft, Clock, Calendar, User, Share2 } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { getPostBySlug, getPostSlugs, getAllPosts, type BlogPost, type BlogMeta } from "@/lib/blog";
+import {
+  getPostBySlug,
+  getPostSlugs,
+  getAllPosts,
+  type BlogPost,
+  type BlogMeta,
+} from "@/lib/blog";
 import { siteConfig } from "@/data/portfolio";
 import { formatDate } from "@/lib/utils";
 import { trackEvent } from "@/lib/analytics";
@@ -62,7 +69,10 @@ export default function BlogPostPage({ post, mdxSource, relatedPosts }: Props) {
       const elapsed = Math.round((Date.now() - startTime) / 1000);
       const totalSessionTime = accumulatedTime + elapsed;
       if (totalSessionTime >= 2 && totalSessionTime < 3600) {
-        trackEvent("blog_time", { slug: post.slug, duration: totalSessionTime });
+        trackEvent("blog_time", {
+          slug: post.slug,
+          duration: totalSessionTime,
+        });
         accumulatedTime = 0;
         startTime = Date.now();
       }
@@ -90,15 +100,20 @@ export default function BlogPostPage({ post, mdxSource, relatedPosts }: Props) {
         <title>{post.title} | Param Panwar Blog</title>
         <meta name="description" content={post.excerpt} />
         <link rel="canonical" href={ogUrl} />
-        
+
         <meta property="og:type" content="article" />
-        <meta property="og:title" content={`${post.title} | Param Panwar Blog`} />
+        <meta
+          property="og:title"
+          content={`${post.title} | Param Panwar Blog`}
+        />
         <meta property="og:description" content={post.excerpt} />
         <meta property="og:url" content={ogUrl} />
-        {post.coverImage && <meta property="og:image" content={post.coverImage} />}
+        {post.coverImage && (
+          <meta property="og:image" content={post.coverImage} />
+        )}
         <meta property="article:published_time" content={post.date} />
         <meta property="article:author" content="Param Panwar" />
-        
+
         {/* Dynamic Unified BlogPosting & Breadcrumb Schema Graph */}
         <script
           type="application/ld+json"
@@ -109,62 +124,64 @@ export default function BlogPostPage({ post, mdxSource, relatedPosts }: Props) {
                 {
                   "@type": "BreadcrumbList",
                   "@id": `${ogUrl}/#breadcrumb`,
-                  "itemListElement": [
+                  itemListElement: [
                     {
                       "@type": "ListItem",
-                      "position": 1,
-                      "name": "Home",
-                      "item": siteConfig.url
+                      position: 1,
+                      name: "Home",
+                      item: siteConfig.url,
                     },
                     {
                       "@type": "ListItem",
-                      "position": 2,
-                      "name": "Blog",
-                      "item": `${siteConfig.url}/blog`
+                      position: 2,
+                      name: "Blog",
+                      item: `${siteConfig.url}/blog`,
                     },
                     {
                       "@type": "ListItem",
-                      "position": 3,
-                      "name": post.title,
-                      "item": ogUrl
-                    }
-                  ]
+                      position: 3,
+                      name: post.title,
+                      item: ogUrl,
+                    },
+                  ],
                 },
                 {
                   "@type": "BlogPosting",
                   "@id": `${ogUrl}/#post`,
-                  "isPartOf": { "@id": `${ogUrl}/#webpage` },
-                  "headline": post.title,
-                  "description": post.excerpt,
-                  "image": post.coverImage || `${siteConfig.url}/logo.png`,
-                  "datePublished": post.date,
-                  "dateModified": post.date,
-                  "mainEntityOfPage": ogUrl,
-                  "wordCount": post.content ? post.content.split(/\s+/).length : 0,
-                  "timeRequired": post.readingTime,
-                  "author": {
+                  isPartOf: { "@id": `${ogUrl}/#webpage` },
+                  headline: post.title,
+                  description: post.excerpt,
+                  image: post.coverImage || `${siteConfig.url}/logo.png`,
+                  datePublished: post.date,
+                  dateModified: post.date,
+                  mainEntityOfPage: ogUrl,
+                  wordCount: post.content
+                    ? post.content.split(/\s+/).length
+                    : 0,
+                  timeRequired: post.readingTime,
+                  author: {
                     "@type": "Person",
-                    "name": post.author || siteConfig.name,
-                    "url": siteConfig.url
+                    name: post.author || siteConfig.name,
+                    url: siteConfig.url,
                   },
-                  "publisher": {
+                  publisher: {
                     "@type": "Organization",
-                    "name": siteConfig.name,
-                    "logo": {
+                    name: siteConfig.name,
+                    logo: {
                       "@type": "ImageObject",
-                      "url": `${siteConfig.url}/logo.png`
-                    }
-                  }
+                      url: `${siteConfig.url}/logo.png`,
+                    },
+                  },
                 },
                 {
                   "@type": "WebPage",
                   "@id": `${ogUrl}/#webpage`,
-                  "url": ogUrl,
-                  "name": `${post.title} | Param Panwar Blog`,
-                  "description": post.excerpt,
-                  "breadcrumb": { "@id": `${ogUrl}/#breadcrumb` }
-                }
-              ]
+                  url: ogUrl,
+                  name: `${post.title} | Param Panwar Blog`,
+                  description: post.excerpt,
+                  breadcrumb: { "@id": `${ogUrl}/#breadcrumb` },
+                },
+              ],
             }),
           }}
         />
@@ -172,8 +189,8 @@ export default function BlogPostPage({ post, mdxSource, relatedPosts }: Props) {
 
       <Navbar />
 
-      <main className="min-h-screen pt-16">
-        <article className="max-w-3xl mx-auto px-6 py-16">
+      <main id="main" className="page-main">
+        <article className="max-w-4xl mx-auto px-6">
           {/* Back link */}
           <motion.div
             initial={{ opacity: 0, x: -16 }}
@@ -209,7 +226,7 @@ export default function BlogPostPage({ post, mdxSource, relatedPosts }: Props) {
               ))}
             </div>
 
-            <h1 className="font-display text-3xl sm:text-5xl font-bold text-text-primary leading-tight mb-6">
+            <h1 className="font-display text-5xl sm:text-7xl text-text-primary leading-tight mb-6">
               {post.title}
             </h1>
 
@@ -219,7 +236,7 @@ export default function BlogPostPage({ post, mdxSource, relatedPosts }: Props) {
 
             {/* Meta row */}
             <div className="flex flex-wrap items-center justify-between gap-4">
-              <div className="flex items-center gap-4 text-sm text-text-muted font-mono">
+              <div className="flex flex-wrap items-center gap-4 text-xs text-text-muted font-mono">
                 <span className="flex items-center gap-1.5">
                   <User size={13} /> {post.author}
                 </span>
@@ -242,7 +259,10 @@ export default function BlogPostPage({ post, mdxSource, relatedPosts }: Props) {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="mb-12 rounded-2xl overflow-hidden aspect-[16/9] bg-surface-2"
             >
-              <img
+              <Image
+                width={1200}
+                height={675}
+                sizes="(max-width: 768px) 100vw, 896px"
                 src={post.coverImage}
                 alt={post.title}
                 className="w-full h-full object-cover"
@@ -266,8 +286,12 @@ export default function BlogPostPage({ post, mdxSource, relatedPosts }: Props) {
           {/* Bottom meta */}
           <div className="mt-16 pt-8 border-t border-rim flex flex-wrap items-center justify-between gap-4">
             <div>
-              <p className="text-xs font-mono text-text-muted mb-1">Written by</p>
-              <p className="font-display font-semibold text-text-primary">{post.author}</p>
+              <p className="text-xs font-mono text-text-muted mb-1">
+                Written by
+              </p>
+              <p className="font-display font-semibold text-text-primary">
+                {post.author}
+              </p>
             </div>
             <ShareButton title={post.title} slug={post.slug} />
           </div>
@@ -279,22 +303,26 @@ export default function BlogPostPage({ post, mdxSource, relatedPosts }: Props) {
             <h2 className="font-display font-bold text-xl text-text-primary mb-6">
               More posts
             </h2>
-            <div className="grid sm:grid-cols-2 gap-4">
+            <div className="space-y-8">
               {relatedPosts.map((related) => (
                 <Link
                   key={related.slug}
                   href={`/blog/${related.slug}`}
-                  className="group card p-5 hover:border-signal/30"
+                  className="group block card p-5 hover:border-signal/30"
                 >
                   <div className="flex flex-wrap gap-1.5 mb-2">
                     {related.tags.slice(0, 2).map((t) => (
-                      <span key={t} className="pill-muted text-[10px]">{t}</span>
+                      <span key={t} className="pill-muted text-xs">
+                        {t}
+                      </span>
                     ))}
                   </div>
                   <h3 className="font-display font-semibold text-sm text-text-primary group-hover:text-signal transition-colors leading-snug mb-1">
                     {related.title}
                   </h3>
-                  <span className="text-xs font-mono text-text-muted">{related.readingTime}</span>
+                  <span className="text-xs font-mono text-text-muted">
+                    {related.readingTime}
+                  </span>
                 </Link>
               ))}
             </div>

@@ -73,14 +73,22 @@ export default function NotFound() {
   const [excuseIndex, setExcuseIndex] = useState(0);
   const [copied, setCopied] = useState(false);
   const [cmdInput, setCmdInput] = useState("");
-  const [terminalLogs, setTerminalLogs] = useState<Array<{ text: string; type: "cmd" | "output" | "error" | "info" }>>([
+  const [terminalLogs, setTerminalLogs] = useState<
+    Array<{ text: string; type: "cmd" | "output" | "error" | "info" }>
+  >([
     { text: `curl -I https://parampanwar.xyz${currentPath}`, type: "cmd" },
     { text: "HTTP/2 404 Not Found", type: "error" },
     { text: "server: caffeinated-edge/2.4.0", type: "info" },
     { text: "x-developer-status: works-on-my-machine", type: "info" },
     { text: "x-coffee-level: 0% [CRITICAL_FAILURE]", type: "info" },
-    { text: `error: Path '${currentPath}' dereferenced a garbage collected memory address.`, type: "output" },
-    { text: "💡 Tip: Type 'help' or click a command below to recover.", type: "info" },
+    {
+      text: `error: Path '${currentPath}' dereferenced a garbage collected memory address.`,
+      type: "output",
+    },
+    {
+      text: "💡 Tip: Type 'help' or click a command below to recover.",
+      type: "info",
+    },
   ]);
 
   const terminalEndRef = useRef<HTMLDivElement | null>(null);
@@ -116,24 +124,49 @@ export default function NotFound() {
       setTerminalLogs([]);
       setCmdInput("");
       return;
-    } else if (lower === "home" || lower === "main" || lower === "cd ~" || lower === "git checkout main") {
-      newLogs.push({ text: "Switching branch to 'main'... Teleporting home 🚀", type: "output" });
+    } else if (
+      lower === "home" ||
+      lower === "main" ||
+      lower === "cd ~" ||
+      lower === "git checkout main"
+    ) {
+      newLogs.push({
+        text: "Switching branch to 'main'... Teleporting home 🚀",
+        type: "output",
+      });
       setTerminalLogs(newLogs);
       setTimeout(() => router.push("/"), 600);
       return;
     } else if (lower === "blog" || lower === "cd blog" || lower === "git log") {
-      newLogs.push({ text: "Fetching commits & articles... Opening blog 📖", type: "output" });
+      newLogs.push({
+        text: "Fetching commits & articles... Opening blog 📖",
+        type: "output",
+      });
       setTerminalLogs(newLogs);
       setTimeout(() => router.push("/blog"), 600);
       return;
-    } else if (lower === "contact" || lower === "ping param" || lower === "ping") {
-      newLogs.push({ text: "Pinging param@parampanwar.xyz: 64 bytes received (0.404 ms). Opening contact 📬", type: "output" });
+    } else if (
+      lower === "contact" ||
+      lower === "ping param" ||
+      lower === "ping"
+    ) {
+      newLogs.push({
+        text: "Pinging param@parampanwar.xyz: 64 bytes received (0.404 ms). Opening contact 📬",
+        type: "output",
+      });
       setTerminalLogs(newLogs);
       setTimeout(() => router.push("/contact"), 600);
       return;
-    } else if (lower === "excuse" || lower === "cat excuse.txt" || lower === "cat /dev/excuse") {
+    } else if (
+      lower === "excuse" ||
+      lower === "cat excuse.txt" ||
+      lower === "cat /dev/excuse"
+    ) {
       handleNextExcuse();
-      newLogs.push({ text: `[EXCUSE] "${DEV_EXCUSES[(excuseIndex + 1) % DEV_EXCUSES.length]}"`, type: "info" });
+      newLogs.push({
+        text: `[EXCUSE] "${DEV_EXCUSES[(excuseIndex + 1) % DEV_EXCUSES.length]}"`,
+        type: "info",
+      });
     } else if (lower.includes("sudo rm -rf") || lower === "rm -rf /") {
       newLogs.push({
         text: "Nice try, Neo. You don't have root permissions in this portfolio. Incident reported to Santa Claus.",
@@ -171,27 +204,31 @@ export default function NotFound() {
     <>
       <Head>
         <title>404: Segmentation Fault (Core Dumped) | {siteConfig.name}</title>
-        <meta name="description" content="404 Page Not Found - It worked fine on localhost:3000..." />
+        <meta
+          name="description"
+          content="404 Page Not Found - It worked fine on localhost:3000..."
+        />
       </Head>
 
       <Navbar />
 
-      <main className="min-h-screen pt-28 pb-20 px-4 sm:px-6 relative overflow-hidden flex flex-col justify-center items-center">
-        {/* Ambient background glows */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[35rem] h-[35rem] bg-signal/5 rounded-full blur-3xl pointer-events-none -z-10" />
-        <div className="absolute inset-0 bg-grid-pattern opacity-40 pointer-events-none -z-10" />
-
+      <main
+        id="main"
+        className="min-h-screen pt-28 pb-20 px-4 sm:px-6 relative overflow-hidden flex flex-col justify-center items-center"
+      >
         <div className="max-w-4xl w-full mx-auto">
           {/* Top Developer Status Bar */}
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="flex flex-wrap items-center justify-center sm:justify-between gap-2.5 mb-8 text-xs font-mono border border-rim/70 bg-surface/80 backdrop-blur-md rounded-xl p-3 shadow-lg shadow-black/40"
+            className="flex flex-wrap items-center justify-center sm:justify-between gap-2.5 mb-8 text-xs font-mono border border-rim/70 bg-surface/80  rounded-xl p-3 "
           >
             <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse" />
-              <span className="text-red-400 font-semibold">FATAL_404_PAGE_NOT_FOUND</span>
+              <span className="w-2.5 h-2.5 rounded-full bg-accent animate-pulse" />
+              <span className="text-ink font-semibold">
+                FATAL_404_PAGE_NOT_FOUND
+              </span>
             </div>
             <div className="flex items-center gap-4 text-text-muted">
               <span className="flex items-center gap-1">
@@ -200,13 +237,15 @@ export default function NotFound() {
               </span>
               <span className="hidden sm:inline text-rim-2">|</span>
               <span className="flex items-center gap-1">
-                <Coffee className="w-3.5 h-3.5 text-amber-400" />
+                <Coffee className="w-3.5 h-3.5 text-ink" />
                 <span className="text-text-secondary">Caffeine: 0%</span>
               </span>
               <span className="hidden sm:inline text-rim-2">|</span>
               <span className="flex items-center gap-1">
                 <Cpu className="w-3.5 h-3.5 text-signal" />
-                <span className="text-text-secondary">Env: prod (Friday 5PM)</span>
+                <span className="text-text-secondary">
+                  Env: prod (Friday 5PM)
+                </span>
               </span>
             </div>
           </motion.div>
@@ -224,7 +263,7 @@ export default function NotFound() {
                 <span className="text-stroke">0</span>
                 <span className="text-signal">4</span>
               </h1>
-              <span className="absolute -top-3 -right-6 px-2.5 py-0.5 rounded-full bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-mono font-medium animate-bounce-slow">
+              <span className="absolute -top-3 -right-6 px-2.5 py-0.5 rounded-full bg-surface border border-border text-ink text-xs font-mono font-medium animate-bounce-slow">
                 NullPointer
               </span>
             </div>
@@ -233,7 +272,8 @@ export default function NotFound() {
               Segmentation Fault: Route Dereferenced Null
             </h2>
             <p className="text-text-secondary max-w-lg mx-auto text-sm sm:text-base font-body">
-              The page you are looking for does not exist, was garbage collected, or was pushed directly to prod without testing.
+              The page you are looking for does not exist, was garbage
+              collected, or was pushed directly to prod without testing.
             </p>
           </motion.div>
 
@@ -242,7 +282,7 @@ export default function NotFound() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="mb-8 p-4 rounded-xl border border-signal/20 bg-surface-2/60 backdrop-blur-md relative overflow-hidden group"
+            className="mb-8 p-4 rounded-xl border border-signal/20 bg-surface-2/60  relative overflow-hidden group"
           >
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
               <div className="flex items-start gap-3">
@@ -250,7 +290,7 @@ export default function NotFound() {
                   <Sparkles className="w-4 h-4" />
                 </div>
                 <div>
-                  <span className="text-[11px] font-mono uppercase tracking-wider text-signal/80 flex items-center gap-1.5 font-semibold">
+                  <span className="text-xs font-mono uppercase tracking-wider text-signal/80 flex items-center gap-1.5 font-semibold">
                     <span>$ cat /dev/developer-excuses.txt</span>
                   </span>
                   <p className="text-sm font-mono text-text-primary mt-1 italic">
@@ -264,7 +304,7 @@ export default function NotFound() {
                 title="Roll another excuse"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
-                <span>Roll Excuse 🎲</span>
+                <span>Roll Excuse</span>
               </button>
             </div>
           </motion.div>
@@ -274,16 +314,17 @@ export default function NotFound() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="rounded-2xl border border-rim bg-[#0d0d14] overflow-hidden shadow-2xl shadow-black/80 mb-10"
+            className="rounded-2xl border border-rim bg-background overflow-hidden  mb-10"
           >
             {/* Window Title Bar with Tabs */}
-            <div className="bg-[#14141d] px-4 py-2.5 border-b border-rim flex flex-wrap items-center justify-between gap-3 select-none">
+            <div className="bg-surface px-4 py-2.5 border-b border-rim flex flex-wrap items-center justify-between gap-3 select-none">
               <div className="flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full bg-[#ff5f56] inline-block" />
-                <span className="w-3 h-3 rounded-full bg-[#ffbd2e] inline-block" />
-                <span className="w-3 h-3 rounded-full bg-[#27c93f] inline-block" />
+                <span className="w-3 h-3 rounded-full bg-muted inline-block" />
+                <span className="w-3 h-3 rounded-full bg-muted inline-block" />
+                <span className="w-3 h-3 rounded-full bg-muted inline-block" />
                 <span className="ml-2 text-xs font-mono text-text-muted hidden md:inline">
-                  debug-console@param-portfolio: ~/{currentPath.replace(/^\//, "") || "404"}
+                  debug-console@param-portfolio: ~/
+                  {currentPath.replace(/^\//, "") || "404"}
                 </span>
               </div>
 
@@ -348,11 +389,13 @@ export default function NotFound() {
                       <div key={i} className="leading-relaxed break-all">
                         {log.type === "cmd" ? (
                           <div className="flex items-center gap-2 text-text-primary">
-                            <span className="text-signal">guest@portfolio:~$</span>
+                            <span className="text-signal">
+                              guest@portfolio:~$
+                            </span>
                             <span>{log.text}</span>
                           </div>
                         ) : log.type === "error" ? (
-                          <p className="text-red-400 font-semibold">{log.text}</p>
+                          <p className="text-ink font-semibold">{log.text}</p>
                         ) : log.type === "info" ? (
                           <p className="text-text-muted">{log.text}</p>
                         ) : (
@@ -375,13 +418,15 @@ export default function NotFound() {
                         placeholder="type command (e.g. 'home', 'blog', 'ping', 'help')..."
                         className="bg-transparent text-text-primary placeholder:text-text-muted focus:outline-none w-full font-mono text-xs sm:text-sm"
                       />
-                      <span className="text-[10px] text-text-muted hidden sm:inline px-1.5 py-0.5 rounded border border-rim">
+                      <span className="text-xs text-text-muted hidden sm:inline px-1.5 py-0.5 rounded border border-rim">
                         ENTER
                       </span>
                     </div>
 
                     <div className="flex flex-wrap items-center gap-1.5 text-xs text-text-muted">
-                      <span className="text-[11px] text-text-muted mr-1">Quick Run:</span>
+                      <span className="text-xs text-text-muted mr-1">
+                        Quick Run:
+                      </span>
                       <button
                         onClick={() => executeCommand("git checkout main")}
                         className="px-2.5 py-1 rounded bg-surface hover:bg-surface-3 border border-rim text-text-secondary hover:text-signal transition-colors font-mono"
@@ -402,7 +447,7 @@ export default function NotFound() {
                       </button>
                       <button
                         onClick={() => executeCommand("sudo rm -rf /")}
-                        className="px-2.5 py-1 rounded bg-surface hover:bg-surface-3 border border-rim text-red-400/80 hover:text-red-400 transition-colors font-mono"
+                        className="px-2.5 py-1 rounded bg-surface hover:bg-surface-3 border border-rim text-ink/80 hover:text-ink transition-colors font-mono"
                       >
                         $ sudo rm -rf /
                       </button>
@@ -424,11 +469,15 @@ export default function NotFound() {
                       onClick={() => handleCopy(STACK_TRACE)}
                       className="flex items-center gap-1 text-xs text-text-muted hover:text-signal transition-colors"
                     >
-                      {copied ? <Check className="w-3.5 h-3.5 text-signal" /> : <Copy className="w-3.5 h-3.5" />}
+                      {copied ? (
+                        <Check className="w-3.5 h-3.5 text-signal" />
+                      ) : (
+                        <Copy className="w-3.5 h-3.5" />
+                      )}
                       <span>{copied ? "Copied" : "Copy Trace"}</span>
                     </button>
                   </div>
-                  <pre className="text-red-400 whitespace-pre-wrap leading-relaxed font-mono bg-red-950/20 p-4 rounded-lg border border-red-500/20 text-xs sm:text-sm overflow-x-auto">
+                  <pre className="text-ink whitespace-pre-wrap leading-relaxed font-mono bg-red-950/20 p-4 rounded-lg border border-red-500/20 text-xs sm:text-sm overflow-x-auto">
                     {STACK_TRACE}
                   </pre>
                 </div>
@@ -441,7 +490,11 @@ export default function NotFound() {
                       onClick={() => handleCopy(GIT_BLAME)}
                       className="flex items-center gap-1 text-xs text-text-muted hover:text-signal transition-colors"
                     >
-                      {copied ? <Check className="w-3.5 h-3.5 text-signal" /> : <Copy className="w-3.5 h-3.5" />}
+                      {copied ? (
+                        <Check className="w-3.5 h-3.5 text-signal" />
+                      ) : (
+                        <Copy className="w-3.5 h-3.5" />
+                      )}
                       <span>{copied ? "Copied" : "Copy Blame"}</span>
                     </button>
                   </div>
@@ -458,7 +511,11 @@ export default function NotFound() {
                       onClick={() => handleCopy(RCA_JSON)}
                       className="flex items-center gap-1 text-xs text-text-muted hover:text-signal transition-colors"
                     >
-                      {copied ? <Check className="w-3.5 h-3.5 text-signal" /> : <Copy className="w-3.5 h-3.5" />}
+                      {copied ? (
+                        <Check className="w-3.5 h-3.5 text-signal" />
+                      ) : (
+                        <Copy className="w-3.5 h-3.5" />
+                      )}
                       <span>{copied ? "Copied" : "Copy JSON"}</span>
                     </button>
                   </div>
@@ -499,4 +556,3 @@ export default function NotFound() {
     </>
   );
 }
-

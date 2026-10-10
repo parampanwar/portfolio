@@ -65,7 +65,7 @@ export default function LoginPage() {
   return (
     <>
       <Head>
-        <title>Login — {siteConfig.name}</title>
+        <title>{`Login — ${siteConfig.name}`}</title>
         <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
       </Head>
 

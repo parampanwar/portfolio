@@ -6,12 +6,13 @@ import {
   FaTrash, FaDownload, FaUpload, FaFilePdf, FaEye, FaSignOutAlt, FaPlus, FaCheck,
 } from "react-icons/fa";
 import {
-  FileText, PlusCircle, BookOpen, Eye, Pencil, ExternalLink, ArrowLeft, Image as ImageIcon, Copy,
+  FileText, PlusCircle, BookOpen, Eye, Pencil, ExternalLink, ArrowLeft, Image as ImageIcon, Copy, Briefcase,
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Navbar from "@/components/layout/Navbar";
 import { useAuth } from "@/hooks/useAuth";
+import CareerManager from "@/components/admin/CareerManager";
 import { getAllPosts, type BlogMeta } from "@/lib/blog";
 import { siteConfig } from "@/data/portfolio";
 import { formatDate, slugify } from "@/lib/utils";
@@ -794,7 +795,7 @@ export default function AdminPage({
   resumeDownloads,
 }: Props) {
   const { user, logout, loading } = useAuth(true);
-  const [tab, setTab] = useState<"blog" | "resume">("blog");
+  const [tab, setTab] = useState<"career" | "blog" | "resume">("career");
   const router = useRouter();
 
   useEffect(() => {
@@ -826,63 +827,89 @@ export default function AdminPage({
   return (
     <>
       <Head>
-        <title>Admin — {siteConfig.name}</title>
+        <title>{`Admin — ${siteConfig.name}`}</title>
         <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
       </Head>
 
-      <main className="min-h-screen pt-10">
-        <div className="max-w-4xl mx-auto px-6 py-12">
-          {/* Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex items-center justify-between mb-10"
-          >
-            <div>
-              <span className="pill mb-2">Admin Dashboard</span>
-              <h1 className="font-display text-3xl font-bold text-text-primary mt-2">
-                Welcome back
-              </h1>
-              <p className="text-text-muted text-sm font-mono mt-1">{user.email}</p>
-            </div>
-            <button
-              onClick={logout}
-              className="btn-ghost text-xs py-2 px-4 flex items-center gap-2"
-            >
-              <FaSignOutAlt size={12} /> Logout
-            </button>
-          </motion.div>
-
-          {/* Stats row */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-            {[
-              { label: "Blog posts", value: initialPosts.length, color: "text-signal" },
-              { label: "Total reads", value: totalReads, color: "text-signal" },
-              { label: "Avg read time", value: avgTimeSpent, color: "text-signal" },
-              { label: "Resume downloads", value: resumeDownloads, color: "text-signal" },
-            ].map(({ label, value, color }) => (
-              <div key={label} className="card p-4">
-                <p className={`font-display font-bold text-3xl ${color}`}>{value}</p>
-                <p className="text-xs text-text-muted mt-1">{label}</p>
+      <main className="min-h-screen pt-8 pb-24 admin-light bg-[#f8fafc]">
+        <div className="w-full px-5 sm:px-8 lg:px-12 xl:px-16 max-w-[1920px] mx-auto">
+          {/* Header Bar */}
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-7 mb-8 border-b-2 border-slate-200">
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 rounded-2xl bg-slate-900 flex items-center justify-center text-white font-extrabold text-2xl shadow-md">
+                P
               </div>
-            ))}
+              <div>
+                <div className="flex items-center gap-3">
+                  <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+                    Admin Workspace
+                  </h1>
+                  <span className="inline-flex items-center px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 border border-emerald-200">
+                    Live System
+                  </span>
+                </div>
+                <p className="text-slate-600 text-base font-medium mt-1">{user.email}</p>
+              </div>
+            </div>
+
+            {/* Navigation Tabs & Logout in Top Bar */}
+            <div className="flex flex-wrap items-center gap-4">
+              <div className="flex bg-slate-200/80 p-1.5 rounded-2xl border border-slate-300 gap-1.5 shadow-inner">
+                {(["career", "blog", "resume"] as const).map((t) => (
+                  <button
+                    key={t}
+                    onClick={() => setTab(t)}
+                    className={`px-6 py-3 rounded-xl text-base font-bold transition-all ${
+                      tab === t
+                        ? "bg-white text-slate-900 shadow-sm border border-slate-300"
+                        : "text-slate-700 hover:text-slate-900 hover:bg-white/60"
+                    }`}
+                  >
+                    {t === "career" ? (
+                      <span className="flex items-center gap-2.5">
+                        <Briefcase size={20} className={tab === "career" ? "text-blue-600" : "text-slate-500"} />
+                        <span>Career Management</span>
+                      </span>
+                    ) : t === "blog" ? (
+                      <span className="flex items-center gap-2.5">
+                        <BookOpen size={20} className={tab === "blog" ? "text-purple-600" : "text-slate-500"} />
+                        <span>Blog Posts ({initialPosts.length})</span>
+                      </span>
+                    ) : (
+                      <span className="flex items-center gap-2.5">
+                        <FaFilePdf size={19} className={tab === "resume" ? "text-rose-600" : "text-slate-500"} />
+                        <span>Résumés</span>
+                      </span>
+                    )}
+                  </button>
+                ))}
+              </div>
+
+              <button
+                onClick={logout}
+                className="h-14 px-6 rounded-xl flex items-center gap-2.5 bg-white border-2 border-slate-200 text-slate-700 hover:bg-slate-50 hover:text-slate-900 font-bold text-base shadow-sm transition-colors"
+              >
+                <FaSignOutAlt size={16} /> Logout
+              </button>
+            </div>
           </div>
 
-          {/* Tabs */}
-          <div className="flex gap-2 mb-6">
-            {(["blog", "resume"] as const).map((t) => (
-              <button
-                key={t}
-                onClick={() => setTab(t)}
-                className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
-                  tab === t ? "bg-signal text-ink" : "border border-rim text-text-muted hover:text-text-primary"
-                }`}
-              >
-                {t === "blog" ? <span className="flex items-center gap-2"><BookOpen size={14} /> Blog Posts</span>
-                              : <span className="flex items-center gap-2"><FaFilePdf size={14} /> Résumés</span>}
-              </button>
-            ))}
-          </div>
+          {/* Stats row - only shown for blog & resume tabs */}
+          {tab !== "career" && (
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+              {[
+                { label: "Blog posts", value: initialPosts.length, color: "text-blue-600" },
+                { label: "Total reads", value: totalReads, color: "text-purple-600" },
+                { label: "Avg read time", value: avgTimeSpent, color: "text-emerald-600" },
+                { label: "Resume downloads", value: resumeDownloads, color: "text-indigo-600" },
+              ].map(({ label, value, color }) => (
+                <div key={label} className="bg-white border-2 border-slate-200/90 rounded-2xl p-7 shadow-sm">
+                  <p className={`font-extrabold text-4xl sm:text-5xl ${color} tracking-tight`}>{value}</p>
+                  <p className="text-sm font-bold text-slate-600 mt-2 uppercase tracking-wider">{label}</p>
+                </div>
+              ))}
+            </div>
+          )}
 
           {/* Tab content */}
           <motion.div
@@ -891,7 +918,9 @@ export default function AdminPage({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            {tab === "blog" ? (
+            {tab === "career" ? (
+              <CareerManager />
+            ) : tab === "blog" ? (
               <BlogManager posts={initialPosts} />
             ) : (
               <ResumeManager />

@@ -1,179 +1,139 @@
-"use client";
-
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import Link from "@/components/ui/SiteLink";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { trackEvent } from "@/lib/analytics";
-
-const NAV_LINKS = [
-  { label: "Work", href: "/#projects" },
-  { label: "About", href: "/#about" },
-  { label: "Skills", href: "/#skills" },
-  { label: "Blog", href: "/blog" },
-  { label: "Contact", href: "/contact" },
+import LocalClock from "@/components/ui/LocalClock";
+const links = [
+  ["Work", "/#work"],
+  ["About", "/#about"],
+  ["Blog", "/blog"],
+  ["Contact", "/contact"],
 ];
-
 export default function Navbar() {
-  const router = useRouter();
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("");
-  const observerRef = useRef<IntersectionObserver | null>(null);
-
+  const [open, setOpen] = useState(false),
+    [hidden, setHidden] = useState(false),
+    [scrolled, setScrolled] = useState(false);
+  const panel = useRef<HTMLDivElement>(null),
+    trigger = useRef<HTMLButtonElement>(null);
+  const reduced = useReducedMotion();
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    let previous = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 32);
+      setHidden(y > 180 && y > previous && Math.abs(y - previous) > 3);
+      previous = y;
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  // Intersection Observer for active section
   useEffect(() => {
-    if (router.pathname !== "/") return;
-
-    const sections = ["projects", "about", "skills"];
-    const observers: IntersectionObserver[] = [];
-
-    sections.forEach((id) => {
-      const el = document.getElementById(id);
-      if (!el) return;
-      const obs = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) setActiveSection(`/#${id}`);
-        },
-        { threshold: 0.3 }
-      );
-      obs.observe(el);
-      observers.push(obs);
-    });
-
-    return () => observers.forEach((o) => o.disconnect());
-  }, [router.pathname]);
-
-  const isActive = (href: string) => {
-    if (href.startsWith("/#")) return activeSection === href;
-    return router.pathname === href || router.pathname.startsWith(href + "/");
-  };
-
+    if (!open) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    panel.current?.querySelector("a")?.focus();
+    const key = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Tab") {
+        const items = [
+          trigger.current,
+          ...Array.from(
+            panel.current?.querySelectorAll<HTMLAnchorElement>("a") || [],
+          ),
+        ].filter(Boolean) as HTMLElement[];
+        const first = items[0],
+          last = items[items.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+    document.addEventListener("keydown", key);
+    return () => {
+      document.body.style.overflow = previous;
+      document.removeEventListener("keydown", key);
+      trigger.current?.focus();
+    };
+  }, [open]);
+  useEffect(() => {
+    const resize = () => {
+      if (window.innerWidth >= 768) setOpen(false);
+    };
+    window.addEventListener("resize", resize);
+    return () => window.removeEventListener("resize", resize);
+  }, []);
   return (
     <>
-      <motion.header
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className={cn(
-          "fixed top-0 left-0 right-0 z-50 w-full flex justify-center transition-all duration-500 ease-out",
-          scrolled ? "pt-4" : "pt-0"
-        )}
+      <a className="skip-link" href="#main">
+        Skip to content
+      </a>
+      <header
+        className={`site-header ${scrolled || open ? "scrolled" : ""} ${hidden && !open ? "hidden-header" : ""}`}
+        onFocus={() => setHidden(false)}
       >
-        <nav className={cn(
-          "transition-all duration-500 ease-out flex items-center justify-between px-6",
-          scrolled
-            ? "h-12 w-[calc(100%-2rem)] md:w-full max-w-5xl rounded-full bg-ink/75 backdrop-blur-xl border border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
-            : "h-16 w-full max-w-6xl rounded-none bg-transparent border-b border-transparent"
-        )}>
-          {/* Logo */}
-          <Link
-            href="/"
-            className="flex items-center group"
-            aria-label="Param Panwar — Home"
-          >
-            <img
-              src="/logo.png"
-              alt="Param Panwar Logo"
-              className="h-8 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
-            />
+        <div className="container header-inner">
+          <Link className="wordmark text-link" href="/">
+            Param Panwar
           </Link>
-
-          {/* Desktop links */}
-          <ul className="hidden md:flex items-center gap-1">
-            {NAV_LINKS.map(({ label, href }) => (
-              <li key={href}>
-                <Link
-                  href={href}
-                  className={cn(
-                    "relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-200",
-                    isActive(href)
-                      ? "text-ink bg-signal"
-                      : "text-text-secondary hover:text-text-primary hover:bg-white/[0.05]"
-                  )}
-                >
-                  {label}
-                </Link>
-              </li>
+          <LocalClock />
+          <nav className="desktop-nav" aria-label="Main navigation">
+            {links.map(([label, href]) => (
+              <Link key={label} className="text-link" href={href}>
+                {label}
+              </Link>
             ))}
-          </ul>
-
-          {/* CTA + Mobile toggle */}
-          <div className="flex items-center gap-3">
-            <a
-              href="/resume"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => trackEvent("resume_download", { filename: "param_panwar.pdf" })}
-              className="hidden md:inline-flex btn-ghost text-xs py-2 px-4"
-            >
+          </nav>
+          <div className="header-actions">
+            <a href="/resume" className="btn-ghost resume-pill">
               Résumé ↗
             </a>
-
             <button
-              onClick={() => setMobileOpen((v) => !v)}
-              className="md:hidden w-9 h-9 flex items-center justify-center rounded-full border border-rim text-text-secondary hover:text-text-primary hover:border-rim-2 transition-all"
-              aria-label={mobileOpen ? "Close menu" : "Open menu"}
+              ref={trigger}
+              className="icon-button menu-toggle"
+              aria-label={open ? "Close menu" : "Open menu"}
+              aria-expanded={open}
+              aria-controls="mobile-menu"
+              onClick={() => setOpen(!open)}
             >
-              {mobileOpen ? <X size={16} /> : <Menu size={16} />}
+              {open ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
-        </nav>
-      </motion.header>
-
-      {/* Mobile menu */}
+        </div>
+      </header>
       <AnimatePresence>
-        {mobileOpen && (
+        {open && (
           <motion.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.2 }}
-            className={cn(
-              "fixed inset-x-0 z-40 glass-strong border-b border-rim p-6 md:hidden transition-all duration-500",
-              scrolled ? "top-20" : "top-16"
-            )}
+            id="mobile-menu"
+            ref={panel}
+            className="mobile-menu"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Navigation"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
           >
-            <ul className="flex flex-col gap-2">
-              {NAV_LINKS.map(({ label, href }) => (
-                <li key={href}>
-                  <Link
-                    href={href}
-                    onClick={() => setMobileOpen(false)}
-                    className={cn(
-                      "block px-4 py-3 rounded-xl text-sm font-medium transition-all",
-                      isActive(href)
-                        ? "text-ink bg-signal"
-                        : "text-text-secondary hover:text-text-primary hover:bg-white/[0.05]"
-                    )}
-                  >
+            <nav>
+              {[...links, ["Résumé ↗", "/resume"]].map(([label, href], i) => (
+                <motion.div
+                  key={label}
+                  initial={{ opacity: 0, y: reduced ? 0 : 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: reduced ? 0 : i * 0.07, duration: 0.6 }}
+                >
+                  <Link href={href} onClick={() => setOpen(false)}>
                     {label}
                   </Link>
-                </li>
+                </motion.div>
               ))}
-              <li className="mt-2 pt-4 border-t border-rim">
-                <a
-                  href="/resume"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => {
-                    setMobileOpen(false);
-                    trackEvent("resume_download", { filename: "param_panwar.pdf" });
-                  }}
-                  className="block btn-ghost text-sm text-center"
-                >
-                  Download Résumé ↗
-                </a>
-              </li>
-            </ul>
+            </nav>
+            <div className="mt-10">
+              <LocalClock />
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

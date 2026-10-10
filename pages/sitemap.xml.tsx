@@ -1,6 +1,6 @@
 import type { GetServerSideProps } from "next";
 import { connectToDatabase } from "@/lib/mongodb";
-import { siteConfig } from "@/data/portfolio";
+import { projects, siteConfig } from "@/data/portfolio";
 
 export default function Sitemap() {
   return null;
@@ -35,6 +35,7 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
+  ${projects.map(project => `<url><loc>${siteConfig.url}/work/${project.id}</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>`).join("")}
   ${posts
     .map((post) => {
       const lastMod = post.updatedAt || post.date || new Date().toISOString();

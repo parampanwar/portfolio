@@ -89,10 +89,10 @@ export default async function handler(
 
   const { username, password, otp } = req.body ?? {};
 
-  const adminUsername = process.env.ADMIN_USERNAME || "admin";
-  const adminPassword = process.env.ADMIN_PASSWORD;
+  const adminUsername = (process.env.ADMIN_USERNAME || "admin").trim();
+  const adminPassword = (process.env.ADMIN_PASSWORD || "").trim();
   const jwtSecret = process.env.JWT_SECRET || "fallback_secret_key";
-  const mfaSecret = process.env.MFA_SECRET;
+  const mfaSecret = process.env.MFA_SECRET ? process.env.MFA_SECRET.trim() : "";
 
   if (!adminPassword) {
     return res.status(500).json({
@@ -101,8 +101,11 @@ export default async function handler(
     });
   }
 
-  // Validate username and password
-  if (username !== adminUsername || password !== adminPassword) {
+  // Validate username and password (case-insensitive email, trimmed)
+  const inputUsername = (username || "").trim().toLowerCase();
+  const inputPassword = (password || "").trim();
+
+  if (inputUsername !== adminUsername.toLowerCase() || inputPassword !== adminPassword) {
     return res.status(401).json({ success: false, message: "Invalid username or password" });
   }
 

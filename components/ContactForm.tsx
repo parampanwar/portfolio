@@ -17,7 +17,11 @@ const schema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100),
   email: z.string().trim().email("Invalid email address").max(255),
   subject: z.string().trim().min(1, "Subject is required").max(200),
-  message: z.string().trim().min(10, "Message must be at least 10 characters").max(1000),
+  message: z
+    .string()
+    .trim()
+    .min(10, "Message must be at least 10 characters")
+    .max(1000),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -66,21 +70,22 @@ export default function ContactForm() {
 
       setStatus("success");
       reset();
-
-      // Reset back to idle after 5s
-      setTimeout(() => setStatus("idle"), 5000);
     } catch (err) {
       setStatus("error");
       setErrorMsg(err instanceof Error ? err.message : "Something went wrong");
-      setTimeout(() => setStatus("idle"), 4000);
     }
   };
 
   if (status === "success") {
     return (
-      <div className="flex flex-col items-center justify-center py-16 gap-4">
+      <div
+        role="status"
+        className="flex flex-col items-center justify-center py-16 gap-4"
+      >
         <CheckCircle className="w-12 h-12 text-signal" />
-        <h3 className="font-display font-bold text-xl text-text-primary">Message sent!</h3>
+        <h3 className="font-display font-bold text-xl text-text-primary">
+          Message sent!
+        </h3>
         <p className="text-text-secondary text-sm text-center max-w-sm">
           Thanks for reaching out. I'll get back to you within 24 hours.
         </p>
@@ -97,113 +102,143 @@ export default function ContactForm() {
         />
       )}
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
-      <div className="grid sm:grid-cols-2 gap-5">
-        {/* Name */}
+        <div className="grid sm:grid-cols-2 gap-5">
+          {/* Name */}
+          <div>
+            <label htmlFor="name" className="field-label">
+              Name
+            </label>
+            <input
+              id="name"
+              aria-invalid={!!errors.name}
+              aria-describedby={errors.name ? "name-error" : undefined}
+              type="text"
+              placeholder="Your name"
+              autoComplete="name"
+              className="input-field"
+              {...register("name")}
+            />
+            {errors.name && (
+              <p
+                id="name-error"
+                role="alert"
+                className="text-ink text-xs mt-1.5 flex items-center gap-1"
+              >
+                <AlertCircle size={11} /> {errors.name.message}
+              </p>
+            )}
+          </div>
+
+          {/* Email */}
+          <div>
+            <label htmlFor="email" className="field-label">
+              Email
+            </label>
+            <input
+              id="email"
+              aria-invalid={!!errors.email}
+              aria-describedby={errors.email ? "email-error" : undefined}
+              type="email"
+              placeholder="you@example.com"
+              autoComplete="email"
+              className="input-field"
+              {...register("email")}
+            />
+            {errors.email && (
+              <p
+                id="email-error"
+                role="alert"
+                className="text-ink text-xs mt-1.5 flex items-center gap-1"
+              >
+                <AlertCircle size={11} /> {errors.email.message}
+              </p>
+            )}
+          </div>
+        </div>
+
+        {/* Subject */}
         <div>
-          <label htmlFor="name" className="field-label">
-            Name
+          <label htmlFor="subject" className="field-label">
+            Subject
           </label>
           <input
-            id="name"
+            id="subject"
+            aria-invalid={!!errors.subject}
+            aria-describedby={errors.subject ? "subject-error" : undefined}
             type="text"
-            placeholder="Your name"
-            autoComplete="name"
+            placeholder="Project inquiry, collaboration, etc."
             className="input-field"
-            {...register("name")}
+            {...register("subject")}
           />
-          {errors.name && (
-            <p className="text-red-400 text-xs mt-1.5 flex items-center gap-1">
-              <AlertCircle size={11} /> {errors.name.message}
+          {errors.subject && (
+            <p
+              id="subject-error"
+              role="alert"
+              className="text-ink text-xs mt-1.5 flex items-center gap-1"
+            >
+              <AlertCircle size={11} /> {errors.subject.message}
             </p>
           )}
         </div>
 
-        {/* Email */}
+        {/* Message */}
         <div>
-          <label htmlFor="email" className="field-label">
-            Email
+          <label htmlFor="message" className="field-label">
+            Message
           </label>
-          <input
-            id="email"
-            type="email"
-            placeholder="you@example.com"
-            autoComplete="email"
-            className="input-field"
-            {...register("email")}
+          <textarea
+            id="message"
+            aria-invalid={!!errors.message}
+            aria-describedby={errors.message ? "message-error" : undefined}
+            placeholder="Tell me about your project..."
+            rows={5}
+            className="textarea-field"
+            {...register("message")}
           />
-          {errors.email && (
-            <p className="text-red-400 text-xs mt-1.5 flex items-center gap-1">
-              <AlertCircle size={11} /> {errors.email.message}
+          {errors.message && (
+            <p
+              id="message-error"
+              role="alert"
+              className="text-ink text-xs mt-1.5 flex items-center gap-1"
+            >
+              <AlertCircle size={11} /> {errors.message.message}
             </p>
           )}
         </div>
-      </div>
 
-      {/* Subject */}
-      <div>
-        <label htmlFor="subject" className="field-label">
-          Subject
-        </label>
-        <input
-          id="subject"
-          type="text"
-          placeholder="Project inquiry, collaboration, etc."
-          className="input-field"
-          {...register("subject")}
-        />
-        {errors.subject && (
-          <p className="text-red-400 text-xs mt-1.5 flex items-center gap-1">
-            <AlertCircle size={11} /> {errors.subject.message}
-          </p>
+        {/* Error alert */}
+        {status === "error" && (
+          <div
+            role="alert"
+            className="rounded-xl px-4 py-3 text-sm text-ink flex items-center gap-2"
+            style={{
+              background: "rgba(239,68,68,0.08)",
+              border: "1px solid rgba(239,68,68,0.2)",
+            }}
+          >
+            <AlertCircle size={14} />
+            {errorMsg || "Failed to send message. Please try again."}
+          </div>
         )}
-      </div>
 
-      {/* Message */}
-      <div>
-        <label htmlFor="message" className="field-label">
-          Message
-        </label>
-        <textarea
-          id="message"
-          placeholder="Tell me about your project..."
-          rows={5}
-          className="textarea-field"
-          {...register("message")}
-        />
-        {errors.message && (
-          <p className="text-red-400 text-xs mt-1.5 flex items-center gap-1">
-            <AlertCircle size={11} /> {errors.message.message}
-          </p>
-        )}
-      </div>
-
-      {/* Error alert */}
-      {status === "error" && (
-        <div className="rounded-xl px-4 py-3 text-sm text-red-400 flex items-center gap-2"
-          style={{ background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.2)" }}>
-          <AlertCircle size={14} />
-          {errorMsg || "Failed to send message. Please try again."}
-        </div>
-      )}
-
-      <button
-        type="submit"
-        disabled={status === "loading"}
-        className="btn-primary w-full justify-center disabled:opacity-60 disabled:cursor-not-allowed"
-      >
-        {status === "loading" ? (
-          <>
-            <Loader2 size={16} className="animate-spin" />
-            Sending…
-          </>
-        ) : (
-          <>
-            <Send size={16} />
-            Send message
-          </>
-        )}
-      </button>
-    </form>
+        <button
+          type="submit"
+          disabled={status === "loading"}
+          className="btn-primary w-full justify-center disabled:opacity-60 disabled:cursor-not-allowed"
+        >
+          {status === "loading" ? (
+            <>
+              <Loader2 size={16} className="animate-spin" />
+              Sending…
+            </>
+          ) : (
+            <>
+              <Send size={16} />
+              Send message
+            </>
+          )}
+        </button>
+      </form>
     </>
   );
 }
