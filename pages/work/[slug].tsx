@@ -12,6 +12,7 @@ import {
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Reveal from "@/components/ui/Reveal";
+import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { projects, Project, siteConfig } from "@/data/portfolio";
 import { caseStudies } from "@/data/caseStudies";
 export default function CaseStudy({ project }: { project: Project }) {
@@ -32,8 +33,9 @@ export default function CaseStudy({ project }: { project: Project }) {
       </Head>
       <Navbar />
       <main id="main" className="container page-main">
-        <Link className="meta text-link" href="/#work">
-          ← Selected work
+        <Link className="meta text-link inline-flex items-center gap-1.5" href="/#work">
+          <ArrowLeft className="w-3.5 h-3.5 flex-shrink-0" aria-hidden="true" />
+          <span>Selected work</span>
         </Link>
         <h1 className="page-title">{project.title}</h1>
         <p className="meta">
@@ -79,10 +81,12 @@ export default function CaseStudy({ project }: { project: Project }) {
             target="_blank"
             rel="noreferrer"
           >
-            Visit project ↗
+            <span>Visit project</span>
+            <ArrowUpRight className="w-5 h-5 flex-shrink-0" aria-hidden="true" />
           </a>
           <Link className="btn-ghost" href="/contact">
-            Let’s work together ↗
+            <span>Let’s work together</span>
+            <ArrowUpRight className="w-5 h-5 flex-shrink-0" aria-hidden="true" />
           </Link>
         </div>
       </main>

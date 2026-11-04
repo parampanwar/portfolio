@@ -16,7 +16,7 @@ Here's the truth: **premature optimization is worse than no optimization.**
 
 ## How to Actually Profile
 
-1. Open Chrome DevTools → Performance tab
+1. Open Chrome DevTools -> Performance tab
 2. Record while interacting with the slow part
 3. Look for **long tasks** (>50ms) in the flame chart
 4. Identify *which component* is causing the issue

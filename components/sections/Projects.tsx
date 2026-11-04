@@ -6,6 +6,7 @@ import { projects } from "@/data/portfolio";
 import { caseStudies } from "@/data/caseStudies";
 import Section from "@/components/ui/Section";
 import Reveal from "@/components/ui/Reveal";
+import { ArrowUpRight } from "lucide-react";
 export default function Projects() {
   const [active, setActive] = useState<string | null>(null);
   const x = useMotionValue(0),
@@ -19,7 +20,7 @@ export default function Projects() {
           <br />
           <em>working products.</em>
         </h2>
-        <p>Full-stack systems, considered interfaces, and AI with a purpose.</p>
+        <p>Autonomous AI agents, production RAG pipelines, and high-performance software systems.</p>
       </Reveal>
       <div>
         {projects.map((project, i) => (
@@ -61,9 +62,11 @@ export default function Projects() {
                   ))}
                 </div>
               </div>
-              <span className="project-arrow" aria-hidden="true">
-                ↗
-              </span>
+              <ArrowUpRight
+                className="project-arrow"
+                aria-hidden="true"
+                strokeWidth={1.5}
+              />
             </Link>
           </article>
         ))}

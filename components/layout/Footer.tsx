@@ -2,6 +2,7 @@ import Link from "@/components/ui/SiteLink";
 import { social } from "@/data/portfolio";
 import LocalClock from "@/components/ui/LocalClock";
 import ThemeSelector from "@/components/ui/ThemeSelector";
+import { ArrowUpRight, ArrowUp } from "lucide-react";
 export default function Footer() {
   return (
     <footer className="site-footer">
@@ -46,12 +47,13 @@ export default function Footer() {
             ].map(([label, href]) => (
               <div key={label}>
                 <a
-                  className="text-link"
+                  className="text-link inline-flex items-center gap-1"
                   href={href}
                   target="_blank"
                   rel="noreferrer"
                 >
-                  {label} ↗
+                  {label}
+                  <ArrowUpRight className="w-3.5 h-3.5 flex-shrink-0" aria-hidden="true" />
                 </a>
               </div>
             ))}
@@ -59,13 +61,21 @@ export default function Footer() {
           <div>
             <h3>Elsewhere</h3>
             <div>
-              <a className="text-link" href="/resume">
-                Résumé ↗
+              <a
+                className="text-link inline-flex items-center gap-1"
+                href="/resume"
+              >
+                Résumé
+                <ArrowUpRight className="w-3.5 h-3.5 flex-shrink-0" aria-hidden="true" />
               </a>
             </div>
             <div>
-              <a className="text-link" href={`mailto:${social.email}`}>
-                Say hello ↗
+              <a
+                className="text-link inline-flex items-center gap-1"
+                href={`mailto:${social.email}`}
+              >
+                Say hello
+                <ArrowUpRight className="w-3.5 h-3.5 flex-shrink-0" aria-hidden="true" />
               </a>
             </div>
             <p className="meta mt-5">
@@ -82,7 +92,7 @@ export default function Footer() {
           <LocalClock />
           <ThemeSelector />
           <button
-            className="meta text-link"
+            className="meta text-link inline-flex items-center gap-1"
             onClick={() =>
               window.scrollTo({
                 top: 0,
@@ -93,7 +103,8 @@ export default function Footer() {
               })
             }
           >
-            Back to top ↑
+            Back to top
+            <ArrowUp className="w-3.5 h-3.5 flex-shrink-0" aria-hidden="true" />
           </button>
         </div>
       </div>

@@ -176,12 +176,12 @@ export default async function handler(
                 <tr>
                   <td align="left">
                     <a href="mailto:${safeEmail}?subject=Re:%20${encodeURIComponent(safeSubject)}" class="btn-primary" target="_blank" style="display: inline-block; padding: 13px 28px; background-color: #121212; color: #FFFFFF; font-family: 'JetBrains Mono', Consolas, Monaco, monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; text-decoration: none; border-radius: 99px;">
-                      Direct Reply ↗
+                      Direct Reply &rarr;
                     </a>
                   </td>
                   <td style="padding-left: 16px;">
                     <a href="https://parampanwar.xyz/admin" target="_blank" style="font-family: 'JetBrains Mono', Consolas, Monaco, monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: #6B675F; text-decoration: none;" class="text-muted">
-                      Admin Console ↗
+                      Admin Console &rarr;
                     </a>
                   </td>
                 </tr>
@@ -195,11 +195,11 @@ export default async function handler(
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
                   <td style="font-family: Georgia, 'Times New Roman', serif; font-size: 13px; color: #6B675F;" class="text-muted">
-                    Param Panwar — Full-stack engineer
+                    Param Panwar — Software engineer
                   </td>
                   <td align="right">
-                    <a href="${social.github}" target="_blank" style="font-family: 'JetBrains Mono', Consolas, Monaco, monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #121212; text-decoration: none; margin-left: 12px;" class="text-primary">GitHub ↗</a>
-                    <a href="${social.linkedin}" target="_blank" style="font-family: 'JetBrains Mono', Consolas, Monaco, monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #121212; text-decoration: none; margin-left: 12px;" class="text-primary">LinkedIn ↗</a>
+                    <a href="${social.github}" target="_blank" style="font-family: 'JetBrains Mono', Consolas, Monaco, monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #121212; text-decoration: none; margin-left: 12px;" class="text-primary">GitHub &rarr;</a>
+                    <a href="${social.linkedin}" target="_blank" style="font-family: 'JetBrains Mono', Consolas, Monaco, monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #121212; text-decoration: none; margin-left: 12px;" class="text-primary">LinkedIn &rarr;</a>
                   </td>
                 </tr>
               </table>
@@ -308,12 +308,12 @@ export default async function handler(
                 <tr>
                   <td>
                     <a href="https://parampanwar.xyz" class="btn-primary" target="_blank" style="display: inline-block; padding: 13px 28px; background-color: #121212; color: #FFFFFF; font-family: 'JetBrains Mono', Consolas, Monaco, monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; text-decoration: none; border-radius: 99px;">
-                      Visit Portfolio ↗
+                      Visit Portfolio &rarr;
                     </a>
                   </td>
                   <td style="padding-left: 16px;">
                     <a href="https://parampanwar.xyz/resume" target="_blank" style="font-family: 'JetBrains Mono', Consolas, Monaco, monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: #6B675F; text-decoration: none;" class="text-muted">
-                      View Résumé ↗
+                      View Résumé &rarr;
                     </a>
                   </td>
                 </tr>
@@ -329,11 +329,11 @@ export default async function handler(
                   <td valign="top" style="font-family: Georgia, 'Times New Roman', serif; font-size: 14px; line-height: 1.6; color: #121212;" class="text-primary">
                     Warm regards,<br>
                     <strong style="font-size: 16px;">Param Panwar</strong><br>
-                    <span style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; color: #6B675F;" class="text-muted">Full-stack engineer building AI products that ship</span>
+                    <span style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; color: #6B675F;" class="text-muted">Software engineer engineering intelligent products with purpose</span>
                   </td>
                   <td align="right" valign="bottom">
-                    <a href="${social.github}" target="_blank" style="font-family: 'JetBrains Mono', Consolas, Monaco, monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #121212; text-decoration: none; margin-left: 12px;" class="text-primary">GitHub ↗</a>
-                    <a href="${social.linkedin}" target="_blank" style="font-family: 'JetBrains Mono', Consolas, Monaco, monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #121212; text-decoration: none; margin-left: 12px;" class="text-primary">LinkedIn ↗</a>
+                    <a href="${social.github}" target="_blank" style="font-family: 'JetBrains Mono', Consolas, Monaco, monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #121212; text-decoration: none; margin-left: 12px;" class="text-primary">GitHub &rarr;</a>
+                    <a href="${social.linkedin}" target="_blank" style="font-family: 'JetBrains Mono', Consolas, Monaco, monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #121212; text-decoration: none; margin-left: 12px;" class="text-primary">LinkedIn &rarr;</a>
                   </td>
                 </tr>
                 <tr>

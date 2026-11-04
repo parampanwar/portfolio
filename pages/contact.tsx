@@ -5,7 +5,7 @@ import Footer from "@/components/layout/Footer";
 import ContactForm from "@/components/ContactForm";
 import { social, siteConfig } from "@/data/portfolio";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
-import { Mail, Clock } from "lucide-react";
+import { Mail, Clock, ArrowUpRight } from "lucide-react";
 
 const XIcon = ({ className, size }: { className?: string; size?: number }) => (
   <svg
@@ -29,24 +29,24 @@ export default function Contact() {
   return (
     <>
       <Head>
-        <title>Hire Full-Stack Developer | Contact Param Panwar</title>
+        <title>Hire Software Engineer | AI Agents & RAG | Contact Param Panwar</title>
         <meta
           name="description"
-          content="Get in touch with Param Panwar for freelance full-stack development, software engineering services, or AI application integrations."
+          content="Get in touch with Param Panwar for autonomous AI agents development, production RAG systems, and full-stack software engineering."
         />
         <meta
           name="keywords"
-          content="Hire Developer, Hire React Developer, Contact Param Panwar, Freelance Engineer India"
+          content="Hire Software Engineer, Hire AI Engineer, AI Agents Developer, RAG Systems, Contact Param Panwar, Python, Next.js"
         />
         <link rel="canonical" href={`${siteConfig.url}/contact`} />
 
         <meta
           property="og:title"
-          content="Hire Full-Stack Developer | Contact Param Panwar"
+          content="Hire Software Engineer | AI Agents & RAG | Contact Param Panwar"
         />
         <meta
           property="og:description"
-          content="Get in touch with Param Panwar for freelance full-stack development, software engineering services, or AI application integrations."
+          content="Get in touch with Param Panwar for autonomous AI agents development, production RAG systems, and full-stack software engineering."
         />
         <meta property="og:url" content={`${siteConfig.url}/contact`} />
 
@@ -86,18 +86,18 @@ export default function Contact() {
           with <em className="accent">hello.</em>
         </h1>
         <p className="max-w-2xl text-muted">
-          Have a project in mind? I'm open to freelance work, full-time
-          opportunities, and interesting collaborations.
+          Have a project in mind? I’m open to engineering autonomous AI agents, production RAG pipelines, full-time roles, and technical collaborations.
         </p>
         <div className="contact-grid">
           <div className="contact-details">
             <div>
               <h2 className="meta mb-4">Email</h2>
               <a
-                className="text-link break-all"
+                className="text-link inline-flex items-center gap-1 break-all"
                 href={`mailto:${social.email}`}
               >
-                {social.email} ↗
+                <span>{social.email}</span>
+                <ArrowUpRight className="w-3.5 h-3.5 flex-shrink-0" aria-hidden="true" />
               </a>
             </div>
             <div>
@@ -113,12 +113,13 @@ export default function Contact() {
               {SOCIAL_LINKS.map(({ href, label }) => (
                 <div key={label} className="mb-3">
                   <a
-                    className="text-link"
+                    className="text-link inline-flex items-center gap-1"
                     href={href}
                     target="_blank"
                     rel="noreferrer"
                   >
-                    {label} ↗
+                    <span>{label}</span>
+                    <ArrowUpRight className="w-3.5 h-3.5 flex-shrink-0" aria-hidden="true" />
                   </a>
                 </div>
               ))}

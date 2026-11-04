@@ -1,7 +1,7 @@
 import Link from "@/components/ui/SiteLink";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ArrowUpRight } from "lucide-react";
 import LocalClock from "@/components/ui/LocalClock";
 const links = [
   ["Work", "/#work"],
@@ -20,7 +20,7 @@ export default function Navbar() {
     let previous = window.scrollY;
     const onScroll = () => {
       const y = window.scrollY;
-      setScrolled(y > 32);
+      setScrolled(y > 10);
       setHidden(y > 180 && y > previous && Math.abs(y - previous) > 3);
       previous = y;
     };
@@ -89,7 +89,10 @@ export default function Navbar() {
           </nav>
           <div className="header-actions">
             <a href="/resume" className="btn-ghost resume-pill">
-              Résumé ↗
+              <span className="inline-flex items-center gap-1.5">
+                Résumé
+                <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
+              </span>
             </a>
             <button
               ref={trigger}
@@ -118,15 +121,22 @@ export default function Navbar() {
             exit={{ opacity: 0 }}
           >
             <nav>
-              {[...links, ["Résumé ↗", "/resume"]].map(([label, href], i) => (
+              {[...links, ["Résumé", "/resume"]].map(([label, href], i) => (
                 <motion.div
                   key={label}
                   initial={{ opacity: 0, y: reduced ? 0 : 24 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: reduced ? 0 : i * 0.07, duration: 0.6 }}
                 >
-                  <Link href={href} onClick={() => setOpen(false)}>
+                  <Link
+                    href={href}
+                    onClick={() => setOpen(false)}
+                    className="inline-flex items-center gap-2"
+                  >
                     {label}
+                    {href === "/resume" && (
+                      <ArrowUpRight className="w-6 h-6" aria-hidden="true" />
+                    )}
                   </Link>
                 </motion.div>
               ))}

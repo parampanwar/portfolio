@@ -6,6 +6,7 @@ import {
   useReducedMotion,
 } from "framer-motion";
 import { ReactNode } from "react";
+import { ArrowUpRight } from "lucide-react";
 export default function MagneticButton({
   href,
   children,
@@ -37,7 +38,7 @@ export default function MagneticButton({
     >
       <Link className={secondary ? "btn-ghost" : "btn-primary"} href={href}>
         {children}
-        <span aria-hidden="true">↗</span>
+        <ArrowUpRight className="w-5 h-5 flex-shrink-0" aria-hidden="true" />
       </Link>
     </motion.span>
   );

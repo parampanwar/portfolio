@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { useState, useMemo, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Clock, Tag, ArrowRight, Search } from "lucide-react";
+import { Clock, Tag, ArrowRight, Search, ArrowUpRight } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { getAllPosts, getAllTags, type BlogMeta } from "@/lib/blog";
@@ -25,7 +25,11 @@ function PostCard({ post }: { post: BlogMeta; index: number }) {
           <span>{post.readingTime}</span>
         </div>
         <h2>
-          {post.title} <span aria-hidden="true">↗</span>
+          {post.title}{" "}
+          <ArrowUpRight
+            className="inline-block w-5 h-5 align-baseline"
+            aria-hidden="true"
+          />
         </h2>
         <p className="text-muted mb-5">{post.excerpt}</p>
         <div className="stack">
@@ -67,7 +71,7 @@ export default function BlogIndex({ posts, tags }: Props) {
   return (
     <>
       <Head>
-        <title>Full-Stack Engineering & AI Blog | Param Panwar</title>
+        <title>Software Engineering & AI Blog | Param Panwar</title>
         <meta
           name="description"
           content="Read developer guides, engineering deep dives, and system architecture blueprints focusing on Next.js, FastAPI, PostgreSQL, and AI application design."
@@ -80,7 +84,7 @@ export default function BlogIndex({ posts, tags }: Props) {
 
         <meta
           property="og:title"
-          content="Full-Stack Engineering & AI Blog | Param Panwar"
+          content="Software Engineering & AI Blog | Param Panwar"
         />
         <meta
           property="og:description"
@@ -128,8 +132,8 @@ export default function BlogIndex({ posts, tags }: Props) {
             <span className="pill mb-4">Writing</span>
             <h1 className="page-title">Notes from the work.</h1>
             <p className="text-text-secondary max-w-xl text-lg leading-relaxed">
-              Thoughts on full-stack development, React patterns, system design,
-              and building things that last.
+              Thoughts on autonomous AI agents, production RAG pipelines, system design,
+              and building software that lasts.
             </p>
           </motion.div>
 

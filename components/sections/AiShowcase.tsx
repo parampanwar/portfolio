@@ -8,10 +8,7 @@ export default function AiShowcase() {
           AI, with a <em>purpose.</em>
         </h2>
         <p className="ai-copy">
-          I build AI into products where it earns its place: customer
-          conversations, coding assessments, and talent matching. In my own
-          workflow, AI supports research, architecture, prototyping, and review
-          — while I own the decisions and the code that ships.
+          I build autonomous AI agents and production RAG pipelines into products where they earn their place: enterprise customer conversations, contextual document intelligence, coding assessments, and talent matching. From multi-agent orchestration and tool calling to hybrid semantic search, I architect AI systems that are reliable, fast, and grounded in real data.
         </p>
       </Reveal>
     </Section>

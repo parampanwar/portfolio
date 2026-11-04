@@ -966,7 +966,7 @@ export default function CareerManager() {
                       required
                       value={role}
                       onChange={(e) => setRole(e.target.value)}
-                      placeholder="e.g. Senior Full Stack Engineer"
+                      placeholder="e.g. Senior Software Engineer"
                       className="w-full h-14 px-5 rounded-xl text-base font-medium border-2 border-slate-300 bg-white focus:border-blue-600 focus:ring-4 focus:ring-blue-500/15 outline-none transition-all"
                     />
                   </div>

@@ -246,12 +246,33 @@
   position: fixed;
   inset: 0 0 auto;
   z-index: 60;
-  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition:
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    -webkit-backdrop-filter 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    backdrop-filter 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .site-header.scrolled {
-  background: rgb(var(--background) / 0.94);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgb(var(--border));
+  background: rgb(var(--background) / 0.65);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgb(var(--border) / 0.45);
+  box-shadow:
+    0 1px 0 0 rgb(255 255 255 / 0.35) inset,
+    0 10px 30px -10px rgb(0 0 0 / 0.05);
+}
+:root.dark .site-header.scrolled {
+  background: rgb(var(--background) / 0.65);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgb(var(--border) / 0.35);
+  box-shadow:
+    0 1px 0 0 rgb(255 255 255 / 0.08) inset,
+    0 12px 36px -8px rgb(0 0 0 / 0.45);
 }
 .site-header.hidden-header {
   transform: translateY(-110%);
@@ -439,9 +460,14 @@
   transform: translateX(14px);
 }
 .project-arrow {
-  font-size: 56px;
-  line-height: 1;
-  transition: transform 0.6s;
+  width: 48px;
+  height: 48px;
+  justify-self: end;
+  align-self: start;
+  flex-shrink: 0;
+  transform-origin: center;
+  transform-box: fill-box;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), color 0.3s ease;
 }
 .project-link:hover .project-arrow {
   transform: rotate(45deg);
@@ -845,7 +871,9 @@
     display: none;
   }
   .project-arrow {
-    font-size: 36px;
+    width: 28px;
+    height: 28px;
+    stroke-width: 1.75;
   }
   .project-meta {
     gap: 14px;

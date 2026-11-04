@@ -1,18 +1,23 @@
 import Section from "@/components/ui/Section";
 import Reveal from "@/components/ui/Reveal";
 const groups = {
+  "AI & Agents": [
+    "AI Agents & Tool Calling",
+    "RAG Architecture",
+    "Vector DBs & Embeddings",
+    "OpenAI & Gemini APIs",
+    "LangChain & LlamaIndex",
+  ],
+  Backend: ["Python", "FastAPI", "Node.js", "REST & WebSockets"],
   Frontend: [
     "React",
     "Next.js",
     "TypeScript",
-    "JavaScript",
     "Tailwind CSS",
     "Framer Motion",
-    "Figma",
   ],
-  Backend: ["Node.js", "Python", "FastAPI"],
   Data: ["PostgreSQL", "MongoDB", "Redis", "SQL"],
-  DevOps: ["Git", "Docker", "Vercel", "AWS"],
+  DevOps: ["Docker", "Git", "Vercel", "AWS"],
 };
 export default function Skills() {
   return (

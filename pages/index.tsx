@@ -49,16 +49,19 @@ export default function Home() {
                     "https://linkedin.com/in/parampanwar",
                     "https://twitter.com/parampanwar"
                   ],
-                  "jobTitle": "Full-Stack Developer",
+                  "jobTitle": "Software Engineer",
                   "knowsAbout": [
-                    "React",
-                    "Next.js",
+                    "AI Agents",
+                    "RAG (Retrieval-Augmented Generation)",
+                    "Vector Databases",
                     "FastAPI",
+                    "Next.js",
+                    "React",
                     "TypeScript",
                     "Python",
                     "MongoDB",
                     "PostgreSQL",
-                    "OpenAI",
+                    "OpenAI & Gemini APIs",
                     "System Design",
                     "API Architectures"
                   ]
